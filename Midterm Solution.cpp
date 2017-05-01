@@ -27,11 +27,11 @@ class Building
 {
 	public:
 		int id;
-		Point position;
+		Point& position;
 		int cost;
 		int revenue;
 		int expense;
-		map <Distribution, Distribution> distrubution;
+		map<int,Distribution&> distribution;
 		int costPerKM;
 	private:
 		Building();
@@ -60,7 +60,7 @@ class Logistics: public Building
 {
 	private:
 		int capacity;
-		map <int, Store> possibleStores;
+		map <int, Store&> possibleStores;
 		int unsold;
 	public:
 		Logistics();
@@ -79,7 +79,7 @@ class Store:public Building//subclass
 {
 	private:
 		int demand;
-		map <int, Logistics> possibleLogistics;
+		map <int, Logistics&> possibleLogistics;
 		int price;
 		int unsatisfied;
 	public:
@@ -101,8 +101,8 @@ class Store:public Building//subclass
 class Distribution
 {
 	private:
-		Logistics from;
-		Store to;
+		Logistics& from;
+		Store& to;
 		int price;
 		int unitCost;
 		int units;
@@ -137,12 +137,12 @@ class Distribution
 class Plan
 {
 private:
-    map<int,Logistics> logistics;
-    map<int,Store> stores;
+    map<int,Logistics&> logistics;
+    map<int,Store&> stores;
     int revenue;
     int expense;
-    map<int,Logistics> unsold;
-    map<int,Store> unsatisfied;
+    map<int,Logistics&> unsold;
+    map<int,Store&> unsatisfied;
 public:
 	Plan();
 	Plan(Logistics* ls, int lNum, Store* ss, int sNum);
@@ -152,12 +152,12 @@ public:
 	bool remove(Building building);
 	void update();
 	// Getters
-    vector<Logistics> getLogistics();
-    vector<Store> getStores();
+    map<int,Logistics> getLogistics();
+    map<int,Store> getStores();
     int getRevenue();
     int getExpense();
-    vector<Logistics> getUnsold();
-    vector<Store> getUnsatisfied();
+    map<int,Logistics> getUnsold();
+    map<int,Store> getUnsatisfied();
 };
 /** JasonBaby end */
 
@@ -166,9 +166,3 @@ int main()
 
 	return 0;
 }
-
-/** JasonBaby start */
-// For Plan
-
-
-/** JasonBaby end */
