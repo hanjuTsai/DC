@@ -109,19 +109,24 @@ class Distribution
 	public:
 		Distribution();
 		Distribution(Logistics from, Store to);
-		int getUnitNet(){
+		int getUnitNet()
+		{
 			return price-unitCost;
 		}
-		int getNet(){
-			return units(price-unitCost);
+		int getNet()
+		{
+			return units*(price-unitCost);
 		}
-		int getPrice(){
+		int getPrice()
+		{
 			return price;
 		}
-		int unitCost(){
+		int getUnitCost()
+		{
 			return unitCost;
 		}
-		int units(){
+		int getUnits()
+		{
 			return units;
 		}
 		~Distribution();
