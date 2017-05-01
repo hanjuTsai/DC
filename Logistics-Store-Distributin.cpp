@@ -38,8 +38,41 @@ class Logistics
 		int send(Store to, int units);	 
 		~Logistics();	
 };
+class Building
+{
+	public:
+		int id;
+		Point position;
+		int cost;
+		int revenue;
+		int expense;
+		map <Distribution, Distribution> distrubution;
+		int costPerKM;
+	private:
+		Building();
+		Building(int id, Point position,int cost);
+		int getCost
+		{
+			return cost;
+		}
+		int getRevenue
+		{
+			return revenue;
+		}
+		int getExpense
+		{
+			return expense;
+		}
+		int manhattonDistance(Building to);
+		int getNet();
+		int compareNet(Building b1, Building b2);
+		double getOperatingExpenseRatio();
+		int copareOER(Building b1, Building b2);
+		int send(Logistic from, Store to, int units);
+};
 
-class Store
+
+class Store:public Building//subclass
 {
 	private:
 		int demand;
@@ -90,38 +123,6 @@ class Distribution
 		}
 		~Distribution();	
 		
-};
-class Building
-{
-	public:
-		int id;
-		Point position;
-		int cost;
-		int revenue;
-		int expense;
-		map <Distribution, Distribution> distrubution;
-		int costPerKM;
-	private:
-		Building();
-		Building(int id, Point position,int cost);
-		int getCost
-		{
-			return cost;
-		}
-		int getRevenue
-		{
-			return revenue;
-		}
-		int getExpense
-		{
-			return expense;
-		}
-		int manhattonDistance(Building to);
-		int getNet();
-		int compareNet(Building b1, Building b2);
-		double getOperatingExpenseRatio();
-		int copareOER(Building b1, Building b2);
-		int send(Logistic from, Store to, int units);
 };
 
 
