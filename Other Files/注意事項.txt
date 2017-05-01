@@ -1,0 +1,10 @@
+注意事項
+
+1.	原則上原始碼應該是不會被檢查的，所以註解用中文或英文都可以(盡量英文啦哈哈XD)
+2.	每個function跟field都要標作者名。需要時請務必註解
+3.	大括號請用K&R Style
+4.	Field跟variable names請使用lowerCamelCase
+5.	Class name請使用UpperCamelCase
+6.	Class declaration的內容請盡量與Class diagram同步，這樣比較容易找出有哪些漏了
+7.	為了不讓Class diagram太擁擠，所有getters都沒有標上去。所以記得要寫getters
+8.	Class內的所有Objects都要用alias (&)來存喔~~(不然沒辦法寫...)
