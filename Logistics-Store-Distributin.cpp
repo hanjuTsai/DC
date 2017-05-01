@@ -20,6 +20,9 @@ class Point
 		Point(int x,int y);
 		int manhattonDistance(Point to);
 };
+class Distribution;
+class Logistics;
+class Store;
 class Building
 {
 	public:
@@ -33,15 +36,15 @@ class Building
 	private:
 		Building();
 		Building(int id, Point position,int cost);
-		int getCost
+		int getCost()
 		{
 			return cost;
 		}
-		int getRevenue
+		int getRevenue()
 		{
 			return revenue;
 		}
-		int getExpense
+		int getExpense()
 		{
 			return expense;
 		}
@@ -50,7 +53,7 @@ class Building
 		int compareNet(Building b1, Building b2);
 		double getOperatingExpenseRatio();
 		int copareOER(Building b1, Building b2);
-		int send(Logistic from, Store to, int units);
+		int send(Logistics from, Store to, int units);
 };
 
 class Logistics: public Building
