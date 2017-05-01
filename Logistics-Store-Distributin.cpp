@@ -1,5 +1,5 @@
 #include <iostream>
-#include <cmath> 
+#include <cmath>
 #include <map>
 using namespace std;
 class Point
@@ -19,24 +19,6 @@ class Point
 		}
 		Point(int x,int y);
 		int manhattonDistance(Point to);
-};
-class Logistics
-{
-	private:
-		int capacity;
-		map <int, Store> possibleStores;
-		int unsold;
-	public:
-		Logistics();
-		Logistics(int id, Point position, int cost, int capacity);
-		int getLogisticsCapacity(){
-			return capacity;
-		}
-		int getLogisticsUnsold(){
-			return unsold;
-		}
-		int send(Store to, int units);	 
-		~Logistics();	
 };
 class Building
 {
@@ -71,6 +53,24 @@ class Building
 		int send(Logistic from, Store to, int units);
 };
 
+class Logistics: public Building
+{
+	private:
+		int capacity;
+		map <int, Store> possibleStores;
+		int unsold;
+	public:
+		Logistics();
+		Logistics(int id, Point position, int cost, int capacity);
+		int getLogisticsCapacity(){
+			return capacity;
+		}
+		int getLogisticsUnsold(){
+			return unsold;
+		}
+		int send(Store to, int units);
+		~Logistics();
+};
 
 class Store:public Building//subclass
 {
@@ -105,7 +105,7 @@ class Distribution
 		int units;
 	public:
 		Distribution();
-		Distribution(Logistics from, Store to);	
+		Distribution(Logistics from, Store to);
 		int getUnitNet(){
 			return price-unitCost;
 		}
@@ -121,14 +121,29 @@ class Distribution
 		int units(){
 			return units;
 		}
-		~Distribution();	
-		
+		~Distribution();
+
 };
 
 
 int main()
 {
-	
+
 	return 0;
 }
+
+
+/** JasonBaby start */
+class Plan
+{
+private:
+    map<int,Logistics> logistics;
+    map<int,Store> stores;
+    int revenue;
+    int expense;
+    map<int,Logistics> unsold;
+    map<int,Store> unsatisfied;
+};
+/** JasonBaby end */
+
 
