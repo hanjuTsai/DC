@@ -151,6 +151,14 @@ private:
     int expense;
     map<int,Logistics> unsold;
     map<int,Store> unsatisfied;
+public:
+	Plan();
+	Plan(Logistics* ls, int lNum, Store* ss, int sNum);
+	~Plan();
+	int getNet();
+	string toString();
+	bool remove(Building building);
+	void update();
 };
 /** JasonBaby end */
 
