@@ -2,7 +2,24 @@
 #include <cmath> 
 #include <map>
 using namespace std;
-
+class Point
+{
+	private:
+		int x;
+		int y;
+	public:
+		Point();
+		int getX()
+		{
+			return x;
+		}
+		int getY()
+		{
+			return y;
+		}
+		Point(int x,int y);
+		int manhattonDistance(Point to);
+};
 class Logistics
 {
 	private:
@@ -74,6 +91,39 @@ class Distribution
 		~Distribution();	
 		
 };
+class Building
+{
+	public:
+		int id;
+		Point position;
+		int cost;
+		int revenue;
+		int expense;
+		map <Distribution, Distribution> distrubution;
+		int costPerKM;
+	private:
+		Building();
+		Building(int id, Point position,int cost);
+		int getCost
+		{
+			return cost;
+		}
+		int getRevenue
+		{
+			return revenue;
+		}
+		int getExpense
+		{
+			return expense;
+		}
+		int manhattonDistance(Building to);
+		int getNet();
+		int compareNet(Building b1, Building b2);
+		double getOperatingExpenseRatio();
+		int copareOER(Building b1, Building b2);
+		int send(Logistic from, Store to, int units);
+};
+
 
 int main()
 {
