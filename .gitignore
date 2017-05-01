@@ -28,5 +28,6 @@
 *.out
 *.app
 
-# System files
+# Other files
 *.ini
+*.save-failed

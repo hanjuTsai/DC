@@ -133,14 +133,6 @@ class Distribution
 
 };
 
-
-int main()
-{
-
-	return 0;
-}
-
-
 /** JasonBaby start */
 class Plan
 {
@@ -155,11 +147,28 @@ public:
 	Plan();
 	Plan(Logistics* ls, int lNum, Store* ss, int sNum);
 	~Plan();
-	int getNet();
-	string toString();
+	int getNet() const;
+	string toString() const;
 	bool remove(Building building);
 	void update();
+	// Getters
+    vector<Logistics> getLogistics();
+    vector<Store> getStores();
+    int getRevenue();
+    int getExpense();
+    vector<Logistics> getUnsold();
+    vector<Store> getUnsatisfied();
 };
 /** JasonBaby end */
 
+int main()
+{
 
+	return 0;
+}
+
+/** JasonBaby start */
+
+
+
+/** JasonBaby end */
