@@ -152,12 +152,12 @@ public:
 	bool remove(Building building);
 	void update();
 	// Getters
-    map<int,Logistics> getLogistics();
-    map<int,Store> getStores();
+    map<int,Logistics&>& getLogistics();
+    map<int,Store&>& getStores();
     int getRevenue();
     int getExpense();
-    map<int,Logistics> getUnsold();
-    map<int,Store> getUnsatisfied();
+    map<int,Logistics&>& getUnsold();
+    map<int,Store&>& getUnsatisfied();
 };
 /** JasonBaby end */
 
