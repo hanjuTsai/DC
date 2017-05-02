@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <map>
+#include <cstdlib>
 using namespace std;
 class Point
 {
@@ -169,68 +170,68 @@ int main()
 
 /** JasonBaby start */
 // Plan
-Plan()
+Plan::Plan()
 {
 	exit(1);
 }
 
-Plan(Logistics* ls, int lNum, Store* ss, int sNum)
+Plan::Plan(Logistics* ls, int lNum, Store* ss, int sNum)
 {
 	exit(1);
 }
 
-~Plan()
+Plan::~Plan()
 {
 	exit(1);
 }
 
-int getNet() const
+int Plan::getNet() const
 {
 	exit(1);
 }
 
-string toString() const
+string Plan::toString() const
 {
 	exit(1);
 }
 
-bool remove(Building building)
+bool Plan::remove(Building building)
 {
 	exit(1);
 }
 
-void update()
+void Plan::update()
 {
 	exit(1);
 }
 
 // Getters
-map<int,Logistics&>& getLogistics()
+map<int,Logistics&>& Plan::getLogistics()
 {
 	exit(1);
 }
 
-map<int,Store&>& getStores()
+map<int,Store&>& Plan::getStores()
 {
 	exit(1);
 }
 
-int getRevenue()
+int Plan::getRevenue()
 {
 	exit(1);
 }
 
-int getExpense()
+int Plan::getExpense()
 {
 	exit(1);
 }
 
-map<int,Logistics&>& getUnsold()
+map<int,Logistics&>& Plan::getUnsold()
 {
 	exit(1);
 }
 
-map<int,Store&>& getUnsatisfied()
+map<int,Store&>& Plan::getUnsatisfied()
 {
 	exit(1);
 }
