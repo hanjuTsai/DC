@@ -8,3 +8,4 @@
 6.	Class declaration的內容請盡量與Class diagram同步，這樣比較容易找出有哪些漏了
 7.	為了不讓Class diagram太擁擠，所有getters都沒有標上去。所以記得要寫getters
 8.	Class內的所有Objects都要用alias (&)來存喔~~(不然沒辦法寫...)
+9.	Classes的所有implementation都必須放在main下面
