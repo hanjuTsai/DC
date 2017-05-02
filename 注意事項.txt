@@ -1,11 +1,13 @@
 注意事項
 
-1.	原則上原始碼應該是不會被檢查的，所以註解用中文或英文都可以(盡量英文啦哈哈XD)
-2.	每個function跟field都要標作者名。需要時請務必註解
-3.	大括號請用K&R Style (也就是{要單獨佔一行並與}對齊)
-4.	Field跟variable names請使用lowerCamelCase
-5.	Class name請使用UpperCamelCase
-6.	Class declaration的內容請盡量與Class diagram同步，這樣比較容易找出有哪些漏了
-7.	為了不讓Class diagram太擁擠，所有getters都沒有標上去。所以記得要寫getters
-8.	Class內的所有Objects都要用alias (&)來存喔~~(不然沒辦法寫...)
-9.	Classes的所有implementation都必須放在main下面
+1.	做任何更改前請先開新的branch來編輯，以免大家的編輯互相干擾。
+	編輯好pull request之前請確認你編輯好後能compile
+2.	原則上原始碼應該是不會被檢查的，所以註解用中文或英文都可以(盡量英文啦哈哈XD)
+3.	每個function跟field都要標作者名。需要時請務必註解
+4.	大括號請用K&R Style (也就是{要單獨佔一行並與}對齊)
+5.	Field跟variable names請使用lowerCamelCase
+6.	Class name請使用UpperCamelCase
+7.	Class declaration的內容請盡量與Class diagram同步，這樣比較容易找出有哪些漏了
+8.	為了不讓Class diagram太擁擠，所有getters都沒有標上去。所以記得要寫getters
+9.	Class內的所有Objects都要用alias (&)來存喔~~(不然沒辦法寫...)
+10.	Classes的所有implementation都必須放在main下面
