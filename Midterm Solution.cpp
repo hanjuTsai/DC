@@ -66,10 +66,12 @@ class Logistics: public Building
 	public:
 		Logistics();
 		Logistics(int id, Point position, int cost, int capacity);
-		int getLogisticsCapacity(){
+		int getLogisticsCapacity()
+		{
 			return capacity;
 		}
-		int getLogisticsUnsold(){
+		int getLogisticsUnsold()
+		{
 			return unsold;
 		}
 		int send(Store to, int units);
@@ -86,13 +88,17 @@ class Store:public Building//subclass
 	public:
 		Store();
 		Store(int id, Point position, int cost, int demand, int price);
-		int getDemand(){
+		int getDemand()
+		{
 			return demand;
 		}
-		int getPrice(){
+		int getPrice()
+		{
 			return price;
 		}
-		int getUnsatisfied(){
+		int getUnsatisfied()
+		{
+		{
 			return unsatisfied;
 		}
 		int receive(Logistics from, int units);
@@ -238,3 +244,9 @@ map<int,Store&>& Plan::getUnsatisfied()
 
 
 /** JasonBaby end */
+int Point:: manhattonDistance(Point to)
+{
+	int manhattonDistance = 0;
+	manhattonDistance = abs(x - to.x) + abs(y - to.y);
+	return manhattonDistance;
+}
