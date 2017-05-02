@@ -168,7 +168,72 @@ int main()
 }
 
 /** JasonBaby start */
-// For Plan
+// Plan
+Plan()
+{
+	exit(1);
+}
+
+Plan(Logistics* ls, int lNum, Store* ss, int sNum)
+{
+	exit(1);
+}
+
+~Plan()
+{
+	exit(1);
+}
+
+int getNet() const
+{
+	exit(1);
+}
+
+string toString() const
+{
+	exit(1);
+}
+
+bool remove(Building building)
+{
+	exit(1);
+}
+
+void update()
+{
+	exit(1);
+}
+
+// Getters
+map<int,Logistics&>& getLogistics()
+{
+	exit(1);
+}
+
+map<int,Store&>& getStores()
+{
+	exit(1);
+}
+
+int getRevenue()
+{
+	exit(1);
+}
+
+int getExpense()
+{
+	exit(1);
+}
+
+map<int,Logistics&>& getUnsold()
+{
+	exit(1);
+}
+
+map<int,Store&>& getUnsatisfied()
+{
+	exit(1);
+}
 
 
 /** JasonBaby end */
