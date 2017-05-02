@@ -65,10 +65,12 @@ class Logistics: public Building
 	public:
 		Logistics();
 		Logistics(int id, Point position, int cost, int capacity);
-		int getLogisticsCapacity(){
+		int getLogisticsCapacity()
+		{
 			return capacity;
 		}
-		int getLogisticsUnsold(){
+		int getLogisticsUnsold()
+		{
 			return unsold;
 		}
 		int send(Store to, int units);
@@ -85,13 +87,17 @@ class Store:public Building//subclass
 	public:
 		Store();
 		Store(int id, Point position, int cost, int demand, int price);
-		int getDemand(){
+		int getDemand()
+		{
 			return demand;
 		}
-		int getPrice(){
+		int getPrice()
+		{
 			return price;
 		}
-		int getUnsatisfied(){
+		int getUnsatisfied()
+		{
+		{
 			return unsatisfied;
 		}
 		int receive(Logistics from, int units);
@@ -152,12 +158,12 @@ public:
 	bool remove(Building building);
 	void update();
 	// Getters
-    map<int,Logistics> getLogistics();
-    map<int,Store> getStores();
+    map<int,Logistics&>& getLogistics();
+    map<int,Store&>& getStores();
     int getRevenue();
     int getExpense();
-    map<int,Logistics> getUnsold();
-    map<int,Store> getUnsatisfied();
+    map<int,Logistics&>& getUnsold();
+    map<int,Store&>& getUnsatisfied();
 };
 /** JasonBaby end */
 
@@ -165,4 +171,16 @@ int main()
 {
 
 	return 0;
+}
+
+/** JasonBaby start */
+// For Plan
+
+
+/** JasonBaby end */
+int Point:: manhattonDistance(Point to)
+{
+	int manhattonDistance = 0;
+	manhattonDistance = abs(x - to.x) + abs(y - to.y);
+	return manhattonDistance;
 }
