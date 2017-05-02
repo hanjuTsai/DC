@@ -9,12 +9,10 @@ class Point
 		int y;
 	public:
 		Point();
-		int getX()
-		{
+		int getX(){
 			return x;
 		}
-		int getY()
-		{
+		int getY(){
 			return y;
 		}
 		Point(int x,int y);
@@ -36,16 +34,13 @@ class Building
 	private:
 		Building();
 		Building(int id, Point position,int cost);
-		int getCost()
-		{
+		int getCost(){
 			return cost;
 		}
-		int getRevenue()
-		{
+		int getRevenue(){
 			return revenue;
 		}
-		int getExpense()
-		{
+		int getExpense(){
 			return expense;
 		}
 		int manhattonDistance(Building to);
@@ -172,3 +167,9 @@ int main()
 
 
 /** JasonBaby end */
+int Point:: manhattonDistance(Point to)
+{
+	int manhattonDistance = 0;
+	manhattonDistance = abs(x - to.x) + abs(y - to.y);
+	return manhattonDistance;
+}
