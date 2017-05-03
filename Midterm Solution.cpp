@@ -42,6 +42,7 @@ class Building
 		Building(int id, Point position,int cost);
 		Building(const Building& b);
 		Building& operator=(const Building& b);
+		virtual ~Building();
 	public:
 		int getCost()
 		{
@@ -167,7 +168,7 @@ public:
 	// Functions
 	int getNet() const;
 	string toString() const;
-	bool remove(Building building);
+	bool remove(Building* building);
 	void update();
 	// Accessors
     map<int,Logistics*>& getLogistics();
@@ -247,8 +248,16 @@ string Plan::toString() const
 	throw new NotImplemented();
 }
 
-bool Plan::remove(Building building)
+bool Plan::remove(Building* building)
 {
+	if (Store* s = dynamic_cast<Store*> (building))
+	{
+
+	}
+	else
+	{
+		Logistics* l = dynamic_cast<Logistics*> (building);
+	}
 	throw new NotImplemented();
 }
 
