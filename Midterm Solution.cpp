@@ -271,8 +271,19 @@ bool Plan::remove(Building* building)
 		for (map<int,Distribution*>::iterator it = s->distribution.begin();
 			it != s->distribution.end(); it++)
 		{
+			Distribution*& d = it->second;
+			Logistics& l = d->from;
+			int revenue = d->price * d->units;
+			int expense = d->unitCost * d->unitsl;
+			l.revenue -= revenue;
+			l.expense -= expense;
 
+            l->possibleStores.erase(id);
+            delete *d;
 		}
+		revenue -= s->revenue;
+		expense -= s->expense;
+		delete *s;
 	}
 	else
 	{
