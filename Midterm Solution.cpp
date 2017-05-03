@@ -35,7 +35,7 @@ class Building
 		int cost;
 		int revenue;
 		int expense;
-		map<int,Distribution&> distribution;
+		map<int,Distribution*> distribution;
 		int costPerKM;
 	private:
 		Building();
@@ -64,7 +64,7 @@ class Logistics: public Building
 {
 	private:
 		int capacity;
-		map <int, Store&> possibleStores;
+		map <int, Store*> possibleStores;
 		int unsold;
 	public:
 		Logistics();
@@ -85,7 +85,7 @@ class Store:public Building//subclass
 {
 	private:
 		int demand;
-		map <int, Logistics&> possibleLogistics;
+		map <int, Logistics*> possibleLogistics;
 		int price;
 		int unsatisfied;
 	public:
@@ -146,12 +146,17 @@ class Distribution
 class Plan
 {
 private:
+<<<<<<< HEAD
     map<int,Logistics> logistics;
     map<int,Store&> stores;
+=======
+    map<int,Logistics*> logistics;
+    map<int,Store*> stores;
+>>>>>>> refs/remotes/origin/master
     int revenue;
     int expense;
-    map<int,Logistics&> unsold;
-    map<int,Store&> unsatisfied;
+    map<int,Logistics*> unsold;
+    map<int,Store*> unsatisfied;
 public:
 	// Static fields
 	static int numLogistics;
@@ -165,12 +170,12 @@ public:
 	bool remove(Building building);
 	void update();
 	// Accessors
-    map<int,Logistics&>& getLogistics();
-    map<int,Store&>& getStores();
+    map<int,Logistics*>& getLogistics();
+    map<int,Store*>& getStores();
     int getRevenue();
     int getExpense();
-    map<int,Logistics&>& getUnsold();
-    map<int,Store&>& getUnsatisfied();
+    map<int,Logistics*>& getUnsold();
+    map<int,Store*>& getUnsatisfied();
 };
 /** JasonBaby end */
 
