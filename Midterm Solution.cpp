@@ -74,6 +74,8 @@ class Logistics: public Building //subclass
 		~Logistics();
 		// Functions
 		int send(Store to, int units);
+		void include(Store s);
+		void include(Store* ss, int sNum);
 		//Getters
 		int getLogisticsCapacity();
 		int getLogisticsUnsold();
@@ -195,11 +197,18 @@ Logistics::	~Logistics();
 // Functions
 int Logistics::send(Store to, int units)
 {
-	
+	int send = Building::send(*this, to, units);
+	return send;
 }
-		//Getters
-		int getLogisticsCapacity();
-		int getLogisticsUnsold();
+//Getters
+Logistics::	int getLogisticsCapacity()
+{
+	return capacity;
+} 
+Logistics::	int getLogisticsUnsold()
+{
+	return unsold;
+}
 
 
 
