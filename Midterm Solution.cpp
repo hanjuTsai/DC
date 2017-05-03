@@ -152,14 +152,19 @@ private:
     map<int,Logistics&> unsold;
     map<int,Store&> unsatisfied;
 public:
+	// Static fields
+	static int numLogistics;
+	static int numStores;
+	// Constructors
 	Plan();
 	Plan(Logistics* ls, int lNum, Store* ss, int sNum);
 	~Plan();
+	// Functions
 	int getNet() const;
 	string toString() const;
 	bool remove(Building building);
 	void update();
-	// Getters
+	// Accessors
     map<int,Logistics&>& getLogistics();
     map<int,Store&>& getStores();
     int getRevenue();
