@@ -63,11 +63,6 @@ class Logistics: public Building //subclass
 		map <int, Store*> possibleStores;
 		int unsold;
 	public:
-<<<<<<< HEAD
-		// Constructors   
-		Logistics();
-=======
->>>>>>> refs/remotes/origin/master
 		Logistics(int id, Point position, int cost, int capacity);
 		Logistics(const Logistics& l);
 		Logistics& operator=(const Logistics& l);
