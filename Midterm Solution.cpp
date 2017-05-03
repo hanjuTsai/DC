@@ -158,7 +158,6 @@ public:
 	// Constructors
 	Plan();
 	Plan(Logistics* ls, int lNum, Store* ss, int sNum);
-	~Plan();
 	// Functions
 	int getNet() const;
 	string toString() const;
@@ -196,11 +195,6 @@ Plan::Plan()
 }
 
 Plan::Plan(Logistics* ls, int lNum, Store* ss, int sNum)
-{
-	throw new NotImplemented();
-}
-
-Plan::~Plan()
 {
 	throw new NotImplemented();
 }
