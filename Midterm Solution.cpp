@@ -36,6 +36,7 @@ class Building
 	protected:
 		Building();
 		Building(int id, Point position,int cost);
+		Building(Building& b);
 	public:
 		int getCost()
 		{
@@ -66,6 +67,7 @@ class Logistics: public Building
 	public:
 		Logistics();
 		Logistics(int id, Point position, int cost, int capacity);
+		Logistics(Logistics& l);
 		int getLogisticsCapacity()
 		{
 			return capacity;
@@ -87,6 +89,7 @@ class Store:public Building//subclass
 	public:
 		Store();
 		Store(int id, Point position, int cost, int demand, int price);
+		Store(Store& s);
 		int getDemand()
 		{
 			return demand;
@@ -151,7 +154,8 @@ public:
 	static int numLogistics;
 	static int numStores;
 	// Constructors
-	Plan(Logistics* ls, int lNum, Store* ss, int sNum);
+	Plan(const Logistics* ls, const int lNum, Store* ss, int sNum);
+	Plan(const Plan& p);
 	// Functions
 	int getNet() const;
 	string toString() const;
