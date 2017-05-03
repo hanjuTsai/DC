@@ -225,7 +225,15 @@ int main()
 		int capacity2 = capacity[i];
 		stores[i] = Store(id, position, cost, demand2, capacity2);
 	}
-	// Plan plan = new Plan(logistic, logisticsNum, store, storeNum )
+	Logistics* logistics = new Logistics[logisticsNum];
+	for(int i = 0; i < logisticsNum; i++){
+		int id = i+1;
+		Point position = *logistic[i];
+		int cost = logisticCost[i];
+		int capacity2 = capacity[i];
+		logistics[i] = Logistics(id, position, cost, capacity2);
+	}
+	Plan plan = Plan(logistics, logisticsNum, stores, storeNum );
 
 
 	return 0;
