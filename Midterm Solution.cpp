@@ -260,32 +260,32 @@ void Plan::update()
 // Accessors
 map<int,Logistics*>& Plan::getLogistics()
 {
-	throw new NotImplemented();
+	return logistics;
 }
 
 map<int,Store*>& Plan::getStores()
 {
-	throw new NotImplemented();
+	return stores;
 }
 
 int Plan::getRevenue()
 {
-	throw new NotImplemented();
+	return revenue;
 }
 
 int Plan::getExpense()
 {
-	throw new NotImplemented();
+	return expense;
 }
 
 map<int,Logistics*>& Plan::getUnsold()
 {
-	throw new NotImplemented();
+	return unsold;
 }
 
 map<int,Store*>& Plan::getUnsatisfied()
 {
-	throw new NotImplemented();
+	return unsatisfied;
 }
 
 
