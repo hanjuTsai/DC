@@ -80,6 +80,7 @@ class Logistics: public Building
 		{
 			return unsold;
 		}
+		map <int, Store*> getPossibleStores();
 		int send(Store to, int units);
 };
 
@@ -98,6 +99,7 @@ class Store:public Building//subclass
 		{
 			return demand;
 		}
+		map <int, Logistics*> getPossibleLogistics();
 		int getPrice()
 		{
 			return price;
