@@ -154,7 +154,7 @@ public:
 	static int numLogistics;
 	static int numStores;
 	// Constructors
-	Plan(const Logistics* ls, const int lNum, Store* ss, int sNum);
+	Plan(const Logistics* ls, int lNum, const Store* ss, int sNum);
 	Plan(const Plan& p);
 	// Functions
 	int getNet() const;
