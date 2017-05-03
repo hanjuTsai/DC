@@ -275,13 +275,13 @@ bool Plan::remove(Building* building)
 			it != s->distribution.end(); it++)
 		{
 			Distribution*& d = it->second;
-			Logistics& l = d->from;
+			Logistics& l = d->getFrom();
 			int revenue = d->price * d->units;
-			int expense = d->unitCost * d->unitsl;
+			int expense = d->unitCost * d->units;
 			l.revenue -= revenue;
 			l.expense -= expense;
 
-            l->possibleStores.erase(id);
+            l.possibleStores.erase(id);
             delete *d;
 		}
 		revenue -= s->revenue;
