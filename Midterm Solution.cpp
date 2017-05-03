@@ -8,7 +8,6 @@ class Point
 		int x;
 		int y;
 	public:
-		Point();
 		int getX()
 		{
 			return x;
@@ -20,9 +19,6 @@ class Point
 		Point(int x,int y);
 		int manhattonDistance(Point to);
 };
-class Distribution;
-class Logistics;
-class Store;
 class Building
 {
 	public:
@@ -34,7 +30,6 @@ class Building
 		map<int,Distribution*> distribution;
 		int costPerKM;
 	protected:
-		Building();
 		Building(int id, Point position,int cost);
 		Building(const Building& b);
 		Building& operator=(const Building& b);
@@ -68,8 +63,11 @@ class Logistics: public Building //subclass
 		map <int, Store*> possibleStores;
 		int unsold;
 	public:
+<<<<<<< HEAD
 		// Constructors   
 		Logistics();
+=======
+>>>>>>> refs/remotes/origin/master
 		Logistics(int id, Point position, int cost, int capacity);
 		Logistics(const Logistics& l);
 		Logistics& operator=(const Logistics& l);
@@ -91,8 +89,11 @@ class Store:public Building//subclass
 		const int price;
 		int unsatisfied;
 	public:
+<<<<<<< HEAD
 		// Constructors
 		Store();
+=======
+>>>>>>> refs/remotes/origin/master
 		Store(int id, Point position, int cost, int demand, int price);
 		Store(const Store& s);
 		~Store();
@@ -113,8 +114,11 @@ class Distribution
 		const int unitCost;
 		const int units;
 	public:
+<<<<<<< HEAD
 		// Constructors
 		Distribution();
+=======
+>>>>>>> refs/remotes/origin/master
 		Distribution(Logistics from, Store to);
 		~Distribution();
 		// Functios
