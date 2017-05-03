@@ -74,7 +74,6 @@ class Logistics: public Building
 			return unsold;
 		}
 		int send(Store to, int units);
-		~Logistics();
 };
 
 class Store:public Building//subclass
@@ -100,7 +99,6 @@ class Store:public Building//subclass
 			return unsatisfied;
 		}
 		int receive(Logistics from, int units);
-		~Store();
 };
 
 class Distribution
@@ -134,7 +132,6 @@ class Distribution
 		{
 			return units;
 		}
-		~Distribution();
 
 };
 
@@ -155,7 +152,6 @@ public:
 	// Constructors
 	Plan();
 	Plan(Logistics* ls, int lNum, Store* ss, int sNum);
-	~Plan();
 	// Functions
 	int getNet() const;
 	string toString() const;
