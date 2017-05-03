@@ -227,7 +227,14 @@ Plan::Plan(const Plan& p)
 
 Plan& Plan::operator=(const Plan& p)
 {
-	throw new NotImplemented();
+    logistics = p.logistics;
+    stores = p.stores;
+    revenue = p.revenue;
+    expense = p.expense;
+    unsold = p.unsold;
+    unsatisfied = p.unsatisfied;
+
+    return *this;
 }
 
 int Plan::getNet() const
