@@ -37,6 +37,7 @@ class Building
 		Building();
 		Building(int id, Point position,int cost);
 		Building(const Building& b);
+		Building& operator=(const Building& b);
 	public:
 		int getCost()
 		{
@@ -68,6 +69,7 @@ class Logistics: public Building
 		Logistics();
 		Logistics(int id, Point position, int cost, int capacity);
 		Logistics(const Logistics& l);
+		Logistics& operator=(const Logistics& l);
 		int getLogisticsCapacity()
 		{
 			return capacity;
@@ -90,6 +92,7 @@ class Store:public Building//subclass
 		Store();
 		Store(int id, Point position, int cost, int demand, int price);
 		Store(const Store& s);
+		Store& operator=(const Store& s);
 		int getDemand()
 		{
 			return demand;
@@ -156,6 +159,7 @@ public:
 	// Constructors
 	Plan(const Logistics* ls, int lNum, const Store* ss, int sNum);
 	Plan(const Plan& p);
+	Plan& operator=(const Plan& p);
 	// Functions
 	int getNet() const;
 	string toString() const;
