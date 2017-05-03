@@ -2,7 +2,10 @@
 #include <cmath>
 #include <map>
 #include <cstdlib>
+#include <exception>
+
 using namespace std;
+
 class Point
 {
 	private:
@@ -37,6 +40,8 @@ class Building
 	protected:
 		Building();
 		Building(int id, Point position,int cost);
+		Building(const Building& b);
+		Building& operator=(const Building& b);
 	public:
 		int getCost()
 		{
@@ -67,6 +72,8 @@ class Logistics: public Building
 	public:
 		Logistics();
 		Logistics(int id, Point position, int cost, int capacity);
+		Logistics(const Logistics& l);
+		Logistics& operator=(const Logistics& l);
 		int getLogisticsCapacity()
 		{
 			return capacity;
@@ -88,6 +95,8 @@ class Store:public Building//subclass
 	public:
 		Store();
 		Store(int id, Point position, int cost, int demand, int price);
+		Store(const Store& s);
+		Store& operator=(const Store& s);
 		int getDemand()
 		{
 			return demand;
@@ -152,7 +161,9 @@ public:
 	static int numLogistics;
 	static int numStores;
 	// Constructors
-	Plan(Logistics* ls, int lNum, Store* ss, int sNum);
+	Plan(const Logistics* ls, int lNum, const Store* ss, int sNum);
+	Plan(const Plan& p);
+	Plan& operator=(const Plan& p);
 	// Functions
 	int getNet() const;
 	string toString() const;
@@ -175,76 +186,104 @@ int main()
 }
 
 /** JasonBaby start */
+
+class NotImplemented : public std::logic_error
+{
+public:
+    NotImplemented() : std::logic_error("Not implemented."){};
+    NotImplemented(string err) : std::logic_error(err){};
+};
+
 // Plan
-Plan::Plan()
+// Constructors
+Plan::Plan(const Logistics* ls, int lNum, const Store* ss, int sNum)
 {
-	exit(1);
+    revenue = 0;
+    expense = 0;
+
+    for (int i = 0; i < lNum; i++)
+	{
+		Logistics l = ls[i];
+        logistics.insert(pair<int,Logistics*>(l.id, &l));
+        unsold.insert(pair<int,Logistics*>(l.id, &l));
+        revenue += l.revenue;
+        expense += l.expense;
+	}
+
+    for (int i = 0; i < sNum; i++)
+	{
+		Store s = ss[i];
+        stores.insert(pair<int,Store*>(s.id, &s));
+        unsatisfied.insert(pair<int,Store*>(s.id, &s));
+        revenue += s.revenue;
+        expense += s.expense;
+	}
 }
 
-Plan::Plan(Logistics* ls, int lNum, Store* ss, int sNum)
+Plan::Plan(const Plan& p)
 {
-	exit(1);
+	*this = p;
 }
 
-Plan::~Plan()
+Plan& Plan::operator=(const Plan& p)
 {
-	exit(1);
+	throw new NotImplemented();
 }
 
 int Plan::getNet() const
 {
-	exit(1);
+	return revenue - expense;
 }
 
 string Plan::toString() const
 {
-	exit(1);
+	throw new NotImplemented();
 }
 
 bool Plan::remove(Building building)
 {
-	exit(1);
+	throw new NotImplemented();
 }
 
 void Plan::update()
 {
-	exit(1);
+	throw new NotImplemented();
 }
 
-// Getters
-map<int,Logistics&>& Plan::getLogistics()
+// Accessors
+map<int,Logistics*>& Plan::getLogistics()
 {
-	exit(1);
+	throw new NotImplemented();
 }
 
-map<int,Store&>& Plan::getStores()
+map<int,Store*>& Plan::getStores()
 {
-	exit(1);
+	throw new NotImplemented();
 }
 
 int Plan::getRevenue()
 {
-	exit(1);
+	throw new NotImplemented();
 }
 
 int Plan::getExpense()
 {
-	exit(1);
+	throw new NotImplemented();
 }
 
-map<int,Logistics&>& Plan::getUnsold()
+map<int,Logistics*>& Plan::getUnsold()
 {
-	exit(1);
+	throw new NotImplemented();
 }
 
-map<int,Store&>& Plan::getUnsatisfied()
+map<int,Store*>& Plan::getUnsatisfied()
 {
-	exit(1);
+	throw new NotImplemented();
 }
 
 
 /** JasonBaby end */
-int Point:: manhattonDistance(Point to)
+int Point::manhattonDistance(Point to)
 {
 	int manhattonDistance = 0;
 	manhattonDistance = abs(x - to.x) + abs(y - to.y);
