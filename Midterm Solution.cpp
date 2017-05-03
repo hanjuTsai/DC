@@ -191,7 +191,7 @@ public:
 };
 
 // Plan
-Plan::Plan(Logistics* ls, int lNum, Store* ss, int sNum)
+Plan::Plan(const Logistics* ls, int lNum, const Store* ss, int sNum)
 {
     revenue = 0;
     expense = 0;
