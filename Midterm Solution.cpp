@@ -188,13 +188,13 @@ int main()
 	for(int i = 0; i < storeNum; i++){
 		int x, y;
 		cin >> x >> y;
-		Point p = new Point(x, y);
+		Point p =  Point(x, y);
 		store[i] = &p;
 	}
 	for(int i = 0; i < logisticsNum; i++){
 		int x, y;
 		cin >> x >> y;
-		Point p = new Point(x, y);
+		Point p =  Point(x, y);
 		logistic[i] = &p;
 	}
 	for(int i = 0; i < storeNum; i++){
@@ -212,6 +212,16 @@ int main()
 	for(int i = 0; i < logisticsNum; i++){
 		cin >> capacity[i];
 	}
+	Store* stores = new Store[storeNum];
+	for(int i = 0; i < storeNum; i++){
+		int id = i;
+		Point position = *store[i];
+		int cost = storeCost[i];
+		int demand2 = demand[i];
+		int capacity2 = capacity[i];
+		stores[i] = Store(id, position, cost, demand2, capacity2);
+	}
+	// Plan plan = new Plan(logistic, logisticsNum, store, storeNum )
 
 
 	return 0;
