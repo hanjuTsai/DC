@@ -169,7 +169,47 @@ public:
 
 int main()
 {
-	cout << "hello world";
+	int storeNum = 0;
+	int logisticsNum = 0;
+	int costPerkm = 0;
+	cin >> storeNum >> logisticsNum >> costPerkm;
+	Point** store = new Point*[storeNum];
+	Point** logistic = new Point*[logisticsNum];
+	int* demand = new int[storeNum];
+	int* storeCost = new int[storeNum];
+	int* price = new int[storeNum];
+	int* logisticCost = new int[logisticsNum];
+	int* capacity = new int[logisticsNum];
+
+	for(int i = 0; i < storeNum; i++){
+		int x, y;
+		cin >> x >> y;
+		Point p = new Point(x, y);
+		store[i] = &p;
+	}
+	for(int i = 0; i < logisticsNum; i++){
+		int x, y;
+		cin >> x >> y;
+		Point p = new Point(x, y);
+		logistic[i] = &p;
+	}
+	for(int i = 0; i < storeNum; i++){
+		cin >> demand[i];
+	}
+	for(int i = 0; i < storeNum; i++){
+		cin >> storeCost[i];
+	}
+	for(int i = 0; i < storeNum; i++){
+		cin >> price[i];
+	}
+	for(int i = 0; i < logisticsNum; i++){
+		cin >> logisticCost[i];
+	}
+	for(int i = 0; i < logisticsNum; i++){
+		cin >> capacity[i];
+	}
+
+
 	return 0;
 }
 
