@@ -154,7 +154,6 @@ public:
 	static int numLogistics;
 	static int numStores;
 	// Constructors
-	Plan();
 	Plan(Logistics* ls, int lNum, Store* ss, int sNum);
 	// Functions
 	int getNet() const;
@@ -187,27 +186,28 @@ public:
 };
 
 // Plan
-Plan::Plan()
-{
-	throw new NotImplemented();
-}
-
 Plan::Plan(Logistics* ls, int lNum, Store* ss, int sNum)
 {
-    logistics;
-    stores;
     revenue = 0;
     expense = 0;
-    unsold;
-    unsatisfied;
 
     for (int i = 0; i < lNum; i++)
 	{
 		Logistics l = ls[i];
-		Store s = ss[i];
         logistics.insert(pair<int,Logistics*>(l.id, &l));
+        unsold.insert(pair<int,Logistics*>(l.id, &l));
+        revenue += l.revenue;
+        expense += l.expense;
 	}
-	throw new NotImplemented();
+
+    for (int i = 0; i < sNum; i++)
+	{
+		Store s = ss[i];
+        stores.insert(pair<int,Store*>(s.id, &s));
+        unsatisfied.insert(pair<int,Store*>(s.id, &s));
+        revenue += s.revenue;
+        expense += s.expense;
+	}
 }
 
 int Plan::getNet() const
