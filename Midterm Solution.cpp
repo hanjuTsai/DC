@@ -12,6 +12,7 @@ class Point
 		int x;
 		int y;
 	public:
+		Point();
 		int getX()
 		{
 			return x;
@@ -23,6 +24,9 @@ class Point
 		Point(int x,int y);
 		int manhattonDistance(Point to);
 };
+class Distribution;
+class Logistics;
+class Store;
 class Building
 {
 	public:
@@ -34,6 +38,7 @@ class Building
 		map<int,Distribution*> distribution;
 		int costPerKM;
 	protected:
+		Building();
 		Building(int id, Point position,int cost);
 		Building(const Building& b);
 		Building& operator=(const Building& b);
@@ -66,6 +71,7 @@ class Logistics: public Building
 		map <int, Store*> possibleStores;
 		int unsold;
 	public:
+		Logistics();
 		Logistics(int id, Point position, int cost, int capacity);
 		Logistics(const Logistics& l);
 		Logistics& operator=(const Logistics& l);
@@ -88,6 +94,7 @@ class Store:public Building//subclass
 		int price;
 		int unsatisfied;
 	public:
+		Store();
 		Store(int id, Point position, int cost, int demand, int price);
 		Store(const Store& s);
 		Store& operator=(const Store& s);
@@ -115,6 +122,7 @@ class Distribution
 		int unitCost;
 		int units;
 	public:
+		Distribution();
 		Distribution(Logistics from, Store to);
 		int getUnitNet()
 		{
@@ -197,16 +205,16 @@ Plan::Plan(const Logistics* ls, int lNum, const Store* ss, int sNum)
     for (int i = 0; i < lNum; i++)
 	{
 		Logistics l = ls[i];
-        logistics.insert(pair<int,Logistics*>(l.id, &l));
-        unsold.insert(pair<int,Logistics*>(l.id, &l));
+        logistics[l.id] = &l;
+        unsold[l.id] = &l;
         expense += l.expense;
 	}
 
     for (int i = 0; i < sNum; i++)
 	{
 		Store s = ss[i];
-        stores.insert(pair<int,Store*>(s.id, &s));
-        unsatisfied.insert(pair<int,Store*>(s.id, &s));
+        stores[s.id] = &s;
+        unsatisfied[s.id] = &s;
         expense += s.expense;
 	}
 }
@@ -218,13 +226,33 @@ Plan::Plan(const Plan& p)
 
 Plan& Plan::operator=(const Plan& p)
 {
-    logistics = p.logistics;
-    stores = p.stores;
     revenue = p.revenue;
     expense = p.expense;
-    unsold = p.unsold;
-    unsatisfied = p.unsatisfied;
-    // TODO
+
+    for (map<int,Logistics*>::const_iterator it = p.logistics.begin();
+		it != p.logistics.end(); it++)
+	{
+		Logistics l = *it->second;
+		logistics[it->first] = &l;
+	}
+    for (map<int,Store*>::const_iterator it = p.stores.begin();
+		it != p.stores.end(); it++)
+	{
+		Store s = *it->second;
+		stores[it->first] = &s;
+	}
+    for (map<int,Logistics*>::const_iterator it = p.unsold.begin();
+		it != p.unsold.end(); it++)
+	{
+		Logistics l = *it->second;
+		unsold[it->first] = &l;
+	}
+    for (map<int,Store*>::const_iterator it = p.unsatisfied.begin();
+		it != p.unsatisfied.end(); it++)
+	{
+		Store s = *it->second;
+		unsatisfied[it->first] = &s;
+	}
 
     return *this;
 }
