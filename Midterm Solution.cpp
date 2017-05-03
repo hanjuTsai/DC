@@ -146,13 +146,8 @@ class Distribution
 class Plan
 {
 private:
-<<<<<<< HEAD
-    map<int,Logistics> logistics;
-    map<int,Store&> stores;
-=======
     map<int,Logistics*> logistics;
     map<int,Store*> stores;
->>>>>>> refs/remotes/origin/master
     int revenue;
     int expense;
     map<int,Logistics*> unsold;
@@ -213,7 +208,7 @@ Plan::Plan(Logistics* ls, int lNum, Store* ss, int sNum)
 	{
 		Logistics l = ls[i];
 		Store s = ss[i];
-        logistics.insert(pair<int,Logistics>(l.id, l));
+        logistics.insert(pair<int,Logistics*>(l.id, &l));
 	}
 	throw new NotImplemented();
 }
@@ -239,12 +234,12 @@ void Plan::update()
 }
 
 // Getters
-map<int,Logistics&>& Plan::getLogistics()
+map<int,Logistics*>& Plan::getLogistics()
 {
 	throw new NotImplemented();
 }
 
-map<int,Store&>& Plan::getStores()
+map<int,Store*>& Plan::getStores()
 {
 	throw new NotImplemented();
 }
@@ -259,12 +254,12 @@ int Plan::getExpense()
 	throw new NotImplemented();
 }
 
-map<int,Logistics&>& Plan::getUnsold()
+map<int,Logistics*>& Plan::getUnsold()
 {
 	throw new NotImplemented();
 }
 
-map<int,Store&>& Plan::getUnsatisfied()
+map<int,Store*>& Plan::getUnsatisfied()
 {
 	throw new NotImplemented();
 }
