@@ -231,7 +231,7 @@ void Plan::update()
 	throw new NotImplemented();
 }
 
-// Getters
+// Accessors
 map<int,Logistics*>& Plan::getLogistics()
 {
 	throw new NotImplemented();
