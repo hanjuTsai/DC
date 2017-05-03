@@ -207,7 +207,6 @@ Plan::Plan(const Logistics* ls, int lNum, const Store* ss, int sNum)
 		Logistics l = ls[i];
         logistics.insert(pair<int,Logistics*>(l.id, &l));
         unsold.insert(pair<int,Logistics*>(l.id, &l));
-        revenue += l.revenue;
         expense += l.expense;
 	}
 
@@ -216,7 +215,6 @@ Plan::Plan(const Logistics* ls, int lNum, const Store* ss, int sNum)
 		Store s = ss[i];
         stores.insert(pair<int,Store*>(s.id, &s));
         unsatisfied.insert(pair<int,Store*>(s.id, &s));
-        revenue += s.revenue;
         expense += s.expense;
 	}
 }
@@ -234,6 +232,7 @@ Plan& Plan::operator=(const Plan& p)
     expense = p.expense;
     unsold = p.unsold;
     unsatisfied = p.unsatisfied;
+    // TODO
 
     return *this;
 }
@@ -252,6 +251,8 @@ bool Plan::remove(Building* building)
 {
 	if (Store* s = dynamic_cast<Store*> (building))
 	{
+        int id = s->id;
+		stores.erase(id);
 
 	}
 	else
