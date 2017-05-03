@@ -183,6 +183,7 @@ public:
     NotImplemented() : std::logic_error("Not implemented."){};
     NotImplemented(string err) : std::logic_error(err){};
 };
+
 // Plan
 Plan::Plan()
 {
