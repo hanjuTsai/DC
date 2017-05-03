@@ -19,6 +19,9 @@ class Point
 		Point(int x,int y);
 		int manhattonDistance(Point to);
 };
+class Distribution;
+class Logistics;
+class Store;
 class Building
 {
 	public:
