@@ -97,7 +97,6 @@ class Store:public Building//subclass
 		}
 		int getUnsatisfied()
 		{
-		{
 			return unsatisfied;
 		}
 		int receive(Logistics from, int units);
