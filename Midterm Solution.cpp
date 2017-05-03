@@ -20,9 +20,7 @@ class Point
 		Point(int x,int y);
 		int manhattonDistance(Point to);
 };
-class Distribution;
-class Logistics;
-class Store;
+
 class Building
 {
 	public:
@@ -59,88 +57,71 @@ class Building
 		int send(Logistics from, Store to, int units);
 };
 
-class Logistics: public Building
+/**Zhen start*/ 
+class Logistics: public Building //subclass
 {
 	private:
-		int capacity;
+		const int capacity;
 		map <int, Store*> possibleStores;
 		int unsold;
 	public:
+		// Constructors   
 		Logistics();
 		Logistics(int id, Point position, int cost, int capacity);
 		Logistics(const Logistics& l);
 		Logistics& operator=(const Logistics& l);
-		int getLogisticsCapacity()
-		{
-			return capacity;
-		}
-		int getLogisticsUnsold()
-		{
-			return unsold;
-		}
+		~Logistics();
+		// Functions
 		int send(Store to, int units);
+		//Getters
+		int getLogisticsCapacity();
+		int getLogisticsUnsold();
 };
 
 class Store:public Building//subclass
 {
 	private:
-		int demand;
+		const int demand;
 		map <int, Logistics*> possibleLogistics;
-		int price;
+		const int price;
 		int unsatisfied;
 	public:
+		// Constructors
 		Store();
 		Store(int id, Point position, int cost, int demand, int price);
 		Store(const Store& s);
-		Store& operator=(const Store& s);
-		int getDemand()
-		{
-			return demand;
-		}
-		int getPrice()
-		{
-			return price;
-		}
-		int getUnsatisfied()
-		{
-			return unsatisfied;
-		}
+		~Store();
+		// Functions
 		int receive(Logistics from, int units);
+		// Getters
+		int getDemand();
+		int getPrice();
+		int getUnsatisfied();		
 };
 
 class Distribution
 {
 	private:
-		Logistics& from;
-		Store& to;
-		int price;
-		int unitCost;
-		int units;
+		const Logistics& from;
+		const Store& to;
+		const int price;
+		const int unitCost;
+		const int units;
 	public:
+		// Constructors
 		Distribution();
 		Distribution(Logistics from, Store to);
-		int getUnitNet()
-		{
-			return price-unitCost;
-		}
-		int getNet()
-		{
-			return units*(price-unitCost);
-		}
-		int getPrice()
-		{
-			return price;
-		}
-		int getUnitCost()
-		{
-			return unitCost;
-		}
-		int getUnits()
-		{
-			return units;
-		}
-
+		~Distribution();
+		// Functios
+		int getUnitNet();
+		int getNet();
+		// Getters		
+		int getPrice();
+		int getUnitCost();
+		int getUnits();
 };
+/** Zhen end */
+
 
 /** JasonBaby start */
 class Plan
@@ -192,3 +173,99 @@ int Point:: manhattonDistance(Point to)
 	manhattonDistance = abs(x - to.x) + abs(y - to.y);
 	return manhattonDistance;
 }
+
+/** Zhen start */
+// Logistics
+// Constructors   
+Logistics::	Logistics();
+{
+	
+}
+Logistics::	Logistics(int id, Point position, int cost, int capacity)
+{
+	this->capacity = capacity;
+	possibleStores[]=
+	
+	
+}
+Logistics:: Logistics(const Logistics& l);// SOS
+Logistics::	Logistics& operator=(const Logistics& l);
+Logistics::	~Logistics();
+// Functions
+int Logistics::send(Store to, int units)
+{
+	
+}
+		//Getters
+		int getLogisticsCapacity();
+		int getLogisticsUnsold();
+
+
+
+
+
+// Store 
+
+
+
+int getDemand()
+		{
+			return demand;
+		}
+		int getPrice()
+		{
+			return price;
+		}
+		int getUnsatisfied()
+		{
+			return unsatisfied;
+		}		
+
+// Distribution
+int getUnitNet()
+		{
+			return price-unitCost;
+		}
+		int getNet()
+		{
+			return units*(price-unitCost);
+		}
+
+
+
+
+
+Distribution :: Distribution()
+{
+	this-> from = nullptr;
+	this-> to = nullptr;
+}
+Distribution :: Distribution(Logistics from, Store to)
+{
+	this-> from = from;
+	this-> to = to;
+}
+
+
+int getPrice()
+		{
+			return price;
+		}
+		int getUnitCost()
+		{
+			return unitCost;
+		}
+		int getUnits()
+		{
+			return units;
+		}
+
+
+
+
+
+/** Zhen end */
+
+
+
+
