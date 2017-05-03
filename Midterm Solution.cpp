@@ -80,7 +80,7 @@ class Logistics: public Building
 		{
 			return unsold;
 		}
-		map <int, Store*> getPossibleStores();
+		map<int,Store*> getPossibleStores();
 		int send(Store to, int units);
 };
 
@@ -283,12 +283,12 @@ bool Plan::remove(Building* building)
 			l.revenue -= revenue;
 			l.expense -= expense;
 
-            l.possibleStores.erase(id);
-            delete *d;
+            l.getPossibleStores().erase(id);
+            delete d;
 		}
 		revenue -= s->revenue;
 		expense -= s->expense;
-		delete *s;
+		delete s;
 	}
 	else
 	{
