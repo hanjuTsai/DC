@@ -2,6 +2,11 @@
 #include <cmath>
 #include <map>
 using namespace std;
+class Point;
+class Building;
+class Distribution;
+class Logistics;
+class Store;
 class Point
 {
 	private:
@@ -9,18 +14,17 @@ class Point
 		int y;
 	public:
 		Point();
-		int getX(){
+		Point(int x,int y);
+		int getX()
+		{
 			return x;
 		}
-		int getY(){
+		int getY()
+		{
 			return y;
 		}
-		Point(int x,int y);
 		int manhattonDistance(Point to);
 };
-class Distribution;
-class Logistics;
-class Store;
 class Building
 {
 	public:
@@ -37,17 +41,19 @@ class Building
 		int getCost(){
 			return cost;
 		}
-		int getRevenue(){
+		int getRevenue()
+		{
 			return revenue;
 		}
-		int getExpense(){
+		int getExpense()
+		{
 			return expense;
 		}
 		int manhattonDistance(Building to);
 		int getNet();
 		int compareNet(Building b1, Building b2);
-		double getOperatingExpenseRatio();
-		int copareOER(Building b1, Building b2);
+		double getOER();//OperatingExpenseRatio
+		int copareOER(Building b1, Building b2);//OperatingExpenseRatio
 		int send(Logistics from, Store to, int units);
 };
 
@@ -60,10 +66,12 @@ class Logistics: public Building
 	public:
 		Logistics();
 		Logistics(int id, Point position, int cost, int capacity);
-		int getLogisticsCapacity(){
+		int getLogisticsCapacity()
+		{
 			return capacity;
 		}
-		int getLogisticsUnsold(){
+		int getLogisticsUnsold()
+		{
 			return unsold;
 		}
 		int send(Store to, int units);
@@ -80,13 +88,16 @@ class Store:public Building//subclass
 	public:
 		Store();
 		Store(int id, Point position, int cost, int demand, int price);
-		int getDemand(){
+		int getDemand()
+		{
 			return demand;
 		}
-		int getPrice(){
+		int getPrice()
+		{
 			return price;
 		}
-		int getUnsatisfied(){
+		int getUnsatisfied()
+		{
 			return unsatisfied;
 		}
 		int receive(Logistics from, int units);
@@ -167,6 +178,16 @@ int main()
 
 
 /** JasonBaby end */
+Point:: Point()
+{
+	int x = 0;
+	int y = 0;
+}
+Point:: Point(int x,int y)
+{
+	this->x = x;
+	this->y = y;
+}
 int Point:: manhattonDistance(Point to)
 {
 	int manhattonDistance = 0;
