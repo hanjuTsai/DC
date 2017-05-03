@@ -71,8 +71,20 @@ class Logistics: public Building //subclass
 		Logistics(int id, Point position, int cost, int capacity);
 		Logistics(const Logistics& l);
 		Logistics& operator=(const Logistics& l);
+<<<<<<< HEAD
 		~Logistics();
 		// Functions
+=======
+		int getLogisticsCapacity()
+		{
+			return capacity;
+		}
+		int getLogisticsUnsold()
+		{
+			return unsold;
+		}
+		map <int, Store*> getPossibleStores();
+>>>>>>> refs/remotes/origin/master
 		int send(Store to, int units);
 		void include(Store s);
 		void include(Store* ss, int sNum);
@@ -93,8 +105,25 @@ class Store:public Building//subclass
 		// Constructors
 		Store(int id, Point position, int cost, int demand, int price);
 		Store(const Store& s);
+<<<<<<< HEAD
 		~Store();
 		// Functions
+=======
+		Store& operator=(const Store& s);
+		int getDemand()
+		{
+			return demand;
+		}
+		map <int, Logistics*> getPossibleLogistics();
+		int getPrice()
+		{
+			return price;
+		}
+		int getUnsatisfied()
+		{
+			return unsatisfied;
+		}
+>>>>>>> refs/remotes/origin/master
 		int receive(Logistics from, int units);
 		void include(Logistics l);
 		void include(Logistics* ls, int lNum);
@@ -108,6 +137,7 @@ class Store:public Building//subclass
 class Distribution
 {
 	private:
+<<<<<<< HEAD
 		const Logistics& from;
 		const Store& to;
 		const int price;
@@ -126,6 +156,39 @@ class Distribution
 		int getPrice();
 		int getUnitCost();
 		int getUnits();
+=======
+		Logistics& from;
+		Store& to;
+	public:
+		const int price;
+		const int unitCost;
+		const int units;
+
+		Distribution(Logistics from, Store to);
+		Logistics& getFrom();
+		Store& getTo();
+		int getUnitNet()
+		{
+			return price-unitCost;
+		}
+		int getNet()
+		{
+			return units*(price-unitCost);
+		}
+		int getPrice()
+		{
+			return price;
+		}
+		int getUnitCost()
+		{
+			return unitCost;
+		}
+		int getUnits()
+		{
+			return units;
+		}
+
+>>>>>>> refs/remotes/origin/master
 };
 /** Zhen end */
 
