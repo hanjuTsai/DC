@@ -2,6 +2,8 @@
 #include <cmath>
 #include <map>
 #include <cstdlib>
+#include <exception>
+
 using namespace std;
 class Point
 {
@@ -98,7 +100,6 @@ class Store:public Building//subclass
 		}
 		int getUnsatisfied()
 		{
-		{
 			return unsatisfied;
 		}
 		int receive(Logistics from, int units);
@@ -175,76 +176,83 @@ int main()
 }
 
 /** JasonBaby start */
+
+class NotImplemented : public std::logic_error
+{
+public:
+    NotImplemented() : std::logic_error("Not implemented."){};
+    NotImplemented(string err) : std::logic_error(err){};
+};
 // Plan
 Plan::Plan()
 {
-	exit(1);
+	throw new NotImplemented();
 }
 
 Plan::Plan(Logistics* ls, int lNum, Store* ss, int sNum)
 {
-	exit(1);
+	throw new NotImplemented();
 }
 
 Plan::~Plan()
 {
-	exit(1);
+	throw new NotImplemented();
 }
 
 int Plan::getNet() const
 {
-	exit(1);
+	throw new NotImplemented();
 }
 
 string Plan::toString() const
 {
-	exit(1);
+	throw new NotImplemented();
 }
 
 bool Plan::remove(Building building)
 {
-	exit(1);
+	throw new NotImplemented();
 }
 
 void Plan::update()
 {
-	exit(1);
+	throw new NotImplemented();
 }
 
 // Getters
 map<int,Logistics&>& Plan::getLogistics()
 {
-	exit(1);
+	throw new NotImplemented();
 }
 
 map<int,Store&>& Plan::getStores()
 {
-	exit(1);
+	throw new NotImplemented();
 }
 
 int Plan::getRevenue()
 {
-	exit(1);
+	throw new NotImplemented();
 }
 
 int Plan::getExpense()
 {
-	exit(1);
+	throw new NotImplemented();
 }
 
 map<int,Logistics&>& Plan::getUnsold()
 {
-	exit(1);
+	throw new NotImplemented();
 }
 
 map<int,Store&>& Plan::getUnsatisfied()
 {
-	exit(1);
+	throw new NotImplemented();
 }
 
 
 /** JasonBaby end */
-int Point:: manhattonDistance(Point to)
+int Point::manhattonDistance(Point to)
 {
 	int manhattonDistance = 0;
 	manhattonDistance = abs(x - to.x) + abs(y - to.y);
