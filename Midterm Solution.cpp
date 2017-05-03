@@ -184,18 +184,11 @@ int Point:: manhattonDistance(Point to)
 /** Zhen start */
 // Logistics
 // Constructors   
-Logistics::	Logistics();
-{
-	
-}
 Logistics::	Logistics(int id, Point position, int cost, int capacity)
 {
-	this->capacity = capacity;
-	possibleStores[]=
-	
-	
+	this->capacity = capacity;	
 }
-Logistics:: Logistics(const Logistics& l);// SOS
+Logistics:: Logistics(const Logistics& l);// copy constructor
 Logistics::	Logistics& operator=(const Logistics& l);
 Logistics::	~Logistics();
 // Functions
@@ -204,6 +197,14 @@ int Logistics::send(Store to, int units)
 	int send = Building::send(*this, to, units);
 	return send;
 }
+void include(Store s)
+{
+	
+}
+void include(Store* ss, int sNum);
+
+
+
 //Getters
 Logistics::	int getLogisticsCapacity()
 {
