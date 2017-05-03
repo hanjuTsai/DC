@@ -195,6 +195,7 @@ public:
 };
 
 // Plan
+// Constructors
 Plan::Plan(const Logistics* ls, int lNum, const Store* ss, int sNum)
 {
     revenue = 0;
@@ -217,6 +218,16 @@ Plan::Plan(const Logistics* ls, int lNum, const Store* ss, int sNum)
         revenue += s.revenue;
         expense += s.expense;
 	}
+}
+
+Plan::Plan(const Plan& p)
+{
+	*this = p;
+}
+
+Plan& Plan::operator=(const Plan& p)
+{
+	throw new NotImplemented();
 }
 
 int Plan::getNet() const
