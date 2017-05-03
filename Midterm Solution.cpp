@@ -107,14 +107,17 @@ class Store:public Building//subclass
 
 class Distribution
 {
+	private:
+		Logistics& from;
+		Store& to;
 	public:
-		const Logistics& from ;
-		const Store& to;
 		const int price;
 		const int unitCost;
 		const int units;
 
 		Distribution(Logistics from, Store to);
+		Logistics& getFrom();
+		Store& getTo();
 		int getUnitNet()
 		{
 			return price-unitCost;
