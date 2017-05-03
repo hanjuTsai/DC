@@ -78,7 +78,6 @@ class Logistics: public Building
 			return unsold;
 		}
 		int send(Store to, int units);
-		~Logistics();
 };
 
 class Store:public Building//subclass
@@ -104,7 +103,6 @@ class Store:public Building//subclass
 			return unsatisfied;
 		}
 		int receive(Logistics from, int units);
-		~Store();
 };
 
 class Distribution
@@ -138,7 +136,6 @@ class Distribution
 		{
 			return units;
 		}
-		~Distribution();
 
 };
 
