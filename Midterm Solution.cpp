@@ -37,9 +37,10 @@ class Building
 		int expense;
 		map<int,Distribution*> distribution;
 		int costPerKM;
-	private:
+	protected:
 		Building();
 		Building(int id, Point position,int cost);
+	public:
 		int getCost()
 		{
 			return cost;
