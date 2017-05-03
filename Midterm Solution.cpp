@@ -33,6 +33,7 @@ class Building
 		map<int,Distribution*> distribution;
 		int costPerKM;
 	protected:
+		Building();
 		Building(int id, Point position,int cost);
 		Building(const Building& b);
 		Building& operator=(const Building& b);
@@ -66,6 +67,7 @@ class Logistics: public Building //subclass
 		map <int, Store*> possibleStores;
 		int unsold;
 	public:
+		// Constructors
 		Logistics(int id, Point position, int cost, int capacity);
 		Logistics(const Logistics& l);
 		Logistics& operator=(const Logistics& l);
@@ -75,8 +77,9 @@ class Logistics: public Building //subclass
 		void include(Store s);
 		void include(Store* ss, int sNum);
 		//Getters
-		int getLogisticsCapacity();
-		int getLogisticsUnsold();
+		int getCapacity();
+		map <int, Store*>& getPossibleStores;
+		int getUnsold();
 };
 
 class Store:public Building//subclass
@@ -87,18 +90,17 @@ class Store:public Building//subclass
 		const int price;
 		int unsatisfied;
 	public:
-<<<<<<< HEAD
 		// Constructors
-		Store();
-=======
->>>>>>> refs/remotes/origin/master
 		Store(int id, Point position, int cost, int demand, int price);
 		Store(const Store& s);
 		~Store();
 		// Functions
 		int receive(Logistics from, int units);
+		void include(Logistics l);
+		void include(Logistics* ls, int lNum);
 		// Getters
 		int getDemand();
+		map <int, Logistics*>& getPossibleLogistics;
 		int getPrice();
 		int getUnsatisfied();		
 };
@@ -112,17 +114,15 @@ class Distribution
 		const int unitCost;
 		const int units;
 	public:
-<<<<<<< HEAD
 		// Constructors
-		Distribution();
-=======
->>>>>>> refs/remotes/origin/master
 		Distribution(Logistics from, Store to);
 		~Distribution();
 		// Functios
 		int getUnitNet();
 		int getNet();
-		// Getters		
+		// Getters
+		Logistics getFrom();
+		Store getTo();		
 		int getPrice();
 		int getUnitCost();
 		int getUnits();
@@ -186,7 +186,10 @@ int Point:: manhattonDistance(Point to)
 // Constructors   
 Logistics::	Logistics(int id, Point position, int cost, int capacity)
 {
-	this->capacity = capacity;	
+	this->id = id;
+	this->position = position;
+	this->cost = cost;
+	this->capacity = capacity;		
 }
 Logistics:: Logistics(const Logistics& l);// copy constructor
 Logistics::	Logistics& operator=(const Logistics& l);
@@ -197,27 +200,29 @@ int Logistics::send(Store to, int units)
 	int send = Building::send(*this, to, units);
 	return send;
 }
-void include(Store s)
+void Logistics::include(Store s)
+{
+	if(s.getDemand()!=0)
+	{
+		if(s.costPerKM*s.position.manhattonDistance(*this.position)<s.price)
+		{
+			possibleStores[s.id]=s;//???
+		}
+	}
+}
+void Logistics::include(Store* ss, int sNum)
 {
 	
 }
-void include(Store* ss, int sNum);
-
-
-
 //Getters
-Logistics::	int getLogisticsCapacity()
+Logistics::	int getCapacity()
 {
 	return capacity;
 } 
-Logistics::	int getLogisticsUnsold()
+Logistics::	int getUnsold()
 {
 	return unsold;
 }
-
-
-
-
 
 // Store 
 
