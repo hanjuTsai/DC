@@ -5,6 +5,7 @@
 #include <exception>
 
 using namespace std;
+
 class Point
 {
 	private:
@@ -145,7 +146,7 @@ class Distribution
 class Plan
 {
 private:
-    map<int,Logistics&> logistics;
+    map<int,Logistics> logistics;
     map<int,Store&> stores;
     int revenue;
     int expense;
@@ -196,12 +197,25 @@ Plan::Plan()
 
 Plan::Plan(Logistics* ls, int lNum, Store* ss, int sNum)
 {
+    logistics;
+    stores;
+    revenue = 0;
+    expense = 0;
+    unsold;
+    unsatisfied;
+
+    for (int i = 0; i < lNum; i++)
+	{
+		Logistics l = ls[i];
+		Store s = ss[i];
+        logistics.insert(pair<int,Logistics>(l.id, l));
+	}
 	throw new NotImplemented();
 }
 
 int Plan::getNet() const
 {
-	throw new NotImplemented();
+	return revenue - expense;
 }
 
 string Plan::toString() const
