@@ -107,13 +107,13 @@ class Store:public Building//subclass
 
 class Distribution
 {
-	private:
-		Logistics& from;
-		Store& to;
-		int price;
-		int unitCost;
-		int units;
 	public:
+		const Logistics& from ;
+		const Store& to;
+		const int price;
+		const int unitCost;
+		const int units;
+
 		Distribution(Logistics from, Store to);
 		int getUnitNet()
 		{
