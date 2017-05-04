@@ -332,6 +332,15 @@ bool Plan::remove(Building* building)
 
 void Plan::update()
 {
+	for (int i = 0; i < lNum; i++)
+	{
+		ls[i]->include(ss, sNum);
+	}
+	for (int i = 0; i < sNum; i++)
+	{
+		ss[i]->include(ls, lNum);
+	}
+
 	vector<Distribution> bestOnes;
 
 	throw new NotImplemented();
