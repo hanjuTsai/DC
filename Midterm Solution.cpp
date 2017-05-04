@@ -268,6 +268,8 @@ bool Plan::remove(Building* building)
 		{
 			Distribution*& d = it->second;
 			Logistics& l = d->getFrom();
+			unsold[l.id] = &l;
+
 			int revenue = d->price * d->units;
 			int expense = d->unitCost * d->units;
 			l.revenue -= revenue;
@@ -283,8 +285,27 @@ bool Plan::remove(Building* building)
 	else
 	{
 		Logistics* l = dynamic_cast<Logistics*> (building);
+        int id = l->id;
+		logistics.erase(id);
+		for (map<int,Distribution*>::iterator it = l->distribution.begin();
+			it != l->distribution.end(); it++)
+		{
+			Distribution*& d = it->second;
+			Store& s = d->getTo();
+			unsatisfied[s.id] = &s;
+
+			int revenue = d->price * d->units;
+			int expense = d->unitCost * d->units;
+			s.revenue -= revenue;
+			s.expense -= expense;
+
+            s.getPossibleLogistics().erase(id);
+            delete d;
+		}
+		revenue -= l->revenue;
+		expense -= l->expense;
+		delete l;
 	}
-	throw new NotImplemented();
 }
 
 void Plan::update()
