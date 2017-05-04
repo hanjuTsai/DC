@@ -69,19 +69,6 @@ class Logistics: public Building //subclass
 	public:
 		// Constructors
 		Logistics(int id, Point position, int cost, int capacity);
-<<<<<<< HEAD
-		Logistics(const Logistics& l);
-		Logistics& operator=(const Logistics& l);
-		int getLogisticsCapacity()
-		{
-			return capacity;
-		}
-		int getLogisticsUnsold()
-		{
-			return unsold;
-		}
-=======
->>>>>>> refs/remotes/origin/master
 		// Functions
 		int send(Store to, int units);
 		void include(Store s);
