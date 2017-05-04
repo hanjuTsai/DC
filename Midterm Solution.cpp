@@ -1,8 +1,13 @@
 #include <iostream>
 #include <cmath>
 #include <map>
+<<<<<<< HEAD
 #include <vector>
+=======
+
+>>>>>>> refs/remotes/origin/master
 using namespace std;
+
 class Point
 {
 	private:
@@ -141,7 +146,7 @@ public:
 	static int numLogistics;
 	static int numStores;
 	// Constructors
-	Plan(const Logistics* ls, int lNum, const Store* ss, int sNum);
+	Plan(Logistics** ls, int lNum, Store** ss, int sNum);
 	Plan(const Plan& p);
 	Plan& operator=(const Plan& p);
 	// Functions
