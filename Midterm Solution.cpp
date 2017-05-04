@@ -1,11 +1,8 @@
 #include <iostream>
 #include <cmath>
 #include <map>
-<<<<<<< HEAD
 #include <vector>
-=======
 
->>>>>>> refs/remotes/origin/master
 using namespace std;
 
 class Point
@@ -164,7 +161,7 @@ public:
 };
 /** JasonBaby end */
 
-bool lessNet(Building, Building); 
+bool lessNet(Building, Building);
 bool moreOER(Building,Building);
 
 int main()
@@ -238,7 +235,7 @@ int main()
 		if(i >= logisticsNum){
 			allBuildings[i] = &stores[i - logisticsNum];
 		}
-		
+
 	}
 
 	vector<Building*> allBuildings1;
@@ -249,10 +246,10 @@ int main()
 		if(i >= logisticsNum){
 			allBuildings1[i] = &stores[i - logisticsNum];
 		}
-		
+
 	}
 
-	
+
 	while(allBuildings.size() > 0)
 	{
 		plan1.update();
@@ -276,7 +273,7 @@ int main()
 		{
 			bestPlan = plan2;
 		}
-	
+
 	}
 
 
