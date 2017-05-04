@@ -10,8 +10,6 @@ class Distribution;
 class Logistics;
 class Store;
 
-
-
 class Point
 {
 	public:
@@ -20,6 +18,7 @@ class Point
 		Point(int x,int y);
 		int manhattonDistance(Point to);
 };
+
 class Building
 {
 	public:
@@ -54,7 +53,7 @@ class Building
 		int send(Logistics from, Store to, int units);
 };
 
-/**Zhen start*/
+/** Zhen start */
 class Logistics: public Building //subclass
 {
 	private:
@@ -191,10 +190,12 @@ int main()
 
 
 /** JasonBaby end */
+
 Point:: Point(int x,int y):x(x),y(y)
 {
-	
+
 }
+
 int Point:: manhattonDistance(Point to)
 {
 	int manhattonDistance = 0;
