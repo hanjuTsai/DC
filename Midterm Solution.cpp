@@ -67,7 +67,7 @@ class Logistics: public Building //subclass
 {
 	private:
 		const int capacity;
-		map <int, Store*> possibleStores;
+		map<int,Store*> possibleStores;
 		int unsold;
 	public:
 		// Constructors
@@ -89,6 +89,10 @@ class Logistics: public Building //subclass
 		void include(Store* ss, int sNum);
 		//Getters
 		int getCapacity();
+<<<<<<< HEAD
+=======
+		map<int,Store*> getPossibleStores();
+>>>>>>> refs/remotes/origin/master
 		int getUnsold();
 };
 
@@ -96,7 +100,7 @@ class Store:public Building//subclass
 {
 	private:
 		const int demand;
-		map <int, Logistics*> possibleLogistics;
+		map<int,Logistics*> possibleLogistics;
 		const int price;
 		int unsatisfied;
 	public:
@@ -110,7 +114,7 @@ class Store:public Building//subclass
 		void include(Logistics* ls, int lNum);
 		// Getters
 		int getDemand();
-		map <int, Logistics*> getPossibleLogistics;
+		map<int,Logistics*> getPossibleLogistics();
 		int getPrice();
 		int getUnsatisfied();
 };
