@@ -123,15 +123,9 @@ class Distribution
 		// Functions
 		int getUnitNet();
 		int getNet();
-<<<<<<< HEAD
-		// Getters
+		// Accessors
 		Logistics& getFrom() const;
 		Store& getTo() const;
-=======
-		// Accessors
-		Logistics& getFrom();
-		Store& getTo();
->>>>>>> refs/remotes/origin/master
 };
 /** Zhen end */
 
@@ -189,14 +183,14 @@ int Point:: manhattonDistance(Point to)
 
 /** Zhen start */
 // Logistics
-// Logistics-Constructors   
-Logistics::Logistics(int id, Point position, int cost, int capacity) 
+// Logistics-Constructors
+Logistics::Logistics(int id, Point position, int cost, int capacity)
 	: id(id)
 	, position(position)
 	, cost(cost)
 	, capacity(capacity)
 {
-	unsold = capacity; 
+	unsold = capacity;
 }
 Logistics::Logistics(const Logistics& l)// copy constructor
 {
@@ -204,7 +198,7 @@ Logistics::Logistics(const Logistics& l)// copy constructor
 }
 Logistics& Logistics::operator=(const Logistics& l)
 {
-	
+
 }
 // Logistics-Functions
 int Logistics::send(Store to, int units)
@@ -231,7 +225,7 @@ void Logistics::include(Store* ss, int sNum)
 		{
 			if(Building::costPerKM * ss[i].position.manhattonDistance(this->position) < ss[i].price)
 			{
-				possibleStores[i]=&ss[i]; 
+				possibleStores[i]=&ss[i];
 			}
 		}
 	}
@@ -241,16 +235,16 @@ int Logistics::getCapacity()
 {
 	return capacity;
 }
-map<int, Store*> Logistics::getPossibleStores() 
+map<int, Store*> Logistics::getPossibleStores()
 {
-	return possibleStores;	
-} 
+	return possibleStores;
+}
 int Logistics::getUnsold()
 {
 	return unsold;
 }
 
-// Store 
+// Store
 // Store-Constructors
 Store::	Store(int id, Point position, int cost, int demand, int price)
 	: this->id(id)
@@ -289,7 +283,7 @@ void Store::include(Logistics* ls, int lNum)
 		{
 			if(Building::costPerKM * ls[i].position.manhattonDistance(this->position) < price)
 			{
-				possibleLogistics[i]=&ls[i]; 
+				possibleLogistics[i]=&ls[i];
 			}
 		}
 	}
@@ -299,7 +293,7 @@ int Store::getDemand()
 {
 	return demand;
 }
-map<int, Logistics*> Store::getPossibleLogistics() 
+map<int, Logistics*> Store::getPossibleLogistics()
 {
 	return possibleLogistics;
 }
@@ -318,7 +312,7 @@ int Store::getUnsatisfied()
 Distribution::Distribution(Logistics from, Store to)
 	: this->from(from)
 	, this->to(to)
-{} 
+{}
 // Distribution-Functios
 int Distribution::getUnitNet()
 {
@@ -333,13 +327,13 @@ int Distribution::getNet()
 // Distribution-Getters
 Logistics& Distribution::getFrom() const
 {
-	return from;  
+	return from;
 }
 Store& Distribution::getTo() const
 {
 	return to;
 }
-		
+
 
 
 /** Zhen end */
