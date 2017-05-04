@@ -370,9 +370,6 @@ map<int,Store*>& Plan::getUnsatisfied()
 
 
 /** JasonBaby end */
-<<<<<<< HEAD
-int Point::manhattonDistance(Point to)
-=======
 
 Point:: Point(int x,int y):x(x),y(y)
 {
@@ -380,7 +377,6 @@ Point:: Point(int x,int y):x(x),y(y)
 }
 
 int Point:: manhattonDistance(Point to)
->>>>>>> refs/remotes/origin/master
 {
 	int manhattonDistance = 0;
 	manhattonDistance = abs(x - to.x) + abs(y - to.y);
