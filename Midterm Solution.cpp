@@ -179,7 +179,7 @@ int Point:: manhattonDistance(Point to)
 
 /** Zhen start */
 // Logistics
-// Constructors   
+// Logistics-Constructors   
 Logistics::	Logistics(int id, Point position, int cost, int capacity)
 {
 	this->id = id;
@@ -189,8 +189,7 @@ Logistics::	Logistics(int id, Point position, int cost, int capacity)
 }
 Logistics:: Logistics(const Logistics& l);// copy constructor
 Logistics::	Logistics& operator=(const Logistics& l);
-Logistics::	~Logistics();
-// Functions
+// Logistics-Functions
 int Logistics::send(Store to, int units)
 {
 	int send = Building::send(*this, to, units);
@@ -200,20 +199,33 @@ void Logistics::include(Store s)
 {
 	if(s.getDemand()!=0)
 	{
-		if(s.costPerKM*s.position.manhattonDistance(*this.position)<s.price)
+		if(Building::costPerKM * s.position.manhattonDistance(*this.position) < s.price)
 		{
-			possibleStores[s.id]=s;//???
+			possibleStores[s.id]=&s;///??? 
 		}
 	}
 }
 void Logistics::include(Store* ss, int sNum)
 {
-	
+	for(int i=0; i<sNum; i++)
+	{
+		if(ss[i].getDemand()!=0)
+		{
+			if(Building::costPerKM * ss[i].position.manhattonDistance(*this.position) < ss[i].price)
+			{
+				possibleStores[i]=&ss[i]; 
+			}
+		}
+	}
 }
-//Getters
+// Logistics-Getters
 Logistics::	int getCapacity()
 {
 	return capacity;
+}
+map <int, Store*> getPossibleStores
+{
+	return possibleStores;	
 } 
 Logistics::	int getUnsold()
 {
@@ -221,21 +233,64 @@ Logistics::	int getUnsold()
 }
 
 // Store 
-
-
-
-int getDemand()
+// Store-Constructors
+Store::	Store(int id, Point position, int cost, int demand, int price);
+{
+	this->id = id;
+	this->position = position;
+	this->cost = cost;
+	this->demand = demand;
+	this->price = price;
+}
+Store::	Store(const Store& s);
+Store::	Store& operator=(const Store& s);
+// Store-Functions
+Store::	int receive(Logistics from, int units)
+{
+	int receive = Building::send(*this, from, units);
+	return receive;
+}
+Store::	void include(Logistics l)
+{
+	if(l.getCapacity()!=0)
+	{
+		if(Building::costPerKM * position.manhattonDistance(l.position) < price)
 		{
-			return demand;
+			possibleLogistics[l.id]=&l;///??? 
 		}
-		int getPrice()
+	}
+}
+Store::	void include(Logistics* ls, int lNum)
+{
+	for(int i=0; i<lNum; i++)
+	{
+		if(ls[i].getCapacity()!=0)
 		{
-			return price;
+			if(Building::costPerKM * ls[i].position.manhattonDistance(*this.position) < price)
+			{
+				possibleLogistics[i]=&ls[i]; 
+			}
 		}
-		int getUnsatisfied()
-		{
-			return unsatisfied;
-		}		
+	}
+}
+// Store-Getters
+Store::	int getDemand()
+{
+	return demand;
+}
+Store::	map <int, Logistics*> getPossibleLogistics
+{
+	return possibleLogistics;
+}
+Store::	int getPrice();
+{
+	return price;
+}
+Store::	int getUnsatisfied();
+{
+	return unsatisfied;
+}
+
 
 // Distribution
 int getUnitNet()
