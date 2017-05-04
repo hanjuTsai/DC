@@ -9,11 +9,10 @@ class Logistics;
 class Store;
 class Point
 {
-	private:
-		int x;
-		int y;
 	public:
-		Point();
+		const int x;
+		const int y;
+	
 		Point(int x,int y);
 		int getX()
 		{
@@ -33,12 +32,16 @@ class Building
 		int cost;
 		int revenue;
 		int expense;
-		map<int,Distribution&> distribution;
+		map<int,Distribution*> distribution;
 		int costPerKM;
-	private:
-		Building();
+	protected:
 		Building(int id, Point position,int cost);
-		int getCost(){
+		Building(const Building& b);
+		Building& operator=(const Building& b);
+		virtual ~Building();
+	public:
+		int getCost()
+		{
 			return cost;
 		}
 		int getRevenue()
@@ -57,36 +60,45 @@ class Building
 		int send(Logistics from, Store to, int units);
 };
 
-class Logistics: public Building
+/**Zhen start*/
+class Logistics: public Building //subclass
 {
 	private:
-		int capacity;
-		map <int, Store&> possibleStores;
+		const int capacity;
+		map<int,Store*> possibleStores;
 		int unsold;
 	public:
-		Logistics();
+		// Constructors
 		Logistics(int id, Point position, int cost, int capacity);
-		int getLogisticsCapacity()
+		int getCapacity()
 		{
 			return capacity;
 		}
-		int getLogisticsUnsold()
+		int getUnsold()
 		{
 			return unsold;
 		}
+		Logistics(const Logistics& l);
+		Logistics& operator=(const Logistics& l);
+		// Functions
 		int send(Store to, int units);
-		~Logistics();
+		void include(Store s);
+		void include(Store* ss, int sNum);
+		//Getters
+		int getCapacity();
+		map<int,Store*> getPossibleStores();
+		int getUnsold();
 };
 
 class Store:public Building//subclass
 {
 	private:
-		int demand;
-		map <int, Logistics&> possibleLogistics;
-		int price;
+		const int demand;
+		map<int,Logistics*> possibleLogistics;
+		const int price;
 		int unsatisfied;
 	public:
-		Store();
+		// Constructors
 		Store(int id, Point position, int cost, int demand, int price);
 		int getDemand()
 		{
@@ -100,70 +112,71 @@ class Store:public Building//subclass
 		{
 			return unsatisfied;
 		}
+		Store(const Store& s);
+		Store& operator=(const Store& s);
+		// Functions
 		int receive(Logistics from, int units);
-		~Store();
+		void include(Logistics l);
+		void include(Logistics* ls, int lNum);
+		// Getters
+		int getDemand();
+		map<int,Logistics*> getPossibleLogistics();
+		int getPrice();
+		int getUnsatisfied();
 };
 
 class Distribution
 {
 	private:
-		Logistics& from;
-		Store& to;
-		int price;
-		int unitCost;
-		int units;
+		const Logistics& from;
+		const Store& to;
 	public:
-		Distribution();
+		// Variables
+		const int price;
+		const int unitCost;
+		const int units;
+		// Constructors
 		Distribution(Logistics from, Store to);
-		int getUnitNet()
-		{
-			return price-unitCost;
-		}
-		int getNet()
-		{
-			return units*(price-unitCost);
-		}
-		int getPrice()
-		{
-			return price;
-		}
-		int getUnitCost()
-		{
-			return unitCost;
-		}
-		int getUnits()
-		{
-			return units;
-		}
-		~Distribution();
-
+		// Functios
+		int getUnitNet();
+		int getNet();
+		// Getters
+		Logistics& getFrom();
+		Store& getTo();
 };
+/** Zhen end */
+
 
 /** JasonBaby start */
 class Plan
 {
 private:
-    map<int,Logistics&> logistics;
-    map<int,Store&> stores;
+    map<int,Logistics*> logistics;
+    map<int,Store*> stores;
     int revenue;
     int expense;
-    map<int,Logistics&> unsold;
-    map<int,Store&> unsatisfied;
+    map<int,Logistics*> unsold;
+    map<int,Store*> unsatisfied;
 public:
-	Plan();
-	Plan(Logistics* ls, int lNum, Store* ss, int sNum);
-	~Plan();
+	// Static fields
+	static int numLogistics;
+	static int numStores;
+	// Constructors
+	Plan(const Logistics* ls, int lNum, const Store* ss, int sNum);
+	Plan(const Plan& p);
+	Plan& operator=(const Plan& p);
+	// Functions
 	int getNet() const;
 	string toString() const;
-	bool remove(Building building);
+	bool remove(Building* building);
 	void update();
-	// Getters
-    map<int,Logistics&>& getLogistics();
-    map<int,Store&>& getStores();
+	// Accessors
+    map<int,Logistics*>& getLogistics();
+    map<int,Store*>& getStores();
     int getRevenue();
     int getExpense();
-    map<int,Logistics&>& getUnsold();
-    map<int,Store&>& getUnsatisfied();
+    map<int,Logistics*>& getUnsold();
+    map<int,Store*>& getUnsatisfied();
 };
 /** JasonBaby end */
 
