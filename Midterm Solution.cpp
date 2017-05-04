@@ -62,18 +62,6 @@ class Logistics: public Building //subclass
 	public:
 		// Constructors
 		Logistics(int id, Point position, int cost, int capacity);
-
-		int getCapacity()
-		{
-			return capacity;
-		}
-		int getUnsold()
-		{
-			return unsold;
-		}
-		Logistics(const Logistics& l);
-		Logistics& operator=(const Logistics& l);
-
 		// Functions
 		int send(Store to, int units);
 		void include(Store s);
@@ -95,22 +83,6 @@ class Store:public Building//subclass
 	public:
 		// Constructors
 		Store(int id, Point position, int cost, int demand, int price);
-
-		int getDemand()
-		{
-			return demand;
-		}
-		int getPrice()
-		{
-			return price;
-		}
-		int getUnsatisfied()
-		{
-			return unsatisfied;
-		}
-		Store(const Store& s);
-		Store& operator=(const Store& s);
-
 		// Functions
 		int receive(Logistics from, int units);
 		void include(Logistics l);
