@@ -12,16 +12,8 @@ class Point
 	public:
 		const int x;
 		const int y;
-
+		Point();
 		Point(int x,int y);
-		int getX()
-		{
-			return x;
-		}
-		int getY()
-		{
-			return y;
-		}
 		int manhattonDistance(Point to);
 };
 class Building
@@ -191,15 +183,12 @@ int main()
 
 
 /** JasonBaby end */
-Point:: Point()
+Point:: Point():x(0),y(0)
 {
-	int x = 0;
-	int y = 0;
-}
-Point:: Point(int x,int y)
+}	
+Point:: Point(int x,int y):x(x),y(y)
 {
-	this->x = x;
-	this->y = y;
+	
 }
 int Point:: manhattonDistance(Point to)
 {
