@@ -1,11 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <map>
-<<<<<<< HEAD
-#include <cstdlib>
 #include <exception>
-=======
->>>>>>> refs/remotes/origin/master
 
 using namespace std;
 
