@@ -183,14 +183,6 @@ Logistics::Logistics(int id, Point position, int cost, int capacity)
 {
 	unsold = capacity;
 }
-Logistics::Logistics(const Logistics& l)// copy constructor
-{
-
-}
-Logistics& Logistics::operator=(const Logistics& l)
-{
-
-}
 // Logistics-Functions
 int Logistics::send(Store to, int units)
 {
@@ -246,9 +238,6 @@ Store::	Store(int id, Point position, int cost, int demand, int price)
 {
 	unsatisfied = demand;
 }
-
-Store::	Store(const Store& s);
-Store& Store::operator=(const Store& s);
 // Store-Functions
 int Store::receive(Logistics from, int units)
 {
