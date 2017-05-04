@@ -82,17 +82,13 @@ class Logistics: public Building //subclass
 		{
 			return unsold;
 		}
-		map<int,Store*> getPossibleStores();
 		// Functions
 		int send(Store to, int units);
 		void include(Store s);
 		void include(Store* ss, int sNum);
 		//Getters
 		int getCapacity();
-<<<<<<< HEAD
-=======
 		map<int,Store*> getPossibleStores();
->>>>>>> refs/remotes/origin/master
 		int getUnsold();
 };
 
