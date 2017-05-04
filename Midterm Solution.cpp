@@ -62,16 +62,19 @@ class Building
 		int send(Logistics from, Store to, int units);
 };
 
-class Logistics: public Building
+/**Zhen start*/ 
+class Logistics: public Building //subclass
 {
 	private:
-		int capacity;
+		const int capacity;
 		map <int, Store*> possibleStores;
 		int unsold;
 	public:
+		// Constructors
 		Logistics(int id, Point position, int cost, int capacity);
 		Logistics(const Logistics& l);
 		Logistics& operator=(const Logistics& l);
+<<<<<<< HEAD
 		int getLogisticsCapacity()
 		{
 			return capacity;
@@ -81,71 +84,62 @@ class Logistics: public Building
 			return unsold;
 		}
 		map<int,Store*> getPossibleStores();
+=======
+		// Functions
+>>>>>>> refs/remotes/origin/master
 		int send(Store to, int units);
+		void include(Store s);
+		void include(Store* ss, int sNum);
+		//Getters
+		int getCapacity();
+		map <int, Store*> getPossibleStores;
+		int getUnsold();
 };
 
 class Store:public Building//subclass
 {
 	private:
-		int demand;
+		const int demand;
 		map <int, Logistics*> possibleLogistics;
-		int price;
+		const int price;
 		int unsatisfied;
 	public:
+		// Constructors
 		Store(int id, Point position, int cost, int demand, int price);
 		Store(const Store& s);
 		Store& operator=(const Store& s);
-		int getDemand()
-		{
-			return demand;
-		}
-		map <int, Logistics*> getPossibleLogistics();
-		int getPrice()
-		{
-			return price;
-		}
-		int getUnsatisfied()
-		{
-			return unsatisfied;
-		}
+		// Functions
 		int receive(Logistics from, int units);
+		void include(Logistics l);
+		void include(Logistics* ls, int lNum);
+		// Getters
+		int getDemand();
+		map <int, Logistics*> getPossibleLogistics;
+		int getPrice();
+		int getUnsatisfied();		
 };
 
 class Distribution
 {
 	private:
-		Logistics& from;
-		Store& to;
+		const Logistics& from;
+		const Store& to;
 	public:
+		// Variables 
 		const int price;
 		const int unitCost;
 		const int units;
-
+		// Constructors
 		Distribution(Logistics from, Store to);
+		// Functios
+		int getUnitNet();
+		int getNet();
+		// Getters
 		Logistics& getFrom();
-		Store& getTo();
-		int getUnitNet()
-		{
-			return price-unitCost;
-		}
-		int getNet()
-		{
-			return units*(price-unitCost);
-		}
-		int getPrice()
-		{
-			return price;
-		}
-		int getUnitCost()
-		{
-			return unitCost;
-		}
-		int getUnits()
-		{
-			return units;
-		}
-
+		Store& getTo();		
 };
+/** Zhen end */
+
 
 /** JasonBaby start */
 class Plan
