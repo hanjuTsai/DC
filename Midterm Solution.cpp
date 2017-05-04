@@ -2,6 +2,7 @@
 #include <cmath>
 #include <map>
 #include <exception>
+#include <vector>
 
 using namespace std;
 
@@ -306,7 +307,8 @@ bool Plan::remove(Building* building)
 
 void Plan::update()
 {
-	//vector<Distribution>
+	vector<Distribution> bestOnes;
+
 	throw new NotImplemented();
 }
 
