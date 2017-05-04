@@ -2,18 +2,12 @@
 #include <cmath>
 #include <map>
 using namespace std;
-class Point;
-class Building;
-class Distribution;
-class Logistics;
-class Store;
 class Point
 {
+	private:
+		int x;
+		int y;
 	public:
-		const int x;
-		const int y;
-	
-		Point(int x,int y);
 		int getX()
 		{
 			return x;
@@ -22,8 +16,12 @@ class Point
 		{
 			return y;
 		}
+		Point(int x,int y);
 		int manhattonDistance(Point to);
 };
+class Distribution;
+class Logistics;
+class Store;
 class Building
 {
 	public:
@@ -55,8 +53,8 @@ class Building
 		int manhattonDistance(Building to);
 		int getNet();
 		int compareNet(Building b1, Building b2);
-		double getOER();//OperatingExpenseRatio
-		int copareOER(Building b1, Building b2);//OperatingExpenseRatio
+		double getOperatingExpenseRatio();
+		int copareOER(Building b1, Building b2);
 		int send(Logistics from, Store to, int units);
 };
 
@@ -70,14 +68,6 @@ class Logistics: public Building //subclass
 	public:
 		// Constructors
 		Logistics(int id, Point position, int cost, int capacity);
-		int getCapacity()
-		{
-			return capacity;
-		}
-		int getUnsold()
-		{
-			return unsold;
-		}
 		Logistics(const Logistics& l);
 		Logistics& operator=(const Logistics& l);
 		// Functions
@@ -100,18 +90,6 @@ class Store:public Building//subclass
 	public:
 		// Constructors
 		Store(int id, Point position, int cost, int demand, int price);
-		int getDemand()
-		{
-			return demand;
-		}
-		int getPrice()
-		{
-			return price;
-		}
-		int getUnsatisfied()
-		{
-			return unsatisfied;
-		}
 		Store(const Store& s);
 		Store& operator=(const Store& s);
 		// Functions
@@ -191,16 +169,6 @@ int main()
 
 
 /** JasonBaby end */
-Point:: Point()
-{
-	int x = 0;
-	int y = 0;
-}
-Point:: Point(int x,int y)
-{
-	this->x = x;
-	this->y = y;
-}
 int Point:: manhattonDistance(Point to)
 {
 	int manhattonDistance = 0;
