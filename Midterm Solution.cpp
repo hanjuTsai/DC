@@ -4,26 +4,22 @@
 
 using namespace std;
 
-class Point
-{
-	private:
-		int x;
-		int y;
-	public:
-		int getX()
-		{
-			return x;
-		}
-		int getY()
-		{
-			return y;
-		}
-		Point(int x,int y);
-		int manhattonDistance(Point to);
-};
+class Point;
+class Building;
 class Distribution;
 class Logistics;
 class Store;
+
+
+
+class Point
+{
+	public:
+		const int x;
+		const int y;
+		Point(int x,int y);
+		int manhattonDistance(Point to);
+};
 class Building
 {
 	public:
@@ -53,8 +49,8 @@ class Building
 		int manhattonDistance(Building to);
 		int getNet();
 		int compareNet(Building b1, Building b2);
-		double getOperatingExpenseRatio();
-		int copareOER(Building b1, Building b2);
+		double getOER();//OperatingExpenseRatio
+		int copareOER(Building b1, Building b2);//OperatingExpenseRatio
 		int send(Logistics from, Store to, int units);
 };
 
@@ -68,6 +64,18 @@ class Logistics: public Building //subclass
 	public:
 		// Constructors
 		Logistics(int id, Point position, int cost, int capacity);
+
+		int getCapacity()
+		{
+			return capacity;
+		}
+		int getUnsold()
+		{
+			return unsold;
+		}
+		Logistics(const Logistics& l);
+		Logistics& operator=(const Logistics& l);
+
 		// Functions
 		int send(Store to, int units);
 		void include(Store s);
@@ -89,6 +97,22 @@ class Store:public Building//subclass
 	public:
 		// Constructors
 		Store(int id, Point position, int cost, int demand, int price);
+
+		int getDemand()
+		{
+			return demand;
+		}
+		int getPrice()
+		{
+			return price;
+		}
+		int getUnsatisfied()
+		{
+			return unsatisfied;
+		}
+		Store(const Store& s);
+		Store& operator=(const Store& s);
+
 		// Functions
 		int receive(Logistics from, int units);
 		void include(Logistics l);
@@ -167,6 +191,10 @@ int main()
 
 
 /** JasonBaby end */
+Point:: Point(int x,int y):x(x),y(y)
+{
+	
+}
 int Point:: manhattonDistance(Point to)
 {
 	int manhattonDistance = 0;
