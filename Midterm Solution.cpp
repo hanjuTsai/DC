@@ -151,7 +151,7 @@ public:
 	static int numLogistics;
 	static int numStores;
 	// Constructors
-	Plan(Logistics** ls, int lNum, Store** ss, int sNum);
+	Plan(Logistics**& ls, int lNum, Store**& ss, int sNum);
 	Plan(const Plan& p);
 	Plan& operator=(const Plan& p);
 	// Functions
@@ -186,7 +186,7 @@ public:
 
 // Plan
 // Constructors
-Plan::Plan(Logistics** ls, int lNum, Store** ss, int sNum)
+Plan::Plan(Logistics**& ls, int lNum, Store**& ss, int sNum)
 {
     revenue = 0;
     expense = 0;
@@ -207,7 +207,14 @@ Plan::Plan(Logistics** ls, int lNum, Store** ss, int sNum)
         expense += s->expense;
 	}
 
-    for (int i = 0; i < lNum; i++);
+    for (int i = 0; i < lNum; i++)
+	{
+		ls[i]->include(ss, sNum);
+	}
+	for (int i = 0; i < sNum; i++)
+	{
+		ss[i]->include(ls, lNum);
+	}
 }
 
 Plan::Plan(const Plan& p)
