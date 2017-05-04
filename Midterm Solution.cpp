@@ -311,7 +311,7 @@ int Store::getUnsatisfied() const
 // Distribution
 // Distribution-Constructors
 Distribution::Distribution(Logistics from, Store to)
-	: from(f), to(t)
+	: from(from), to(to)
 {}
 
 
