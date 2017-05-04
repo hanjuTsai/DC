@@ -321,12 +321,12 @@ map<int,Store*>& Plan::getStores()
 	return stores;
 }
 
-int Plan::getRevenue()
+int Plan::getRevenue() const
 {
 	return revenue;
 }
 
-int Plan::getExpense()
+int Plan::getExpense() const
 {
 	return expense;
 }
