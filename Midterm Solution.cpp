@@ -205,22 +205,24 @@ int main()
 	for(int i = 0; i < logisticsNum; i++){
 		cin >> capacity[i];
 	}
-	Store* stores = new Store[storeNum];
+	Store** stores = new Store*[storeNum];
 	for(int i = 0; i < storeNum; i++){
 		int id = i;
 		Point position = *store[i];
 		int cost = storeCost[i];
 		int demand2 = demand[i];
 		int capacity2 = capacity[i];
-		stores[i] = Store(id, position, cost, demand2, capacity2);
+		Store storeS = Store(id, position, cost, demand2, capacity2);
+		stores[i] = &storeS;
 	}
-	Logistics* logistics = new Logistics[logisticsNum];
+	Logistics** logistics = new Logistics*[logisticsNum];
 	for(int i = 0; i < logisticsNum; i++){
 		int id = i+1;
 		Point position = *logistic[i];
 		int cost = logisticCost[i];
 		int capacity2 = capacity[i];
-		logistics[i] = Logistics(id, position, cost, capacity2);
+		Logistics logisticS = Logistics(id, position, cost, capacity2);
+		logistics[i] = &logisticS;
 	}
 	Plan originalPlan = Plan(logistics, logisticsNum, stores, storeNum );
 	Plan plan1 = originalPlan;
@@ -267,8 +269,8 @@ int main()
 	{
 		plan2.update();
 		sort(allBuildings1.begin(),allBuildings1.end(), moreOER);
-		plan2.remove(allBuildings1.begin());
-		allBuildings1.erase(allBuildings1.begin());
+		plan2.remove(allBuildings1[0]);
+		allBuildings1.erase(allBuildings1[0]);
 		if(plan2.getNet > bestPlan.getNet())
 		{
 			bestPlan = plan2;
