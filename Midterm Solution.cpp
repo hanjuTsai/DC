@@ -1,12 +1,17 @@
 #include <iostream>
 #include <cmath>
 #include <map>
+
 using namespace std;
+
 class Point;
 class Building;
 class Distribution;
 class Logistics;
 class Store;
+
+
+
 class Point
 {
 	public:
@@ -28,19 +33,17 @@ class Building
 		int costPerKM;
 	protected:
 		Building(int id, Point position,int cost);
-		Building(const Building& b);
-		Building& operator=(const Building& b);
 		virtual ~Building();
 	public:
-		int getCost()
+		int getCost() const
 		{
 			return cost;
 		}
-		int getRevenue()
+		int getRevenue() const
 		{
 			return revenue;
 		}
-		int getExpense()
+		int getExpense() const
 		{
 			return expense;
 		}
@@ -62,6 +65,7 @@ class Logistics: public Building //subclass
 	public:
 		// Constructors
 		Logistics(int id, Point position, int cost, int capacity);
+
 		int getCapacity()
 		{
 			return capacity;
@@ -72,14 +76,16 @@ class Logistics: public Building //subclass
 		}
 		Logistics(const Logistics& l);
 		Logistics& operator=(const Logistics& l);
+
 		// Functions
 		int send(Store to, int units);
 		void include(Store s);
 		void include(Store* ss, int sNum);
-		//Getters
-		int getCapacity();
+		void include(Store** ss, int sNum);
+		// Accessors
+		int getCapacity() const;
 		map<int,Store*> getPossibleStores();
-		int getUnsold();
+		int getUnsold() const;
 };
 
 class Store:public Building//subclass
@@ -92,6 +98,7 @@ class Store:public Building//subclass
 	public:
 		// Constructors
 		Store(int id, Point position, int cost, int demand, int price);
+
 		int getDemand()
 		{
 			return demand;
@@ -106,15 +113,17 @@ class Store:public Building//subclass
 		}
 		Store(const Store& s);
 		Store& operator=(const Store& s);
+
 		// Functions
 		int receive(Logistics from, int units);
 		void include(Logistics l);
 		void include(Logistics* ls, int lNum);
-		// Getters
-		int getDemand();
+		void include(Logistics** ls, int lNum);
+		// Accessors
+		int getDemand() const;
 		map<int,Logistics*> getPossibleLogistics();
-		int getPrice();
-		int getUnsatisfied();
+		int getPrice() const;
+		int getUnsatisfied() const;
 };
 
 class Distribution
@@ -129,12 +138,12 @@ class Distribution
 		const int units;
 		// Constructors
 		Distribution(Logistics from, Store to);
-		// Functios
+		// Functions
 		int getUnitNet();
 		int getNet();
-		// Getters
-		Logistics& getFrom();
-		Store& getTo();
+		// Accessors
+		Logistics& getFrom() const;
+		Store& getTo() const;
 };
 /** Zhen end */
 
@@ -154,9 +163,9 @@ public:
 	static int numLogistics;
 	static int numStores;
 	// Constructors
-	Plan(const Logistics* ls, int lNum, const Store* ss, int sNum);
 	Plan(const Plan& p);
 	Plan& operator=(const Plan& p);
+	Plan(Logistics**& ls, int lNum, Store**& ss, int sNum);
 	// Functions
 	int getNet() const;
 	string toString() const;
@@ -165,8 +174,8 @@ public:
 	// Accessors
     map<int,Logistics*>& getLogistics();
     map<int,Store*>& getStores();
-    int getRevenue();
-    int getExpense();
+    int getRevenue() const;
+    int getExpense() const;
     map<int,Logistics*>& getUnsold();
     map<int,Store*>& getUnsatisfied();
 };
