@@ -17,7 +17,6 @@ class Point
 	public:
 		const int x;
 		const int y;
-		Point();
 		Point(int x,int y);
 		int manhattonDistance(Point to);
 };
@@ -192,9 +191,6 @@ int main()
 
 
 /** JasonBaby end */
-Point:: Point():x(0),y(0)
-{
-}	
 Point:: Point(int x,int y):x(x),y(y)
 {
 	
