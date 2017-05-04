@@ -77,7 +77,8 @@ class Logistics: public Building //subclass
 		int send(Store to, int units);
 		void include(Store s);
 		void include(Store* ss, int sNum);
-		//Getters
+		void include(Store** ss, int sNum);
+		// Accessors
 		int getCapacity();
 		map<int,Store*> getPossibleStores();
 		int getUnsold();
@@ -99,7 +100,8 @@ class Store: public Building//subclass
 		int receive(Logistics from, int units);
 		void include(Logistics l);
 		void include(Logistics* ls, int lNum);
-		// Getters
+		void include(Logistics** ls, int lNum);
+		// Accessors
 		int getDemand();
 		map<int,Logistics*> getPossibleLogistics();
 		int getPrice();
@@ -118,12 +120,18 @@ class Distribution
 		const int units;
 		// Constructors
 		Distribution(Logistics from, Store to);
-		// Functios
+		// Functions
 		int getUnitNet();
 		int getNet();
+<<<<<<< HEAD
 		// Getters
 		Logistics& getFrom() const;
 		Store& getTo() const;
+=======
+		// Accessors
+		Logistics& getFrom();
+		Store& getTo();
+>>>>>>> refs/remotes/origin/master
 };
 /** Zhen end */
 
@@ -143,7 +151,7 @@ public:
 	static int numLogistics;
 	static int numStores;
 	// Constructors
-	Plan(Logistics** ls, int lNum, Store** ss, int sNum);
+	Plan(Logistics**& ls, int lNum, Store**& ss, int sNum);
 	Plan(const Plan& p);
 	Plan& operator=(const Plan& p);
 	// Functions
