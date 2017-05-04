@@ -310,6 +310,7 @@ bool Plan::remove(Building* building)
 
 void Plan::update()
 {
+	vector<Distribution>
 	throw new NotImplemented();
 }
 
