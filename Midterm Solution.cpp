@@ -36,8 +36,6 @@ class Building
 		int costPerKM;
 	protected:
 		Building(int id, Point position,int cost);
-		Building(const Building& b);
-		Building& operator=(const Building& b);
 		virtual ~Building();
 	public:
 		int getCost()
@@ -70,8 +68,6 @@ class Logistics: public Building //subclass
 	public:
 		// Constructors
 		Logistics(int id, Point position, int cost, int capacity);
-		Logistics(const Logistics& l);
-		Logistics& operator=(const Logistics& l);
 		// Functions
 		int send(Store to, int units);
 		void include(Store s);
@@ -93,8 +89,6 @@ class Store:public Building//subclass
 	public:
 		// Constructors
 		Store(int id, Point position, int cost, int demand, int price);
-		Store(const Store& s);
-		Store& operator=(const Store& s);
 		// Functions
 		int receive(Logistics from, int units);
 		void include(Logistics l);
@@ -145,8 +139,6 @@ public:
 	static int numStores;
 	// Constructors
 	Plan(Logistics**& ls, int lNum, Store**& ss, int sNum);
-	Plan(const Plan& p);
-	Plan& operator=(const Plan& p);
 	// Functions
 	int getNet() const;
 	string toString() const;
