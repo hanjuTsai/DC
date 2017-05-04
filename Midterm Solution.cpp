@@ -185,10 +185,7 @@ int Point:: manhattonDistance(Point to)
 // Logistics
 // Logistics-Constructors
 Logistics::Logistics(int id, Point position, int cost, int capacity)
-	: id(id)
-	, position(position)
-	, cost(cost)
-	, capacity(capacity)
+	: Building(id, position, cost), capacity(capacity)
 {
 	unsold = capacity;
 }
@@ -334,10 +331,4 @@ Store& Distribution::getTo() const
 	return to;
 }
 
-
-
 /** Zhen end */
-
-
-
-
