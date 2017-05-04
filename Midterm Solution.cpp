@@ -139,6 +139,8 @@ public:
 	static int numLogistics;
 	static int numStores;
 	// Constructors
+	Plan(const Plan& p);
+	Plan& operator=(const Plan& p);
 	Plan(Logistics**& ls, int lNum, Store**& ss, int sNum);
 	// Functions
 	int getNet() const;
