@@ -152,7 +152,7 @@ public:
 	static int numLogistics;
 	static int numStores;
 	// Constructors
-	Plan(const Logistics* ls, int lNum, const Store* ss, int sNum);
+	Plan(Logistics** ls, int lNum, Store** ss, int sNum);
 	Plan(const Plan& p);
 	Plan& operator=(const Plan& p);
 	// Functions
@@ -187,26 +187,28 @@ public:
 
 // Plan
 // Constructors
-Plan::Plan(const Logistics* ls, int lNum, const Store* ss, int sNum)
+Plan::Plan(Logistics** ls, int lNum, Store** ss, int sNum)
 {
     revenue = 0;
     expense = 0;
 
     for (int i = 0; i < lNum; i++)
 	{
-		Logistics l = ls[i];
-        logistics[l.id] = &l;
-        unsold[l.id] = &l;
-        expense += l.expense;
+		Logistics* l = ls[i];
+        logistics[l->id] = l;
+        unsold[l->id] = l;
+        expense += l->expense;
 	}
 
     for (int i = 0; i < sNum; i++)
 	{
-		Store s = ss[i];
-        stores[s.id] = &s;
-        unsatisfied[s.id] = &s;
-        expense += s.expense;
+		Store* s = ss[i];
+        stores[s->id] = s;
+        unsatisfied[s->id] = s;
+        expense += s->expense;
 	}
+
+    for (int i = 0; i < lNum; i++);
 }
 
 Plan::Plan(const Plan& p)
@@ -310,7 +312,7 @@ bool Plan::remove(Building* building)
 
 void Plan::update()
 {
-	vector<Distribution>
+	//vector<Distribution>
 	throw new NotImplemented();
 }
 
