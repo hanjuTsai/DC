@@ -62,7 +62,7 @@ class Building
 		int send(Logistics from, Store to, int units);
 };
 
-/**Zhen start*/ 
+/**Zhen start*/
 class Logistics: public Building //subclass
 {
 	private:
@@ -74,7 +74,6 @@ class Logistics: public Building //subclass
 		Logistics(int id, Point position, int cost, int capacity);
 		Logistics(const Logistics& l);
 		Logistics& operator=(const Logistics& l);
-<<<<<<< HEAD
 		int getLogisticsCapacity()
 		{
 			return capacity;
@@ -84,15 +83,12 @@ class Logistics: public Building //subclass
 			return unsold;
 		}
 		map<int,Store*> getPossibleStores();
-=======
 		// Functions
->>>>>>> refs/remotes/origin/master
 		int send(Store to, int units);
 		void include(Store s);
 		void include(Store* ss, int sNum);
 		//Getters
 		int getCapacity();
-		map <int, Store*> getPossibleStores;
 		int getUnsold();
 };
 
@@ -116,7 +112,7 @@ class Store:public Building//subclass
 		int getDemand();
 		map <int, Logistics*> getPossibleLogistics;
 		int getPrice();
-		int getUnsatisfied();		
+		int getUnsatisfied();
 };
 
 class Distribution
@@ -125,7 +121,7 @@ class Distribution
 		const Logistics& from;
 		const Store& to;
 	public:
-		// Variables 
+		// Variables
 		const int price;
 		const int unitCost;
 		const int units;
@@ -136,7 +132,7 @@ class Distribution
 		int getNet();
 		// Getters
 		Logistics& getFrom();
-		Store& getTo();		
+		Store& getTo();
 };
 /** Zhen end */
 
