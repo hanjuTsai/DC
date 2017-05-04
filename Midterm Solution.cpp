@@ -60,12 +60,12 @@ class Building
 		int send(Logistics from, Store to, int units);
 };
 
-/**Zhen start*/ 
+/**Zhen start*/
 class Logistics: public Building //subclass
 {
 	private:
 		const int capacity;
-		map <int, Store*> possibleStores;
+		map<int,Store*> possibleStores;
 		int unsold;
 	public:
 		// Constructors
@@ -86,7 +86,7 @@ class Logistics: public Building //subclass
 		void include(Store* ss, int sNum);
 		//Getters
 		int getCapacity();
-		map <int, Store*> getPossibleStores;
+		map<int,Store*> getPossibleStores();
 		int getUnsold();
 };
 
@@ -94,7 +94,7 @@ class Store:public Building//subclass
 {
 	private:
 		const int demand;
-		map <int, Logistics*> possibleLogistics;
+		map<int,Logistics*> possibleLogistics;
 		const int price;
 		int unsatisfied;
 	public:
@@ -120,9 +120,9 @@ class Store:public Building//subclass
 		void include(Logistics* ls, int lNum);
 		// Getters
 		int getDemand();
-		map <int, Logistics*> getPossibleLogistics;
+		map<int,Logistics*> getPossibleLogistics();
 		int getPrice();
-		int getUnsatisfied();		
+		int getUnsatisfied();
 };
 
 class Distribution
@@ -131,7 +131,7 @@ class Distribution
 		const Logistics& from;
 		const Store& to;
 	public:
-		// Variables 
+		// Variables
 		const int price;
 		const int unitCost;
 		const int units;
@@ -142,7 +142,7 @@ class Distribution
 		int getNet();
 		// Getters
 		Logistics& getFrom();
-		Store& getTo();		
+		Store& getTo();
 };
 /** Zhen end */
 
