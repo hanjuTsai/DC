@@ -331,13 +331,15 @@ bool Plan::remove(Building* building)
 
 void Plan::update()
 {
-	for (int i = 0; i < lNum; i++)
+	for (map<int,Logistics*>::iterator lit = unsold.begin(); lit != unsold.end();
+		lit++)
 	{
-		ls[i]->include(ss, sNum);
-	}
-	for (int i = 0; i < sNum; i++)
-	{
-		ss[i]->include(ls, lNum);
+        for (map<int,Store*>::iterator sit = unsatisfied.begin();
+			sit != unsatisfied.end(); sit++)
+		{
+            lit->second->include(*sit->second);
+            sit->second->include(*lit->second);
+		}
 	}
 
 	vector<Distribution> bestOnes;
