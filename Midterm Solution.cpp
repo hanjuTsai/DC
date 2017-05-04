@@ -38,15 +38,15 @@ class Building
 		Building(int id, Point position,int cost);
 		virtual ~Building();
 	public:
-		int getCost()
+		int getCost() const
 		{
 			return cost;
 		}
-		int getRevenue()
+		int getRevenue() const
 		{
 			return revenue;
 		}
-		int getExpense()
+		int getExpense() const
 		{
 			return expense;
 		}
@@ -74,9 +74,9 @@ class Logistics: public Building //subclass
 		void include(Store* ss, int sNum);
 		void include(Store** ss, int sNum);
 		// Accessors
-		int getCapacity();
+		int getCapacity() const;
 		map<int,Store*> getPossibleStores();
-		int getUnsold();
+		int getUnsold() const;
 };
 
 class Store:public Building//subclass
@@ -95,10 +95,10 @@ class Store:public Building//subclass
 		void include(Logistics* ls, int lNum);
 		void include(Logistics** ls, int lNum);
 		// Accessors
-		int getDemand();
+		int getDemand() const;
 		map<int,Logistics*> getPossibleLogistics();
-		int getPrice();
-		int getUnsatisfied();
+		int getPrice() const;
+		int getUnsatisfied() const;
 };
 
 class Distribution
@@ -117,8 +117,8 @@ class Distribution
 		int getUnitNet();
 		int getNet();
 		// Accessors
-		Logistics& getFrom();
-		Store& getTo();
+		Logistics& getFrom() const;
+		Store& getTo() const;
 };
 /** Zhen end */
 
@@ -149,8 +149,8 @@ public:
 	// Accessors
     map<int,Logistics*>& getLogistics();
     map<int,Store*>& getStores();
-    int getRevenue();
-    int getExpense();
+    int getRevenue() const;
+    int getExpense() const;
     map<int,Logistics*>& getUnsold();
     map<int,Store*>& getUnsatisfied();
 };
