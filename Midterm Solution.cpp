@@ -21,15 +21,14 @@ class Point
 
 class Building
 {
-	private:
-		int revenue;
-		int expense;
-		map<int,Distribution*> distribution;
-		int costPerKM;
 	protected:
 		Building(int id, Point position,int cost);
 		virtual ~Building();
 	public:
+		int revenue;
+		int expense;
+		map<int,Distribution*> distribution;
+		static int costPerKM;
 		const int id;
 		const Point& position;
 		const int cost;
