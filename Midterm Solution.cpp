@@ -35,7 +35,6 @@ class Building
 		map<int,Distribution*> distribution;
 		int costPerKM;
 	protected:
-		Building();
 		Building(int id, Point position,int cost);
 		virtual ~Building();
 	public:
@@ -194,7 +193,7 @@ void Logistics::include(Store s)
 {
 	if(s.getDemand()!=0)
 	{
-		if(Building::costPerKM * s.position.manhattonDistance(this->position) < s.price)
+		if(Building::costPerKM * s.position.manhattonDistance(this->position) < s.getPrice())
 		{
 			possibleStores[s.id]=&s;
 		}
@@ -206,15 +205,28 @@ void Logistics::include(Store* ss, int sNum)
 	{
 		if(ss[i].getDemand()!=0)
 		{
-			if(Building::costPerKM * ss[i].position.manhattonDistance(this->position) < ss[i].price)
+			if(Building::costPerKM * ss[i].position.manhattonDistance(this->position) < ss[i].getPrice())
 			{
 				possibleStores[i]=&ss[i];
 			}
 		}
 	}
 }
+void Logistics::include(Store** ss, int sNum)
+{
+	for(int i=0; i<sNum; i++)
+	{
+		if(ss[i]->getDemand()!=0)
+		{
+			if(Building::costPerKM * ss[i]->position.manhattonDistance(this->position) < ss[i]->getPrice())
+			{
+				possibleStores[i]=ss[i];
+			}
+		}
+	}
+} 
 // Logistics-Getters
-int Logistics::getCapacity()
+int Logistics::getCapacity() const
 {
 	return capacity;
 }
@@ -222,7 +234,7 @@ map<int, Store*> Logistics::getPossibleStores()
 {
 	return possibleStores;
 }
-int Logistics::getUnsold()
+int Logistics::getUnsold() const
 {
 	return unsold;
 }
@@ -230,18 +242,14 @@ int Logistics::getUnsold()
 // Store
 // Store-Constructors
 Store::	Store(int id, Point position, int cost, int demand, int price)
-	: this->id(id)
-	, this->position(position)
-	, this->cost(cost)
-	, this->demand(demand)
-	, this->price(price)
+	: Building(id, position, cost), demand(demand), price(price)
 {
 	unsatisfied = demand;
 }
 // Store-Functions
 int Store::receive(Logistics from, int units)
 {
-	int receive = Building::send(*this, from, units);
+	int receive = Building::send(from, *this, units);
 	unsatisfied -= units;
 	return receive;
 }
@@ -268,8 +276,21 @@ void Store::include(Logistics* ls, int lNum)
 		}
 	}
 }
+void Store::include(Logistics** ls, int lNum)
+{
+	for(int i=0; i<lNum; i++)
+	{
+		if(ls[i]->getCapacity()!=0)
+		{
+			if(Building::costPerKM * ls[i]->position.manhattonDistance(this->position) < price)
+			{
+				possibleLogistics[i]=ls[i];
+			}
+		}
+	}
+} 
 // Store-Getters
-int Store::getDemand()
+int Store::getDemand() const
 {
 	return demand;
 }
@@ -277,11 +298,11 @@ map<int, Logistics*> Store::getPossibleLogistics()
 {
 	return possibleLogistics;
 }
-int Store::getPrice()
+int Store::getPrice() const
 {
 	return price;
 }
-int Store::getUnsatisfied()
+int Store::getUnsatisfied() const
 {
 	return unsatisfied;
 }
@@ -290,9 +311,10 @@ int Store::getUnsatisfied()
 // Distribution
 // Distribution-Constructors
 Distribution::Distribution(Logistics from, Store to)
-	: this->from(from)
-	, this->to(to)
+	: from(f), to(t)
 {}
+
+
 // Distribution-Functios
 int Distribution::getUnitNet()
 {
