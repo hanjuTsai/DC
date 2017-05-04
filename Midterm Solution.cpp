@@ -134,7 +134,7 @@ class Distribution
 		// Variables
 		const int price;
 		const int unitCost;
-		const int units;
+		int units;
 		// Constructors
 		Distribution(Logistics from, Store to);
 		// Functions
