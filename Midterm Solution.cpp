@@ -273,6 +273,7 @@ bool Plan::remove(Building* building)
 			l.expense -= expense;
 
             l.getPossibleStores().erase(id);
+            l.distribution.erase(id);
             delete d;
 		}
 		revenue -= s->revenue;
@@ -297,6 +298,7 @@ bool Plan::remove(Building* building)
 			s.expense -= expense;
 
             s.getPossibleLogistics().erase(id);
+            s.distribution.erase(id);
             delete d;
 		}
 		revenue -= l->revenue;
