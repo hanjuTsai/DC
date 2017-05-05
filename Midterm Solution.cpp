@@ -2,6 +2,7 @@
 #include <cmath>
 #include <map>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -64,12 +65,7 @@ class Logistics: public Building //subclass
 		int unsold;
 	public:
 		// Constructors
-<<<<<<< HEAD
-		Logistics(int id, Point position, int cost, int capacity);
-
-=======
 		Logistics(int id, Point& position, int cost, int capacity);
->>>>>>> refs/remotes/origin/master
 		// Functions
 		int send(Store& to, int units);
 		void include(Store& s);
@@ -90,12 +86,7 @@ class Store:public Building//subclass
 		int unsatisfied;
 	public:
 		// Constructors
-<<<<<<< HEAD
-		Store(int id, Point position, int cost, int demand, int price);
-
-=======
 		Store(int id, Point& position, int cost, int demand, int price);
->>>>>>> refs/remotes/origin/master
 		// Functions
 		int receive(Logistics& from, int units);
 		void include(Logistics& l);
@@ -164,7 +155,7 @@ public:
 /** JasonBaby end */
 
 bool moreNet(Building, Building);
-bool lessNet(Building, Building); 
+bool lessNet(Building, Building);
 bool lessOER(Building,Building);
 
 int main()
@@ -302,7 +293,7 @@ int main()
 		bestPlan1 = bestPlan2;
 	}
 	string bestplan = bestPlan1.toString();
-	
+
 
 
 	return 0;
@@ -322,13 +313,6 @@ bool lessOER(Building b1, Building b2)
 	return Building::compareOER(b1,b2) < 0;
 }
 
-
-
-
-Point:: Point(int x,int y):x(x),y(y)
-{
-
-}
 
 
 
