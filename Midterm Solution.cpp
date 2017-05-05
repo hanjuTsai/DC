@@ -71,7 +71,7 @@ class Logistics: public Building //subclass
 		void include(Store** ss, int sNum);
 		// Accessors
 		int getCapacity() const;
-		map<int,Store*> getPossibleStores();
+		map<int,Store*>& getPossibleStores();
 		int getUnsold() const;
 };
 
@@ -92,7 +92,7 @@ class Store:public Building//subclass
 		void include(Logistics** ls, int lNum);
 		// Accessors
 		int getDemand() const;
-		map<int,Logistics*> getPossibleLogistics();
+		map<int,Logistics*>& getPossibleLogistics();
 		int getPrice() const;
 		int getUnsatisfied() const;
 };
