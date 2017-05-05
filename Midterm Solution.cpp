@@ -17,13 +17,13 @@ class Point
 		const int x;
 		const int y;
 		Point(int x,int y);
-		int manhattonDistance(Point to);
+		int manhattonDistance(const Point& to) const;
 };
 
 class Building
 {
 	protected:
-		Building(int id, Point position,int cost);
+		Building(int id, Point& position,int cost);
 		virtual ~Building();
 	public:
 
@@ -47,12 +47,12 @@ class Building
 		{
 			return expense;
 		}
-		int manhattonDistance(Building to);
+		int manhattonDistance(const Building& to) const;
 		int getNet();
-		int compareNet(Building b1, Building b2);
+		static int compareNet(const Building& b1, const Building& b2);
 		double getOER();//OperatingExpenseRatio
-		int copareOER(Building b1, Building b2);//OperatingExpenseRatio
-		int send(Logistics from, Store to, int units);
+		static int compareOER(const Building& b1, const Building& b2);//OperatingExpenseRatio
+		static int send(Logistics& from, Store& to, int units);
 };
 
 /** Zhen start */
@@ -64,16 +64,20 @@ class Logistics: public Building //subclass
 		int unsold;
 	public:
 		// Constructors
+<<<<<<< HEAD
 		Logistics(int id, Point position, int cost, int capacity);
 
+=======
+		Logistics(int id, Point& position, int cost, int capacity);
+>>>>>>> refs/remotes/origin/master
 		// Functions
-		int send(Store to, int units);
-		void include(Store s);
+		int send(Store& to, int units);
+		void include(Store& s);
 		void include(Store* ss, int sNum);
 		void include(Store** ss, int sNum);
 		// Accessors
 		int getCapacity() const;
-		map<int,Store*> getPossibleStores();
+		map<int,Store*>& getPossibleStores();
 		int getUnsold() const;
 };
 
@@ -86,16 +90,20 @@ class Store:public Building//subclass
 		int unsatisfied;
 	public:
 		// Constructors
+<<<<<<< HEAD
 		Store(int id, Point position, int cost, int demand, int price);
 
+=======
+		Store(int id, Point& position, int cost, int demand, int price);
+>>>>>>> refs/remotes/origin/master
 		// Functions
-		int receive(Logistics from, int units);
-		void include(Logistics l);
+		int receive(Logistics& from, int units);
+		void include(Logistics& l);
 		void include(Logistics* ls, int lNum);
 		void include(Logistics** ls, int lNum);
 		// Accessors
 		int getDemand() const;
-		map<int,Logistics*> getPossibleLogistics();
+		map<int,Logistics*>& getPossibleLogistics();
 		int getPrice() const;
 		int getUnsatisfied() const;
 };
@@ -111,7 +119,7 @@ class Distribution
 		const int unitCost;
 		const int units;
 		// Constructors
-		Distribution(Logistics from, Store to);
+		Distribution(Logistics& from, Store& to);
 		// Functions
 		int getUnitNet();
 		int getNet();
@@ -335,7 +343,7 @@ Point:: Point(int x,int y):x(x),y(y)
 
 }
 
-int Point:: manhattonDistance(Point to)
+int Point:: manhattonDistance(const Point& to) const
 {
 	int manhattonDistance = 0;
 	manhattonDistance = abs(x - to.x) + abs(y - to.y);
