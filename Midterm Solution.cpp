@@ -314,23 +314,42 @@ void Plan::update()
 		}
 	}
 
-	Distribution* bestD = nullptr;
+	bool done = false;
 
-	for (map<int,Logistics*>::iterator lit = unsold.begin();
-		lit != unsold.end(); lit++)
+	while (!done)
 	{
-		Logistics* l = lit->second;
-		map<int,Store*>& possible = l->getPossibleStores();
-        for (map<int,Store*>::iterator sit = possible.begin();
-			sit != possible.end(); sit++)
+		Distribution* bestD = nullptr;
+		for (map<int,Logistics*>::iterator lit = unsold.begin();
+			lit != unsold.end(); lit++)
 		{
-            Store* s = sit->second;
-			Distribution* d = new Distribution(*l, *s);
-			d->units++;
+			Logistics* l = lit->second;
+			map<int,Store*>& possible = l->getPossibleStores();
+			for (map<int,Store*>::iterator sit = possible.begin();
+				sit != possible.end(); sit++)
+			{
+				Store* s = sit->second;
+				Distribution* d = new Distribution(*l, *s);
+				d->units++;
+
+				if (bestD == nullptr || d->getNet() > bestD->getNet())
+				{
+					bestD = d;
+				}
+			}
+		}
+
+		if (bestD == nullptr)
+		{
+            done = true;
+		}
+		else
+		{
+			Logistics l = bestD->getFrom();
+			Store s = bestD->getTo();
+			int units = min(l.getUnsold(), s.getUnsatisfied());
+			Building::send(l, s, units);
 		}
 	}
-
-	throw new NotImplemented();
 }
 
 // Accessors
