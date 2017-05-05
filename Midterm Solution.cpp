@@ -3,7 +3,7 @@
 #include <map>
 #include <exception>
 #include <vector>
-#include <sstream> 
+#include <sstream>
 
 using namespace std;
 
@@ -248,17 +248,19 @@ string Plan::toString() const
 {
 	stringstream result;
 	result << logistics.size();
-	for(map<int, logistics*>::iterator it = logistics.begin(); it ! = logistics.end(); it++)
+	for(auto it = logistics.begin();
+		it != logistics.end(); it++)
 	{
-		logistics* l = it -> first;
-		result << l;
+		int id = it->first;
+		result << id;
 	}
-	result << endl;	
+	result << endl;
 	result << stores.size();
-	for(map<int, Store*>::iterator it = stores.begin(); it ! = stores.end(); it++)
+	for(auto it = stores.begin();
+		it != stores.end(); it++)
 	{
-		stores* l = it -> first;
-		result << l;
+		int id = it -> first;
+		result << id;
 	}
 	result << endl;
 	for(int i = 1; i <= numStores; i++)
@@ -270,15 +272,14 @@ string Plan::toString() const
 		}
 
 		Store* s = stores.find(i)->second;
-		map<int,Distribution>& ds = s->getDistribution();
+		map<int,Distribution*>& ds = s->distribution;
 		for(int j= 1; j <= numLogistics; j++)
 		{
-			
-			if()
 
-			
+
+
 		}
-		
+
 		result << endl;
 	}
 	throw new NotImplemented();
