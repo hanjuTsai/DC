@@ -226,7 +226,7 @@ int Logistics::getCapacity() const
 {
 	return capacity;
 }
-map<int, Store*> Logistics::getPossibleStores()
+map<int, Store*>& Logistics::getPossibleStores()
 {
 	return possibleStores;
 }
@@ -289,7 +289,7 @@ int Store::getDemand() const
 {
 	return demand;
 }
-map<int, Logistics*> Store::getPossibleLogistics()
+map<int, Logistics*>& Store::getPossibleLogistics()
 {
 	return possibleLogistics;
 }
