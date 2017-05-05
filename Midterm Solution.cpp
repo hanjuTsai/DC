@@ -3,6 +3,7 @@
 #include <map>
 #include <exception>
 #include <vector>
+#include <sstream> 
 
 using namespace std;
 
@@ -245,7 +246,43 @@ int Plan::getNet() const
 
 string Plan::toString() const
 {
+	stringstream result;
+	result << logistics.size();
+	for(map<int, logistics*>::iterator it = logistics.begin(); it ! = logistics.end(); it++)
+	{
+		logistics* l = it -> first;
+		result << l;
+	}
+	result << endl;	
+	result << stores.size();
+	for(map<int, Store*>::iterator it = stores.begin(); it ! = stores.end(); it++)
+	{
+		stores* l = it -> first;
+		result << l;
+	}
+	result << endl;
+	for(int i = 1; i <= numStores; i++)
+	{
+		if(stores.find(i) == stores.end())
+		{
+			//TODO zeros
+			continue;
+		}
+
+		Store* s = stores.find(i)->second;
+		map<int,Distribution>& ds = s->getDistribution();
+		for(int j= 1; j <= numLogistics; j++)
+		{
+			
+			if()
+
+			
+		}
+		
+		result << endl;
+	}
 	throw new NotImplemented();
+
 }
 
 bool Plan::remove(Building* building)
