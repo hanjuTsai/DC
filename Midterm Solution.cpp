@@ -186,14 +186,14 @@ Logistics::Logistics(int id, Point position, int cost, int capacity)
 // Logistics-Functions
 int Logistics::send(Store to, int units)
 {
-	if(this->capacity==0)
-	  return 0;
-	if(to.getUnsatisfied()==0)
-	  return 0;
-	this->unsold -=units;
+	this->unsold -= units;
 	Distribution dis(*this, to);
 	revenue += to.getPrice() * units;
 	expense += dis.unitCost * units;
+	if(this->capacity == 0)
+	{
+		to.getPossibleLogistics().erase(this->id);
+	}
 	return units;
 }
 void Logistics::include(Store s)
@@ -245,14 +245,12 @@ Store::	Store(int id, Point position, int cost, int demand, int price)
 // Store-Functions
 int Store::receive(Logistics from, int units)
 {
-	if(this->demand==0)
-	  return 0;
-	if(from.getCapacity()==0)
-	  return 0;
 	this->unsatisfied -= units;
 	Distribution dis(from, *this);
 	revenue += this->price * units;
 	expense += dis.unitCost * units;
+	if(this->unsatisfied==0)
+	  from.getPossibleStores().erase(this->id);
 	return units;		
 }
 void Store::include(Logistics l)
