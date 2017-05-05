@@ -167,7 +167,7 @@ Point:: Point(int x,int y):x(x),y(y)
 
 }
 
-int Point:: manhattonDistance(Point to)
+int Point:: manhattonDistance(const Point& to) const
 {
 	int manhattonDistance = 0;
 	manhattonDistance = abs(x - to.x) + abs(y - to.y);
