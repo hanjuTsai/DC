@@ -23,13 +23,8 @@ class Point
 class Building
 {
 	protected:
-<<<<<<< HEAD
-		Building(int id, Point position,int cost);
-		virtual ~Building() ;
-=======
 		Building(int id, Point& position,int cost);
 		virtual ~Building();
->>>>>>> refs/remotes/origin/master
 	public:
 		int revenue;
 		int expense;
@@ -173,7 +168,7 @@ Point:: Point(int x,int y):x(x),y(y)
 
 }
 
-int Point:: manhattonDistance(Point to)
+int Point:: manhattonDistance(const Point& to) const
 {
 	int manhattonDistance = 0;
 	manhattonDistance = abs(x - to.x) + abs(y - to.y);
@@ -183,13 +178,13 @@ int Point:: manhattonDistance(Point to)
 /** Zhen start */
 // Logistics
 // Logistics-Constructors
-Logistics::Logistics(int id, Point position, int cost, int capacity)
+Logistics::Logistics(int id, Point& position, int cost, int capacity)
 	: Building(id, position, cost), capacity(capacity)
 {
 	unsold = capacity;
 }
 // Logistics-Functions
-int Logistics::send(Store to, int units)
+int Logistics::send(Store& to, int units)
 {
 	this->unsold -= units;
 	Distribution dis(*this, to);
@@ -201,7 +196,7 @@ int Logistics::send(Store to, int units)
 	}
 	return units;
 }
-void Logistics::include(Store s)
+void Logistics::include(Store& s)
 {
 	for(int i=0; i<possibleStores.size(); i++)
 	{
@@ -242,13 +237,13 @@ int Logistics::getUnsold() const
 
 // Store
 // Store-Constructors
-Store::	Store(int id, Point position, int cost, int demand, int price)
+Store::	Store(int id, Point& position, int cost, int demand, int price)
 	: Building(id, position, cost), demand(demand), price(price)
 {
 	unsatisfied = demand;
 }
 // Store-Functions
-int Store::receive(Logistics from, int units)
+int Store::receive(Logistics& from, int units)
 {
 	this->unsatisfied -= units;
 	Distribution dis(from, *this);
@@ -258,7 +253,7 @@ int Store::receive(Logistics from, int units)
 	  from.getPossibleStores().erase(this->id);
 	return units;		
 }
-void Store::include(Logistics l)
+void Store::include(Logistics& l)
 {
 	for(int i=0; i<possibleLogistics.size(); i++)
 	{
