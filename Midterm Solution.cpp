@@ -46,10 +46,10 @@ class Building
 		}
 		int manhattonDistance(const Building& to) const;
 		int getNet();
-		int compareNet(const Building& b1, const Building& b2);
+		static int compareNet(const Building& b1, const Building& b2);
 		double getOER();//OperatingExpenseRatio
-		int compareOER(const Building& b1, const Building& b2);//OperatingExpenseRatio
-		int send(Logistics& from, Store& to, int units);
+		static int compareOER(const Building& b1, const Building& b2);//OperatingExpenseRatio
+		static int send(Logistics& from, Store& to, int units);
 };
 
 /** Zhen start */
