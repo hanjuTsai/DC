@@ -174,35 +174,43 @@ int main()
 	int* logisticCost = new int[logisticsNum];
 	int* capacity = new int[logisticsNum];
 
-	for(int i = 0; i < storeNum; i++){
+	for(int i = 0; i < storeNum; i++)
+	{
 		int x, y;
 		cin >> x >> y;
 		Point p =  Point(x, y);
 		store[i] = &p;
 	}
-	for(int i = 0; i < logisticsNum; i++){
+	for(int i = 0; i < logisticsNum; i++)
+	{
 		int x, y;
 		cin >> x >> y;
 		Point p =  Point(x, y);
 		logistic[i] = &p;
 	}
-	for(int i = 0; i < storeNum; i++){
+	for(int i = 0; i < storeNum; i++)
+	{
 		cin >> demand[i];
 	}
-	for(int i = 0; i < storeNum; i++){
+	for(int i = 0; i < storeNum; i++)
+	{
 		cin >> storeCost[i];
 	}
-	for(int i = 0; i < storeNum; i++){
+	for(int i = 0; i < storeNum; i++)
+	{
 		cin >> price[i];
 	}
-	for(int i = 0; i < logisticsNum; i++){
+	for(int i = 0; i < logisticsNum; i++)
+	{
 		cin >> logisticCost[i];
 	}
-	for(int i = 0; i < logisticsNum; i++){
+	for(int i = 0; i < logisticsNum; i++)
+	{
 		cin >> capacity[i];
 	}
 	Store** stores = new Store*[storeNum];
-	for(int i = 0; i < storeNum; i++){
+	for(int i = 0; i < storeNum; i++)
+	{
 		int id = i;
 		Point position = *store[i];
 		int cost = storeCost[i];
@@ -212,7 +220,8 @@ int main()
 		stores[i] = &storeS;
 	}
 	Logistics** logistics = new Logistics*[logisticsNum];
-	for(int i = 0; i < logisticsNum; i++){
+	for(int i = 0; i < logisticsNum; i++)
+	{
 		int id = i+1;
 		Point position = *logistic[i];
 		int cost = logisticCost[i];
@@ -227,11 +236,14 @@ int main()
 	Plan bestPlan2 = originalPlan;
 
 	vector<Building*> allBuildings;
-	for(int i = 0; i < logisticsNum+storeNum; i++){
-		if(i < logisticsNum){
+	for(int i = 0; i < logisticsNum+storeNum; i++)
+	{
+		if(i < logisticsNum)
+		{
 			allBuildings[i] = logistics[i];
 		}
-		if(i >= logisticsNum){
+		if(i >= logisticsNum)
+		{
 			allBuildings[i] = stores[i - logisticsNum];
 		}
 
@@ -239,10 +251,12 @@ int main()
 
 	vector<Building*> allBuildings1;
 	for(int i = 0; i < logisticsNum+storeNum; i++){
-		if(i < logisticsNum){
+		if(i < logisticsNum)
+		{
 			allBuildings1[i] = logistics[i];
 		}
-		if(i >= logisticsNum){
+		if(i >= logisticsNum)
+		{
 			allBuildings1[i] = stores[i - logisticsNum];
 		}
 
