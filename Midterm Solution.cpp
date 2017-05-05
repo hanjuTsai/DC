@@ -303,8 +303,8 @@ bool Plan::remove(Building* building)
 
 void Plan::update()
 {
-	for (map<int,Logistics*>::iterator lit = unsold.begin(); lit != unsold.end();
-		lit++)
+	for (map<int,Logistics*>::iterator lit = unsold.begin();
+		lit != unsold.end(); lit++)
 	{
         for (map<int,Store*>::iterator sit = unsatisfied.begin();
 			sit != unsatisfied.end(); sit++)
@@ -314,7 +314,21 @@ void Plan::update()
 		}
 	}
 
-	vector<Distribution> bestOnes;
+	Distribution* bestD = nullptr;
+
+	for (map<int,Logistics*>::iterator lit = unsold.begin();
+		lit != unsold.end(); lit++)
+	{
+		Logistics* l = lit->second;
+		map<int,Store*>& possible = l->getPossibleStores();
+        for (map<int,Store*>::iterator sit = possible.begin();
+			sit != possible.end(); sit++)
+		{
+            Store* s = sit->second;
+			Distribution* d = new Distribution(*l, *s);
+			d->units++;
+		}
+	}
 
 	throw new NotImplemented();
 }
