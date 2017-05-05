@@ -5,26 +5,21 @@
 
 using namespace std;
 
-class Point
-{
-	private:
-		int x;
-		int y;
-	public:
-		int getX()
-		{
-			return x;
-		}
-		int getY()
-		{
-			return y;
-		}
-		Point(int x,int y);
-		int manhattonDistance(Point to);
-};
+class Point;
+class Building;
 class Distribution;
 class Logistics;
 class Store;
+
+class Point
+{
+	public:
+		const int x;
+		const int y;
+		Point(int x,int y);
+		int manhattonDistance(Point to);
+};
+
 class Building
 {
 	public:
@@ -37,31 +32,29 @@ class Building
 		int costPerKM;
 	protected:
 		Building(int id, Point position,int cost);
-		Building(const Building& b);
-		Building& operator=(const Building& b);
 		virtual ~Building();
 	public:
-		int getCost()
+		int getCost() const
 		{
 			return cost;
 		}
-		int getRevenue()
+		int getRevenue() const
 		{
 			return revenue;
 		}
-		int getExpense()
+		int getExpense() const
 		{
 			return expense;
 		}
 		int manhattonDistance(Building to);
 		int getNet();
 		int compareNet(Building b1, Building b2);
-		double getOperatingExpenseRatio();
-		int copareOER(Building b1, Building b2);
+		double getOER();//OperatingExpenseRatio
+		int copareOER(Building b1, Building b2);//OperatingExpenseRatio
 		int send(Logistics from, Store to, int units);
 };
 
-/**Zhen start*/
+/** Zhen start */
 class Logistics: public Building //subclass
 {
 	private:
@@ -71,16 +64,27 @@ class Logistics: public Building //subclass
 	public:
 		// Constructors
 		Logistics(int id, Point position, int cost, int capacity);
+
+		int getCapacity()
+		{
+			return capacity;
+		}
+		int getUnsold()
+		{
+			return unsold;
+		}
 		Logistics(const Logistics& l);
 		Logistics& operator=(const Logistics& l);
+
 		// Functions
 		int send(Store to, int units);
 		void include(Store s);
 		void include(Store* ss, int sNum);
-		//Getters
-		int getCapacity();
+		void include(Store** ss, int sNum);
+		// Accessors
+		int getCapacity() const;
 		map<int,Store*> getPossibleStores();
-		int getUnsold();
+		int getUnsold() const;
 };
 
 class Store:public Building//subclass
@@ -93,17 +97,32 @@ class Store:public Building//subclass
 	public:
 		// Constructors
 		Store(int id, Point position, int cost, int demand, int price);
+
+		int getDemand()
+		{
+			return demand;
+		}
+		int getPrice()
+		{
+			return price;
+		}
+		int getUnsatisfied()
+		{
+			return unsatisfied;
+		}
 		Store(const Store& s);
 		Store& operator=(const Store& s);
+
 		// Functions
 		int receive(Logistics from, int units);
 		void include(Logistics l);
 		void include(Logistics* ls, int lNum);
-		// Getters
-		int getDemand();
+		void include(Logistics** ls, int lNum);
+		// Accessors
+		int getDemand() const;
 		map<int,Logistics*> getPossibleLogistics();
-		int getPrice();
-		int getUnsatisfied();
+		int getPrice() const;
+		int getUnsatisfied() const;
 };
 
 class Distribution
@@ -118,12 +137,12 @@ class Distribution
 		const int units;
 		// Constructors
 		Distribution(Logistics from, Store to);
-		// Functios
+		// Functions
 		int getUnitNet();
 		int getNet();
-		// Getters
-		Logistics& getFrom();
-		Store& getTo();
+		// Accessors
+		Logistics& getFrom() const;
+		Store& getTo() const;
 };
 /** Zhen end */
 
@@ -143,9 +162,9 @@ public:
 	static int numLogistics;
 	static int numStores;
 	// Constructors
-	Plan(Logistics** ls, int lNum, Store** ss, int sNum);
 	Plan(const Plan& p);
 	Plan& operator=(const Plan& p);
+	Plan(Logistics**& ls, int lNum, Store**& ss, int sNum);
 	// Functions
 	int getNet() const;
 	string toString() const;
@@ -154,18 +173,19 @@ public:
 	// Accessors
     map<int,Logistics*>& getLogistics();
     map<int,Store*>& getStores();
-    int getRevenue();
-    int getExpense();
+    int getRevenue() const;
+    int getExpense() const;
     map<int,Logistics*>& getUnsold();
     map<int,Store*>& getUnsatisfied();
 };
 /** JasonBaby end */
 
-bool lessNet(Building, Building);
+bool lessNet(Building, Building); 
 bool moreOER(Building,Building);
 
 int main()
 {
+// <<<<<<< HEAD
 	int storeNum = 0;
 	int logisticsNum = 0;
 	int costPerkm = 0;
@@ -227,15 +247,16 @@ int main()
 	Plan originalPlan = Plan(logistics, logisticsNum, stores, storeNum );
 	Plan plan1 = originalPlan;
 	Plan plan2 = originalPlan;
-	Plan bestPlan = originalPlan;
+	Plan bestPlan1 = originalPlan;
+	Plan bestPlan2 = originalPlan;
 
 	vector<Building*> allBuildings;
 	for(int i = 0; i < logisticsNum+storeNum; i++){
 		if(i < logisticsNum){
-			allBuildings[i] = &logistics[i];
+			allBuildings[i] = logistics[i];
 		}
 		if(i >= logisticsNum){
-			allBuildings[i] = &stores[i - logisticsNum];
+			allBuildings[i] = stores[i - logisticsNum];
 		}
 
 	}
@@ -243,10 +264,10 @@ int main()
 	vector<Building*> allBuildings1;
 	for(int i = 0; i < logisticsNum+storeNum; i++){
 		if(i < logisticsNum){
-			allBuildings1[i] = &logistics[i];
+			allBuildings1[i] = logistics[i];
 		}
 		if(i >= logisticsNum){
-			allBuildings1[i] = &stores[i - logisticsNum];
+			allBuildings1[i] = stores[i - logisticsNum];
 		}
 
 	}
@@ -257,10 +278,10 @@ int main()
 		plan1.update();
 		sort(allBuildings.begin(),allBuildings.end(), lessNet);
 		plan1.remove(allBuildings[0]);
-		allBuildings.erase(allBuildings[0]);
-		if(plan1.getNet() > bestPlan.getNet())
+		allBuildings.erase(allBuildings.begin());
+		if(plan1.getNet() > bestPlan1.getNet())
 		{
-			bestPlan = plan1;
+			bestPlan1 = plan1;
 		}
 
 
@@ -270,23 +291,27 @@ int main()
 		plan2.update();
 		sort(allBuildings1.begin(),allBuildings1.end(), moreOER);
 		plan2.remove(allBuildings1[0]);
-		allBuildings1.erase(allBuildings1[0]);
-		if(plan2.getNet > bestPlan.getNet())
+		allBuildings1.erase(allBuildings1.begin());
+		if(plan2.getNet() > bestPlan2.getNet())
 		{
-			bestPlan = plan2;
+			bestPlan2 = plan2;
 		}
 
 	}
 
+	if(bestPlan1.getNet() < bestPlan2.getNet())
+	{
+		bestPlan1 = bestPlan2;
+	}
+	string bestplan = bestPlan1.toString();
+	
+
+// =======
+// >>>>>>> master
 
 	return 0;
 }
 
-/** JasonBaby start */
-// For Plan
-
-
-/** JasonBaby end */
 
 
 bool lessNet(Building b1, Building b2)
@@ -299,6 +324,19 @@ bool moreOER(Building b1, Building b2)
 	return Building::compareOER(b1,b2) > 0;
 }
 
+
+
+
+/** JasonBaby start */
+// For Plan
+
+
+/** JasonBaby end */
+
+Point:: Point(int x,int y):x(x),y(y)
+{
+
+}
 
 int Point:: manhattonDistance(Point to)
 {
