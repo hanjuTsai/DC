@@ -268,7 +268,7 @@ int main()
 	while(allBuildings.size() > 0)
 	{
 		plan1.update();
-		sort(allBuildings.begin(),allBuildings.end(), moreNet);
+		sort(&allBuildings[0],&allBuildings[-1], moreNet);
 		plan1.remove(allBuildings[-1]);
 		allBuildings.erase(allBuildings.end());
 		if(plan1.getNet() > bestPlan1.getNet())
@@ -281,7 +281,7 @@ int main()
 	while(allBuildings1.size() > 0)
 	{
 		plan2.update();
-		sort(allBuildings1.begin(),allBuildings1.end(), lessOER);
+		sort(&allBuildings1[0],&allBuildings1[-1], lessOER);
 		plan2.remove(allBuildings1[-1]);
 		allBuildings1.erase(allBuildings1.end());
 		if(plan2.getNet() > bestPlan2.getNet())
