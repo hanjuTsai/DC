@@ -111,8 +111,8 @@ class Distribution
 		int getUnitNet();
 		int getNet();
 		// Accessors
-		const Logistics& getFrom() const;
-		const Store& getTo() const;
+		Logistics& getFrom() const;
+		Store& getTo() const;
 };
 /** Zhen end */
 
