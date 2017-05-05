@@ -72,7 +72,7 @@ class Logistics: public Building //subclass
 		void include(Store** ss, int sNum);
 		// Accessors
 		int getCapacity() const;
-		map<int,Store*> getPossibleStores();
+		map<int,Store*>& getPossibleStores();
 		int getUnsold() const;
 };
 
@@ -93,7 +93,7 @@ class Store:public Building//subclass
 		void include(Logistics** ls, int lNum);
 		// Accessors
 		int getDemand() const;
-		map<int,Logistics*> getPossibleLogistics();
+		map<int,Logistics*>& getPossibleLogistics();
 		int getPrice() const;
 		int getUnsatisfied() const;
 };
@@ -340,8 +340,8 @@ bool Plan::remove(Building* building)
 
 void Plan::update()
 {
-	for (map<int,Logistics*>::iterator lit = unsold.begin(); lit != unsold.end();
-		lit++)
+	for (map<int,Logistics*>::iterator lit = unsold.begin();
+		lit != unsold.end(); lit++)
 	{
         for (map<int,Store*>::iterator sit = unsatisfied.begin();
 			sit != unsatisfied.end(); sit++)
@@ -351,9 +351,42 @@ void Plan::update()
 		}
 	}
 
-	vector<Distribution> bestOnes;
+	bool done = false;
 
-	throw new NotImplemented();
+	while (!done)
+	{
+		Distribution* bestD = nullptr;
+		for (map<int,Logistics*>::iterator lit = unsold.begin();
+			lit != unsold.end(); lit++)
+		{
+			Logistics* l = lit->second;
+			map<int,Store*>& possible = l->getPossibleStores();
+			for (map<int,Store*>::iterator sit = possible.begin();
+				sit != possible.end(); sit++)
+			{
+				Store* s = sit->second;
+				Distribution* d = new Distribution(*l, *s);
+				d->units++;
+
+				if (bestD == nullptr || d->getNet() > bestD->getNet())
+				{
+					bestD = d;
+				}
+			}
+		}
+
+		if (bestD == nullptr)
+		{
+            done = true;
+		}
+		else
+		{
+			Logistics l = bestD->getFrom();
+			Store s = bestD->getTo();
+			int units = min(l.getUnsold(), s.getUnsatisfied());
+			Building::send(l, s, units);
+		}
+	}
 }
 
 // Accessors
