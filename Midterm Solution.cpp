@@ -22,18 +22,19 @@ class Point
 
 class Building
 {
-	public:
-		int id;
-		Point& position;
-		int cost;
-		int revenue;
-		int expense;
-		map<int,Distribution*> distribution;
-		int costPerKM;
 	protected:
 		Building(int id, Point position,int cost);
 		virtual ~Building();
 	public:
+
+		int revenue;
+		int expense;
+		map<int,Distribution*> distribution;
+		static int costPerKM;
+		const int id;
+		const Point& position;
+		const int cost;
+
 		int getCost() const
 		{
 			return cost;
@@ -65,17 +66,6 @@ class Logistics: public Building //subclass
 		// Constructors
 		Logistics(int id, Point position, int cost, int capacity);
 
-		int getCapacity()
-		{
-			return capacity;
-		}
-		int getUnsold()
-		{
-			return unsold;
-		}
-		Logistics(const Logistics& l);
-		Logistics& operator=(const Logistics& l);
-
 		// Functions
 		int send(Store to, int units);
 		void include(Store s);
@@ -97,21 +87,6 @@ class Store:public Building//subclass
 	public:
 		// Constructors
 		Store(int id, Point position, int cost, int demand, int price);
-
-		int getDemand()
-		{
-			return demand;
-		}
-		int getPrice()
-		{
-			return price;
-		}
-		int getUnsatisfied()
-		{
-			return unsatisfied;
-		}
-		Store(const Store& s);
-		Store& operator=(const Store& s);
 
 		// Functions
 		int receive(Logistics from, int units);
@@ -180,12 +155,13 @@ public:
 };
 /** JasonBaby end */
 
+bool moreNet(Building, Building);
 bool lessNet(Building, Building); 
-bool moreOER(Building,Building);
+bool lessOER(Building,Building);
 
 int main()
 {
-// <<<<<<< HEAD
+
 	int storeNum = 0;
 	int logisticsNum = 0;
 	int costPerkm = 0;
@@ -276,9 +252,9 @@ int main()
 	while(allBuildings.size() > 0)
 	{
 		plan1.update();
-		sort(allBuildings.begin(),allBuildings.end(), lessNet);
-		plan1.remove(allBuildings[0]);
-		allBuildings.erase(allBuildings.begin());
+		sort(allBuildings.begin(),allBuildings.end(), moreNet);
+		plan1.remove(allBuildings[-1]);
+		allBuildings.erase(allBuildings.end());
 		if(plan1.getNet() > bestPlan1.getNet())
 		{
 			bestPlan1 = plan1;
@@ -289,9 +265,9 @@ int main()
 	while(allBuildings1.size() > 0)
 	{
 		plan2.update();
-		sort(allBuildings1.begin(),allBuildings1.end(), moreOER);
-		plan2.remove(allBuildings1[0]);
-		allBuildings1.erase(allBuildings1.begin());
+		sort(allBuildings1.begin(),allBuildings1.end(), lessOER);
+		plan2.remove(allBuildings1[-1]);
+		allBuildings1.erase(allBuildings1.end());
 		if(plan2.getNet() > bestPlan2.getNet())
 		{
 			bestPlan2 = plan2;
@@ -306,24 +282,31 @@ int main()
 	string bestplan = bestPlan1.toString();
 	
 
-// =======
-// >>>>>>> master
 
 	return 0;
 }
 
-
+bool moreNet(Building b1, Building b2)
+{
+	return Building::compareNet(b1,b2) > 0;
+}
 
 bool lessNet(Building b1, Building b2)
 {
 	return Building::compareNet(b1,b2) < 0;
-
 }
-bool moreOER(Building b1, Building b2)
+bool lessOER(Building b1, Building b2)
 {
-	return Building::compareOER(b1,b2) > 0;
+	return Building::compareOER(b1,b2) < 0;
 }
 
+
+
+
+Point:: Point(int x,int y):x(x),y(y)
+{
+
+}
 
 
 
