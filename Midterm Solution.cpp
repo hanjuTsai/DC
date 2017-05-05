@@ -172,6 +172,9 @@ int main()
 	int* price = new int[storeNum];
 	int* logisticCost = new int[logisticsNum];
 	int* capacity = new int[logisticsNum];
+	Building::costPerKM = costPerkm;
+	Plan::numLogistics = logisticsNum;
+	Plan::numStores = storeNum;
 
 	for(int i = 0; i < storeNum; i++)
 	{
