@@ -17,14 +17,19 @@ class Point
 		const int x;
 		const int y;
 		Point(int x,int y);
-		int manhattonDistance(Point to);
+		int manhattonDistance(const Point& to) const;
 };
 
 class Building
 {
 	protected:
+<<<<<<< HEAD
 		Building(int id, Point position,int cost);
 		virtual ~Building() ;
+=======
+		Building(int id, Point& position,int cost);
+		virtual ~Building();
+>>>>>>> refs/remotes/origin/master
 	public:
 		int revenue;
 		int expense;
@@ -45,12 +50,12 @@ class Building
 		{
 			return expense;
 		}
-		int manhattonDistance(Building& to);
+		int manhattonDistance(const Building& to) const;
 		int getNet();
-		int compareNet(Building b1, Building b2);
+		int compareNet(const Building& b1, const Building& b2);
 		double getOER();//OperatingExpenseRatio
-		int copareOER(Building b1, Building b2);//OperatingExpenseRatio
-		int send(Logistics from, Store to, int units);
+		int compareOER(const Building& b1, const Building& b2);//OperatingExpenseRatio
+		int send(Logistics& from, Store& to, int units);
 };
 
 /** Zhen start */
@@ -62,10 +67,10 @@ class Logistics: public Building //subclass
 		int unsold;
 	public:
 		// Constructors
-		Logistics(int id, Point position, int cost, int capacity);
+		Logistics(int id, Point& position, int cost, int capacity);
 		// Functions
-		int send(Store to, int units);
-		void include(Store s);
+		int send(Store& to, int units);
+		void include(Store& s);
 		void include(Store* ss, int sNum);
 		void include(Store** ss, int sNum);
 		// Accessors
@@ -83,10 +88,10 @@ class Store: public Building//subclass
 		int unsatisfied;
 	public:
 		// Constructors
-		Store(int id, Point position, int cost, int demand, int price);
+		Store(int id, Point& position, int cost, int demand, int price);
 		// Functions
-		int receive(Logistics from, int units);
-		void include(Logistics l);
+		int receive(Logistics& from, int units);
+		void include(Logistics& l);
 		void include(Logistics* ls, int lNum);
 		void include(Logistics** ls, int lNum);
 		// Accessors
