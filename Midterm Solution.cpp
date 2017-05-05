@@ -44,7 +44,7 @@ class Building
 		{
 			return expense;
 		}
-		int manhattonDistance(Building to);
+		int manhattonDistance(Building& to);
 		int getNet();
 		int compareNet(Building b1, Building b2);
 		double getOER();//OperatingExpenseRatio
@@ -111,8 +111,8 @@ class Distribution
 		int getUnitNet();
 		int getNet();
 		// Accessors
-		Logistics& getFrom() const;
-		Store& getTo() const;
+		const Logistics& getFrom() const;
+		const Store& getTo() const;
 };
 /** Zhen end */
 
