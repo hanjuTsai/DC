@@ -75,7 +75,7 @@ class Logistics: public Building //subclass
 		int getUnsold() const;
 };
 
-class Store:public Building//subclass
+class Store: public Building//subclass
 {
 	private:
 		const int demand;
@@ -100,8 +100,8 @@ class Store:public Building//subclass
 class Distribution
 {
 	private:
-		const Logistics& from;
-		const Store& to;
+		Logistics& from;
+		Store& to;
 	public:
 		// Variables
 		const int price;
@@ -113,8 +113,8 @@ class Distribution
 		int getUnitNet();
 		int getNet();
 		// Accessors
-		Logistics& getFrom() const;
-		Store& getTo() const;
+		Logistics& getFrom();
+		Store& getTo();
 };
 /** Zhen end */
 
@@ -460,3 +460,164 @@ int Point:: manhattonDistance(const Point& to) const
 	manhattonDistance = abs(x - to.x) + abs(y - to.y);
 	return manhattonDistance;
 }
+
+/** Zhen start */
+// Logistics
+// Logistics-Constructors
+Logistics::Logistics(int id, Point& position, int cost, int capacity)
+	: Building(id, position, cost), capacity(capacity)
+{
+	unsold = capacity;
+}
+// Logistics-Functions
+int Logistics::send(Store& to, int units)
+{
+	this->unsold -= units;
+	Distribution dis(*this, to);
+	revenue += to.getPrice() * units;
+	expense += dis.unitCost * units;
+	if(this->unsold == 0)
+	{
+		to.getPossibleLogistics().erase(this->id);
+	}
+	return units;
+}
+void Logistics::include(Store& s)
+{
+	if (possibleStores.find(s.id) != possibleStores.end())
+	{
+		return;
+	}
+	if(s.getDemand() == 0)
+	{
+		return;
+	}
+	if(Building::costPerKM * this->manhattonDistance(s) < s.getPrice())
+	{
+		possibleStores[s.id] = &s;
+	}
+}
+void Logistics::include(Store* ss, int sNum)
+{
+	for(int i=0; i<sNum; i++)
+	  this->include(ss[i]);
+}
+void Logistics::include(Store** ss, int sNum)
+{
+	for(int i=0; i<sNum; i++)
+	  this->include(*ss[i]);
+}
+// Logistics-Getters
+int Logistics::getCapacity() const
+{
+	return capacity;
+}
+map<int, Store*>& Logistics::getPossibleStores()
+{
+	return possibleStores;
+}
+int Logistics::getUnsold() const
+{
+	return unsold;
+}
+
+// Store
+// Store-Constructors
+Store::	Store(int id, Point& position, int cost, int demand, int price)
+	: Building(id, position, cost), demand(demand), price(price)
+{
+	unsatisfied = demand;
+}
+// Store-Functions
+int Store::receive(Logistics& from, int units)
+{
+	this->unsatisfied -= units;
+	Distribution dis(from, *this);
+	revenue += this->price * units;
+	expense += dis.unitCost * units;
+	if(this->unsatisfied==0)
+	  from.getPossibleStores().erase(this->id);
+	return units;
+}
+void Store::include(Logistics& l)
+{
+	if(possibleLogistics.find(l.id) != possibleLogistics.end())
+	{
+		return;
+	}
+	if(l.getCapacity() == 0)
+	{
+		return;
+	}
+	if(Building::costPerKM * this->manhattonDistance(l) < price)
+	{
+		possibleLogistics[l.id] = &l;
+	}
+}
+void Store::include(Logistics* ls, int lNum)
+{
+	for(int i=0; i<lNum; i++)
+	{
+		this->include(ls[i]);
+	}
+}
+void Store::include(Logistics** ls, int lNum)
+{
+	for(int i=0; i<lNum; i++)
+	{
+		this->include(*ls[i]);
+	}
+}
+// Store-Getters
+int Store::getDemand() const
+{
+	return demand;
+}
+map<int, Logistics*>& Store::getPossibleLogistics()
+{
+	return possibleLogistics;
+}
+int Store::getPrice() const
+{
+	return price;
+}
+int Store::getUnsatisfied() const
+{
+	return unsatisfied;
+}
+
+
+// Distribution
+// Distribution-Constructors
+Distribution::Distribution(Logistics& from, Store& to)
+	: from(from)
+	, to(to)
+	, price(to.getPrice())
+	, unitCost(Building::costPerKM * from.manhattonDistance(to))
+	, units(0)
+{}
+
+
+// Distribution-Functios
+int Distribution::getUnitNet()
+{
+	int getUnitNet = price-unitCost;
+	return getUnitNet;
+}
+int Distribution::getNet()
+{
+	int getNet = units * this->getUnitNet();
+	return getNet;
+}
+// Distribution-Getters
+Logistics& Distribution::getFrom()
+{
+	return from;
+}
+Store& Distribution::getTo()
+{
+	return to;
+}
+
+
+/** Zhen end */
