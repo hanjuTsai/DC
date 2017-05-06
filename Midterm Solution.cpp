@@ -515,10 +515,7 @@ int Building:: send(Logistics& from, Store& to, int units)
 {
 	for(int i = 0; i < distribution.size(); i++)
 	{
-		if((from.id == (distribution[i]->from).id)&&(to.id == (distribution[i]->to).id))
-        {
-            units += distribution[i]->units;
-        }
+		units += distribution[i]->units;
 	}
 	from.send(to,units);
 	to.receive(from,units);
