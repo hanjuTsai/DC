@@ -1,12 +1,8 @@
 #include <iostream>
 #include <cmath>
 #include <map>
-<<<<<<< HEAD
-#include <algorithm>
-=======
 #include <vector>
 #include <sstream>
->>>>>>> refs/remotes/origin/master
 
 using namespace std;
 
@@ -480,7 +476,7 @@ int Logistics::send(Store& to, int units)
 	Distribution dis(*this, to);
 	revenue += to.getPrice() * units;
 	expense += dis.unitCost * units;
-	if(this->capacity == 0)
+	if(this->unsold == 0)
 	{
 		to.getPossibleLogistics().erase(this->id);
 	}
@@ -490,7 +486,7 @@ void Logistics::include(Store& s)
 {
 	for(int i=0; i<possibleStores.size(); i++)
 	{
-		if( s.id == (*possibleStores[i]).id)
+		if(possibleStores.find(s.id) == &s)
 		  return;
 	}
 	if(s.getDemand()!=0)
@@ -547,7 +543,7 @@ void Store::include(Logistics& l)
 {
 	for(int i=0; i<possibleLogistics.size(); i++)
 	{
-		if(l.id == (*possibleLogistics[i]).id)
+		if(possibleLogistics.find(l.id) == &l)
 		  return;
 	}
 	if(l.getCapacity()!=0)
@@ -598,7 +594,7 @@ Distribution::Distribution(Logistics& from, Store& to)
 	, to(to)
 	, price(to.getPrice())
 	, unitCost(Building::costPerKM * from.manhattonDistance(to))
-	, units(min(from.getCapacity(), to.getDemand()))
+	, units(0)
 {}
 
 
