@@ -1,7 +1,6 @@
 #include <iostream>
 #include <cmath>
 #include <map>
-#include <exception>
 #include <vector>
 #include <sstream>
 
@@ -160,13 +159,6 @@ int main()
 }
 
 /** JasonBaby start */
-
-class NotImplemented : public std::logic_error
-{
-public:
-    NotImplemented() : std::logic_error("Not implemented."){};
-    NotImplemented(string err) : std::logic_error(err){};
-};
 
 // Plan
 // Constructors
