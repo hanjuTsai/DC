@@ -312,6 +312,7 @@ bool Plan::remove(Building* building)
 			int expense = d->unitCost * d->units;
 			l.revenue -= revenue;
 			l.expense -= expense;
+			l.unsold += d->units;
 
             l.getPossibleStores().erase(id);
             l.distribution.erase(id);
@@ -337,6 +338,7 @@ bool Plan::remove(Building* building)
 			int expense = d->unitCost * d->units;
 			s.revenue -= revenue;
 			s.expense -= expense;
+			s.unsatisfied += d->units;
 
             s.getPossibleLogistics().erase(id);
             s.distribution.erase(id);
