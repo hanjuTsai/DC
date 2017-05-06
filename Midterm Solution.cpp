@@ -60,8 +60,8 @@ class Logistics: public Building //subclass
 	private:
 		const int capacity;
 		map<int,Store*> possibleStores;
-		int unsold;
 	public:
+		int unsold;
 		// Constructors
 		Logistics(int id, Point& position, int cost, int capacity);
 		// Functions
@@ -81,8 +81,8 @@ class Store:public Building//subclass
 		const int demand;
 		map<int,Logistics*> possibleLogistics;
 		const int price;
-		int unsatisfied;
 	public:
+		int unsatisfied;
 		// Constructors
 		Store(int id, Point& position, int cost, int demand, int price);
 		// Functions
