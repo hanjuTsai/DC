@@ -403,6 +403,11 @@ void Plan::update()
 			Store s = bestD->getTo();
 			int units = min(l.getUnsold(), s.getUnsatisfied());
 			Building::send(l, s, units);
+
+			int price = bestD->price;
+			int unitCost = bestD->unitCost;
+			revenue += price * units;
+			expense += unitCost *= units;
 		}
 	}
 }
