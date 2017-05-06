@@ -484,17 +484,17 @@ int Logistics::send(Store& to, int units)
 }
 void Logistics::include(Store& s)
 {
-	for(int i=0; i<possibleStores.size(); i++)
+	if (possibleStores.find(s.id) != possibleStores.end())
 	{
-		if(possibleStores.find(s.id) == &s)
-		  return;
+		return;
 	}
-	if(s.getDemand()!=0)
+	if(s.getDemand() == 0)
 	{
-		if(Building::costPerKM * this->manhattonDistance(s) < s.getPrice())
-		{
-			possibleStores[s.id]=&s;
-		}
+		return;
+	}
+	if(Building::costPerKM * this->manhattonDistance(s) < s.getPrice())
+	{
+		possibleStores[s.id] = &s;
 	}
 }
 void Logistics::include(Store* ss, int sNum)
@@ -541,17 +541,17 @@ int Store::receive(Logistics& from, int units)
 }
 void Store::include(Logistics& l)
 {
-	for(int i=0; i<possibleLogistics.size(); i++)
+	if(possibleLogistics.find(l.id) != possibleLogistics.end())
 	{
-		if(possibleLogistics.find(l.id) == &l)
-		  return;
+		return;
 	}
-	if(l.getCapacity()!=0)
+	if(l.getCapacity() == 0)
 	{
-		if(Building::costPerKM * this->manhattonDistance(l) < price)
-		{
-			possibleLogistics[l.id]=&l;
-		}
+		return;
+	}
+	if(Building::costPerKM * this->manhattonDistance(l) < price)
+	{
+		possibleLogistics[l.id] = &l;
 	}
 }
 void Store::include(Logistics* ls, int lNum)
