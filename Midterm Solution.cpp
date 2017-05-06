@@ -393,8 +393,8 @@ void Plan::update()
 		}
 		else
 		{
-			Logistics l = bestD->getFrom();
-			Store s = bestD->getTo();
+			Logistics& l = bestD->getFrom();
+			Store& s = bestD->getTo();
 			int units = min(l.getUnsold(), s.getUnsatisfied());
 			Building::send(l, s, units);
 
@@ -402,6 +402,15 @@ void Plan::update()
 			int unitCost = bestD->unitCost;
 			revenue += price * units;
 			expense += unitCost *= units;
+
+			if (l.getUnsold() == 0)
+			{
+                unsold.erase(l.id);
+			}
+			if (s.getUnsatisfied() == 0)
+			{
+				unsatisfied.erase(s.id);
+			}
 		}
 	}
 }
