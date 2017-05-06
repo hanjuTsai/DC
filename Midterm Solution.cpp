@@ -99,8 +99,8 @@ class Store: public Building//subclass
 class Distribution
 {
 	private:
-		const Logistics& from;
-		const Store& to;
+		Logistics& from;
+		Store& to;
 	public:
 		// Variables
 		const int price;
@@ -112,8 +112,8 @@ class Distribution
 		int getUnitNet();
 		int getNet();
 		// Accessors
-		Logistics& getFrom() const;
-		Store& getTo() const;
+		Logistics& getFrom();
+		Store& getTo();
 };
 /** Zhen end */
 
@@ -220,7 +220,7 @@ void Logistics::include(Store** ss, int sNum)
 {
 	for(int i=0; i<sNum; i++)
 	  this->include(*ss[i]);
-} 
+}
 // Logistics-Getters
 int Logistics::getCapacity() const
 {
@@ -251,7 +251,7 @@ int Store::receive(Logistics& from, int units)
 	expense += dis.unitCost * units;
 	if(this->unsatisfied==0)
 	  from.getPossibleStores().erase(this->id);
-	return units;		
+	return units;
 }
 void Store::include(Logistics& l)
 {
@@ -259,7 +259,7 @@ void Store::include(Logistics& l)
 	{
 		if(l.id == (*possibleLogistics[i]).id)
 		  return;
-	}		
+	}
 	if(l.getCapacity()!=0)
 	{
 		if(Building::costPerKM * this->manhattonDistance(l) < price)
@@ -281,7 +281,7 @@ void Store::include(Logistics** ls, int lNum)
 	{
 		this->include(*ls[i]);
 	}
-} 
+}
 // Store-Getters
 int Store::getDemand() const
 {
@@ -324,11 +324,11 @@ int Distribution::getNet()
 	return getNet;
 }
 // Distribution-Getters
-const Logistics& Distribution::getFrom() const
+Logistics& Distribution::getFrom()
 {
 	return from;
 }
-const Store& Distribution::getTo() const
+Store& Distribution::getTo()
 {
 	return to;
 }
