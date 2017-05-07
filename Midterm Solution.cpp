@@ -45,6 +45,7 @@ class Building
         static int compareOER(const Building& b1,const Building& b2);//OperatingExpenseRatio
         static int send(Logistics& from, Store& to, int units);
 };
+int Building::costPerKM;
 
 /** Zhen start */
 class Logistics: public Building //subclass
@@ -69,7 +70,6 @@ class Logistics: public Building //subclass
 
 class Store: public Building//subclass
 {
-
 	private:
 		const int demand;
 		map<int,Logistics*> possibleLogistics;
@@ -142,6 +142,8 @@ public:
     map<int,Logistics*>& getUnsold();
     map<int,Store*>& getUnsatisfied();
 };
+int Plan::numLogistics;
+int Plan::numStores;
 /** JasonBaby end */
 
 bool moreNet(Building*, Building*);
