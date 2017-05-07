@@ -153,7 +153,6 @@ bool lessOER(Building*, Building*);
 
 int main()
 {
-
 	int storeNum = 0;
 	int logisticsNum = 0;
 	int costPerkm = 0;
@@ -169,19 +168,19 @@ int main()
 	Plan::numLogistics = logisticsNum;
 	Plan::numStores = storeNum;
 
-	for(int i = 0; i < storeNum; i++)
-	{
-		int x, y;
-		cin >> x >> y;
-		Point* p = new Point(x, y);
-		store[i] = p;
-	}
 	for(int i = 0; i < logisticsNum; i++)
 	{
 		int x, y;
 		cin >> x >> y;
 		Point* p = new Point(x, y);
 		logistic[i] = p;
+	}
+	for(int i = 0; i < storeNum; i++)
+	{
+		int x, y;
+		cin >> x >> y;
+		Point* p = new Point(x, y);
+		store[i] = p;
 	}
 	for(int i = 0; i < storeNum; i++)
 	{
@@ -206,12 +205,12 @@ int main()
 	Store** stores = new Store*[storeNum];
 	for(int i = 0; i < storeNum; i++)
 	{
-		int id = i+1;
+		int id = i + 1;
 		Point* position = store[i];
 		int cost = storeCost[i];
 		int demand2 = demand[i];
-		int capacity2 = capacity[i];
-		Store* storeS = new Store(id, *position, cost, demand2, capacity2);
+		int price2 = price[i];
+		Store* storeS = new Store(id, *position, cost, demand2, price2);
 		stores[i] = storeS;
 	}
 	Logistics** logistics = new Logistics*[logisticsNum];
@@ -224,9 +223,8 @@ int main()
 		Logistics* logisticS = new Logistics(id, *position, cost, capacity2);
 		logistics[i] = logisticS;
 	}
+
 	Plan original = Plan(logistics, logisticsNum, stores, storeNum);
-
-
 	Plan current = original;
 	string result = original.toString();
 	int bestNet = original.getNet();
@@ -256,8 +254,15 @@ int main()
 		current.remove(worst);
 		allBuildings.pop_back();
 	}
+	current.update();
+	if(current.getNet() > bestNet)
+	{
+		bestNet = current.getNet();
+		result = current.toString();
+	}
 
-    cout << result;
+	/** !!!DEBUG!!! */
+    cout << result;// << endl << endl << bestNet;
 
 	return 0;
 }
@@ -293,7 +298,7 @@ Plan::Plan(Logistics**& ls, int lNum, Store**& ss, int sNum)
 		Logistics* l = ls[i];
         logistics[l->id] = l;
         unsold[l->id] = l;
-        expense += l->expense;
+        expense += l->cost;
 	}
 
     for (int i = 0; i < sNum; i++)
@@ -301,7 +306,7 @@ Plan::Plan(Logistics**& ls, int lNum, Store**& ss, int sNum)
 		Store* s = ss[i];
         stores[s->id] = s;
         unsatisfied[s->id] = s;
-        expense += s->expense;
+        expense += s->cost;
 	}
 
     for (int i = 0; i < lNum; i++)
@@ -435,7 +440,7 @@ bool Plan::remove(Building* building)
 
             l.getPossibleStores().erase(id);
             l.distribution.erase(id);
-            delete d;
+			delete d;
 		}
 		revenue -= s->revenue;
 		expense -= s->expense;
@@ -520,7 +525,7 @@ void Plan::update()
 			int price = bestD->price;
 			int unitCost = bestD->unitCost;
 			revenue += price * units;
-			expense += unitCost *= units;
+			expense += unitCost * units;
 
 			if (l.getUnsold() == 0)
 			{
@@ -631,7 +636,7 @@ int Building:: compareOER(const Building& b1,const Building& b2)
         return 1;
     }
 }
-int Building:: send(Logistics& from, Store& to, int units)
+int Building::send(Logistics& from, Store& to, int units)
 {
 	if (from.distribution.find(to.id) == from.distribution.end())
 	{
