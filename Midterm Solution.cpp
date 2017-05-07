@@ -173,15 +173,15 @@ int main()
 	{
 		int x, y;
 		cin >> x >> y;
-		Point p =  Point(x, y);
-		store[i] = &p;
+		Point* p = new Point(x, y);
+		store[i] = p;
 	}
 	for(int i = 0; i < logisticsNum; i++)
 	{
 		int x, y;
 		cin >> x >> y;
-		Point p =  Point(x, y);
-		logistic[i] = &p;
+		Point* p = new Point(x, y);
+		logistic[i] = p;
 	}
 	for(int i = 0; i < storeNum; i++)
 	{
@@ -207,22 +207,22 @@ int main()
 	for(int i = 0; i < storeNum; i++)
 	{
 		int id = i+1;
-		Point position = *store[i];
+		Point* position = store[i];
 		int cost = storeCost[i];
 		int demand2 = demand[i];
 		int capacity2 = capacity[i];
-		Store storeS = Store(id, position, cost, demand2, capacity2);
-		stores[i] = &storeS;
+		Store* storeS = new Store(id, *position, cost, demand2, capacity2);
+		stores[i] = storeS;
 	}
 	Logistics** logistics = new Logistics*[logisticsNum];
 	for(int i = 0; i < logisticsNum; i++)
 	{
-		int id = i+1;
-		Point position = *logistic[i];
+		int id = i + 1;
+		Point* position = logistic[i];
 		int cost = logisticCost[i];
 		int capacity2 = capacity[i];
-		Logistics logisticS = Logistics(id, position, cost, capacity2);
-		logistics[i] = &logisticS;
+		Logistics* logisticS = new Logistics(id, *position, cost, capacity2);
+		logistics[i] = logisticS;
 	}
 	Plan originalPlan = Plan(logistics, logisticsNum, stores, storeNum );
 	Plan plan1 = originalPlan;
