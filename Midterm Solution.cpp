@@ -453,6 +453,8 @@ int Point:: manhattonDistance(const Point& to)const
 }
 Building::Building(int id,Point& position,int cost): id(id), position(position), cost(cost)
 {
+	revenue = 0;
+	expense = cost;
 }
 int Building::getRevenue()const
 {
@@ -468,9 +470,7 @@ int Building::getNet()const
 }
 int Building::manhattonDistance(const Building& to)//because the point reference is a const
 {
-    int manhattonDistance = 0;
-    manhattonDistance = (this->position.x - to.position.x)+(this->position.y - to.position.y);//not quite sure
-    return manhattonDistance;
+    return this->position.manhattonDistance(to.position);
 }
 int Building ::compareNet(const Building& b1,const Building& b2)
 {
@@ -489,9 +489,7 @@ int Building ::compareNet(const Building& b1,const Building& b2)
 }
 double Building::getOER()const
 {
-    double OER = 0;
-    OER = static_cast<float>(revenue)/expense;
-    return OER;
+    return static_cast<double>(expense)/revenue;
 }
 int Building:: compareOER(const Building& b1,const Building& b2)
 {
@@ -510,20 +508,27 @@ int Building:: compareOER(const Building& b1,const Building& b2)
 }
 int Building:: send(Logistics& from, Store& to, int units)
 {
-    for(int i = 0; i < from.distribution.size(); i++)
-    {
-        if((from.id == (from.distribution[i]->getFrom()).id)&&(to.id == (from.distribution[i]->getTo()).id))
-        {
-            units += from.distribution[i]->units;
-        }
-    }
+	if (from.distribution.find(to.id) == from.distribution.end())
+	{
+		Distribution* d = new Distribution(from, to);
+		d->units = units;
+		from.distribution[to.id] = d;
+		to.distribution[from.id] = d;
+	}
+    else
+	{
+		from.distribution[to.id]->units += units;
+	}
     from.send(to,units);
     to.receive(from,units);
     return units;
 }
 Building:: ~Building()
 {
-    distribution.clear();
+    for (auto it = distribution.begin(); it != distribution.end(); it++)
+	{
+        delete it->second;
+	}
 }
 /** HanjuTsai end */
 
