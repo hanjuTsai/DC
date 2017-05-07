@@ -335,22 +335,66 @@ Plan& Plan::operator=(const Plan& p)
 		// Has problem??? does it get deleted twice???
 		Logistics* l = new Logistics(*it->second);
 		logistics[it->first] = l;
-		unsold[it->first] = l;
 	}
     for (map<int,Store*>::const_iterator it = p.stores.begin();
 		it != p.stores.end(); it++)
 	{
 		Store* s = new Store(*it->second);
 		stores[it->first] = s;
-		unsatisfied[it->first] = s;
 	}
+	for (map<int,Logistics*>::const_iterator it = p.unsold.begin();
+        it != p.unsold.end(); it++)
+    {
+        unsold[it->first] = new Logistics(*it->second);
+    }
+    for (map<int,Store*>::const_iterator it = p.unsatisfied.begin();
+        it != p.unsatisfied.end(); it++)
+    {
+        unsatisfied[it->first] = new Store(*it->second);
+    }
+
 
     return *this;
 }
 
 int Plan::getNet() const
 {
-	return revenue - expense;
+	int result = 0;
+	for(auto it = logistics.begin();
+		it != logistics.end(); it++)
+	{
+		result -= it->second->cost;
+	}
+
+	for(auto it = stores.begin();
+		it != stores.end(); it++)
+	{
+		result -= it->second->cost;
+	}
+
+	for(int i = 1; i <= numStores; i++)
+	{
+		if(stores.find(i) == stores.end())
+		{
+			continue;
+		}
+
+		Store* s = stores.find(i)->second;
+		map<int,Distribution*>& ds = s->distribution;
+		for(int j = 1; j <= numLogistics; j++)
+		{
+			auto dit = ds.find(j);
+            if (dit == ds.end())
+			{
+			}
+			else
+			{
+				Distribution* d = dit->second;
+				result << d->units * s->getPrice();
+			}
+		}
+	}
+	return result;
 }
 
 string Plan::toString() const
@@ -534,6 +578,7 @@ void Plan::update()
 			{
 				unsatisfied.erase(s.id);
 			}
+			delete bestD;
 		}
 	}
 }
@@ -601,7 +646,7 @@ int Building::manhattonDistance(const Building& to)//because the point reference
 {
     return this->position.manhattonDistance(to.position);
 }
-int Building ::compareNet(const Building& b1,const Building& b2)
+int Building::compareNet(const Building& b1,const Building& b2)
 {
     if(b1.getNet() < b2.getNet())
     {
@@ -652,7 +697,7 @@ int Building::send(Logistics& from, Store& to, int units)
     to.receive(from,units);
     return units;
 }
-Building:: ~Building()
+Building::~Building()
 {
     for (auto it = distribution.begin(); it != distribution.end(); it++)
 	{
