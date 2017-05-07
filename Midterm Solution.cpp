@@ -124,19 +124,19 @@ private:
     map<int,Logistics*> unsold;
     map<int,Store*> unsatisfied;
 public:
-    // Static fields
-    static int numLogistics;
-    static int numStores;
-    // Constructors
-    Plan(const Plan& p);
-    Plan& operator=(const Plan& p);
-    Plan(Logistics**& ls, int lNum, Store**& ss, int sNum);
-    // Functions
-    int getNet() const;
-    string toString() const;
-    bool remove(Building* building);
-    void update();
-    // Accessors
+	// Static fields
+	static int numLogistics;
+	static int numStores;
+	// Constructors
+	Plan(const Plan& p);
+	Plan& operator=(const Plan& p);
+	Plan(Logistics**& ls, int lNum, Store**& ss, int sNum);
+	// Functions
+	int getNet() const;
+	string toString() const;
+	bool remove(Building* building);
+	void update();
+	// Accessors
     map<int,Logistics*>& getLogistics();
     map<int,Store*>& getStores();
     int getRevenue() const;
