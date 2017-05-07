@@ -23,35 +23,28 @@ class Point
 
 class Building
 {
-	protected:
-		Building(int id, Point& position,int cost);
-		virtual ~Building();
-	public:
-		int revenue;
-		int expense;
-		map<int,Distribution*> distribution;
-		static int costPerKM;
-		const int id;
-		const Point& position;
-		const int cost;
-		int getCost() const
-		{
-			return cost;
-		}
-		int getRevenue() const
-		{
-			return revenue;
-		}
-		int getExpense() const
-		{
-			return expense;
-		}
-		int manhattonDistance(const Building& to) const;
-		int getNet();
-		static int compareNet(const Building& b1, const Building& b2);
-		double getOER();//OperatingExpenseRatio
-		static int compareOER(const Building& b1, const Building& b2);//OperatingExpenseRatio
-		static int send(Logistics& from, Store& to, int units);
+    protected:
+        Building(int id, Point& position,int cost);
+        virtual ~Building();
+    public:
+
+    	int revenue;
+ 		int expense;
+ 		map<int,Distribution*> distribution;
+ 		static int costPerKM;
+        const int id;
+        const Point& position;
+        const int cost;
+        //getter
+        int getRevenue() const;
+        int getExpense() const;
+        int manhattonDistance(const Building& to);
+        int getNet()const;
+        static int compareNet(const Building& b1,const Building& b2);
+        double getOER()const;//OperatingExpenseRatio
+        static int compareOER(const Building& b1,const Building& b2);//OperatingExpenseRatio
+        static int send(Logistics& from, Store& to, int units);
+
 };
 
 /** Zhen start */
@@ -77,6 +70,7 @@ class Logistics: public Building //subclass
 
 class Store: public Building//subclass
 {
+
 	private:
 		const int demand;
 		map<int,Logistics*> possibleLogistics;
@@ -445,21 +439,98 @@ map<int,Store*>& Plan::getUnsatisfied()
 {
 	return unsatisfied;
 }
-
-
 /** JasonBaby end */
 
+/** HanjuTsai start*/
 Point:: Point(int x,int y):x(x),y(y)
 {
-
 }
-
-int Point:: manhattonDistance(const Point& to) const
+int Point:: manhattonDistance(const Point& to)const
 {
-	int manhattonDistance = 0;
-	manhattonDistance = abs(x - to.x) + abs(y - to.y);
-	return manhattonDistance;
+    int manhattonDistance = 0;
+    manhattonDistance = abs(x - to.x) + abs(y - to.y);
+    return manhattonDistance;
 }
+Building::Building(int id,Point& position,int cost): id(id), position(position), cost(cost)
+{
+	revenue = 0;
+	expense = cost;
+}
+int Building::getRevenue()const
+{
+    return revenue;
+}
+int Building::getExpense()const
+{
+    return expense;
+}
+int Building::getNet()const
+{
+    return revenue - expense;
+}
+int Building::manhattonDistance(const Building& to)//because the point reference is a const
+{
+    return this->position.manhattonDistance(to.position);
+}
+int Building ::compareNet(const Building& b1,const Building& b2)
+{
+    if(b1.getNet() < b2.getNet())
+    {
+        return -1;
+    }
+    else if(b1.getNet() == b2.getNet())
+    {
+        return 0;
+    }
+    else
+    {
+        return 1;
+    }
+}
+double Building::getOER()const
+{
+    return static_cast<double>(expense)/revenue;
+}
+int Building:: compareOER(const Building& b1,const Building& b2)
+{
+    if(b1.getOER() < b2.getOER())
+    {
+        return -1;
+    }
+    else if(b1.getOER() == b2.getOER())
+    {
+        return 0;
+    }
+    else
+    {
+        return 1;
+    }
+}
+int Building:: send(Logistics& from, Store& to, int units)
+{
+	if (from.distribution.find(to.id) == from.distribution.end())
+	{
+		Distribution* d = new Distribution(from, to);
+		d->units = units;
+		from.distribution[to.id] = d;
+		to.distribution[from.id] = d;
+	}
+    else
+	{
+		from.distribution[to.id]->units += units;
+	}
+    from.send(to,units);
+    to.receive(from,units);
+    return units;
+}
+Building:: ~Building()
+{
+    for (auto it = distribution.begin(); it != distribution.end(); it++)
+	{
+        delete it->second;
+	}
+}
+/** HanjuTsai end */
 
 /** Zhen start */
 // Logistics
