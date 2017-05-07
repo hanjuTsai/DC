@@ -28,7 +28,6 @@ class Building
         Building(int id, Point& position,int cost);
         virtual ~Building();
     public:
-
     	int revenue;
  		int expense;
  		map<int,Distribution*> distribution;
@@ -116,14 +115,13 @@ class Distribution
 /** JasonBaby start */
 class Plan
 {
-private:
+public:
     map<int,Logistics*> logistics;
     map<int,Store*> stores;
     int revenue;
     int expense;
     map<int,Logistics*> unsold;
     map<int,Store*> unsatisfied;
-public:
 	// Static fields
 	static int numLogistics;
 	static int numStores;
@@ -224,73 +222,40 @@ int main()
 		Logistics* logisticS = new Logistics(id, *position, cost, capacity2);
 		logistics[i] = logisticS;
 	}
-	Plan originalPlan = Plan(logistics, logisticsNum, stores, storeNum );
-	Plan plan1 = originalPlan;
-	Plan plan2 = originalPlan;
-	Plan bestPlan1 = originalPlan;
-	Plan bestPlan2 = originalPlan;
+	Plan original = Plan(logistics, logisticsNum, stores, storeNum);
+
+
+	Plan current = original;
+	string result = original.toString();
+	int bestNet = original.getNet();
 
 	vector<Building*> allBuildings;
-	for(int i = 0; i < logisticsNum+storeNum; i++)
+	for (auto lit = current.logistics.begin(); lit != current.logistics.end();
+		lit++)
 	{
-		if(i < logisticsNum)
-		{
-			allBuildings[i] = logistics[i];
-		}
-		if(i >= logisticsNum)
-		{
-			allBuildings[i] = stores[i - logisticsNum];
-		}
-
+        allBuildings.push_back(lit->second);
 	}
-
-	vector<Building*> allBuildings1;
-	for(int i = 0; i < logisticsNum+storeNum; i++){
-		if(i < logisticsNum)
-		{
-			allBuildings1[i] = logistics[i];
-		}
-		if(i >= logisticsNum)
-		{
-			allBuildings1[i] = stores[i - logisticsNum];
-		}
-
+	for (auto sit = current.stores.begin(); sit != current.stores.end();
+		sit++)
+	{
+        allBuildings.push_back(sit->second);
 	}
-
 
 	while(allBuildings.size() > 0)
 	{
-		plan1.update();
-		sort(allBuildings.begin(),allBuildings.end(), moreNet);
-		plan1.remove(allBuildings[logisticsNum+storeNum-1]);
-		allBuildings.erase(allBuildings.end());
-		if(plan1.getNet() > bestPlan1.getNet())
+		current.update();
+		if(current.getNet() > bestNet)
 		{
-			bestPlan1 = plan1;
+			bestNet = current.getNet();
+			result = current.toString();
 		}
-
-
+		sort(allBuildings.begin(),allBuildings.end(), moreNet);
+		Building* worst = allBuildings[allBuildings.size() - 1];
+		current.remove(worst);
+		allBuildings.pop_back();
 	}
-	// while(allBuildings1.size() > 0)
-	// {
-	// 	plan2.update();
-	// 	sort(allBuildings1.begin(),allBuildings1.end(), lessOER);
-	// 	plan2.remove(allBuildings1[-1]);
-	// 	allBuildings1.erase(allBuildings1.end());
-	// 	if(plan2.getNet() > bestPlan2.getNet())
-	// 	{
-	// 		bestPlan2 = plan2;
-	// 	}
 
-	// }
-
-	// if(bestPlan1.getNet() < bestPlan2.getNet())
-	// {
-	// 	bestPlan1 = bestPlan2;
-	// }
-	// string bestplan = bestPlan1.toString();
-
-
+    cout << result;
 
 	return 0;
 }
