@@ -2,6 +2,7 @@
 #include <cmath>
 #include <map>
 #include <vector>
+#include <algorithm>
 #include <sstream>
 
 using namespace std;
@@ -27,7 +28,6 @@ class Building
         Building(int id, Point& position,int cost);
         virtual ~Building();
     public:
-
     	int revenue;
  		int expense;
  		map<int,Distribution*> distribution;
@@ -44,8 +44,8 @@ class Building
         double getOER()const;//OperatingExpenseRatio
         static int compareOER(const Building& b1,const Building& b2);//OperatingExpenseRatio
         static int send(Logistics& from, Store& to, int units);
-
 };
+int Building::costPerKM;
 
 /** Zhen start */
 class Logistics: public Building //subclass
@@ -70,7 +70,6 @@ class Logistics: public Building //subclass
 
 class Store: public Building//subclass
 {
-
 	private:
 		const int demand;
 		map<int,Logistics*> possibleLogistics;
@@ -116,14 +115,13 @@ class Distribution
 /** JasonBaby start */
 class Plan
 {
-private:
+public:
     map<int,Logistics*> logistics;
     map<int,Store*> stores;
     int revenue;
     int expense;
     map<int,Logistics*> unsold;
     map<int,Store*> unsatisfied;
-public:
 	// Static fields
 	static int numLogistics;
 	static int numStores;
@@ -144,12 +142,141 @@ public:
     map<int,Logistics*>& getUnsold();
     map<int,Store*>& getUnsatisfied();
 };
+int Plan::numLogistics;
+int Plan::numStores;
 /** JasonBaby end */
+
+bool moreNet(Building*, Building*);
+bool lessNet(Building*, Building*);
+bool moreOER(Building*, Building*);
+bool lessOER(Building*, Building*);
 
 int main()
 {
 
+	int storeNum = 0;
+	int logisticsNum = 0;
+	int costPerkm = 0;
+	cin >> storeNum >> logisticsNum >> costPerkm;
+	Point** store = new Point*[storeNum];
+	Point** logistic = new Point*[logisticsNum];
+	int* demand = new int[storeNum];
+	int* storeCost = new int[storeNum];
+	int* price = new int[storeNum];
+	int* logisticCost = new int[logisticsNum];
+	int* capacity = new int[logisticsNum];
+	Building::costPerKM = costPerkm;
+	Plan::numLogistics = logisticsNum;
+	Plan::numStores = storeNum;
+
+	for(int i = 0; i < storeNum; i++)
+	{
+		int x, y;
+		cin >> x >> y;
+		Point* p = new Point(x, y);
+		store[i] = p;
+	}
+	for(int i = 0; i < logisticsNum; i++)
+	{
+		int x, y;
+		cin >> x >> y;
+		Point* p = new Point(x, y);
+		logistic[i] = p;
+	}
+	for(int i = 0; i < storeNum; i++)
+	{
+		cin >> demand[i];
+	}
+	for(int i = 0; i < storeNum; i++)
+	{
+		cin >> storeCost[i];
+	}
+	for(int i = 0; i < storeNum; i++)
+	{
+		cin >> price[i];
+	}
+	for(int i = 0; i < logisticsNum; i++)
+	{
+		cin >> logisticCost[i];
+	}
+	for(int i = 0; i < logisticsNum; i++)
+	{
+		cin >> capacity[i];
+	}
+	Store** stores = new Store*[storeNum];
+	for(int i = 0; i < storeNum; i++)
+	{
+		int id = i+1;
+		Point* position = store[i];
+		int cost = storeCost[i];
+		int demand2 = demand[i];
+		int capacity2 = capacity[i];
+		Store* storeS = new Store(id, *position, cost, demand2, capacity2);
+		stores[i] = storeS;
+	}
+	Logistics** logistics = new Logistics*[logisticsNum];
+	for(int i = 0; i < logisticsNum; i++)
+	{
+		int id = i + 1;
+		Point* position = logistic[i];
+		int cost = logisticCost[i];
+		int capacity2 = capacity[i];
+		Logistics* logisticS = new Logistics(id, *position, cost, capacity2);
+		logistics[i] = logisticS;
+	}
+	Plan original = Plan(logistics, logisticsNum, stores, storeNum);
+
+
+	Plan current = original;
+	string result = original.toString();
+	int bestNet = original.getNet();
+
+	vector<Building*> allBuildings;
+	for (auto lit = current.logistics.begin(); lit != current.logistics.end();
+		lit++)
+	{
+        allBuildings.push_back(lit->second);
+	}
+	for (auto sit = current.stores.begin(); sit != current.stores.end();
+		sit++)
+	{
+        allBuildings.push_back(sit->second);
+	}
+
+	while(allBuildings.size() > 0)
+	{
+		current.update();
+		if(current.getNet() > bestNet)
+		{
+			bestNet = current.getNet();
+			result = current.toString();
+		}
+		sort(allBuildings.begin(),allBuildings.end(), moreNet);
+		Building* worst = allBuildings[allBuildings.size() - 1];
+		current.remove(worst);
+		allBuildings.pop_back();
+	}
+
+    cout << result;
+
 	return 0;
+}
+
+bool moreNet(Building *b1, Building *b2)
+{
+	return Building::compareNet(*b1,*b2) > 0;
+}
+bool lessNet(Building *b1, Building *b2)
+{
+	return Building::compareNet(*b1,*b2) < 0;
+}
+bool moreOER(Building *b1, Building *b2)
+{
+	return Building::compareOER(*b1,*b2) > 0;
+}
+bool lessOER(Building *b1, Building *b2)
+{
+	return Building::compareOER(*b1,*b2) < 0;
 }
 
 /** JasonBaby start */
