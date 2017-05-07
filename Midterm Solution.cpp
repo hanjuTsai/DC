@@ -504,6 +504,7 @@ void Plan::update()
 
 				if (bestD == nullptr || d->getNet() > bestD->getNet())
 				{
+					delete bestD;
 					bestD = d;
 				}
 			}
