@@ -420,6 +420,8 @@ bool Plan::remove(Building* building)
 	{
         int id = s->id;
 		stores.erase(id);
+		revenue -= s->revenue;
+		expense -= s->expense;
 		for (map<int,Distribution*>::iterator it = s->distribution.begin();
 			it != s->distribution.end(); it++)
 		{
@@ -437,8 +439,7 @@ bool Plan::remove(Building* building)
             l.distribution.erase(id);
 			delete d;
 		}
-		revenue -= s->revenue;
-		expense -= s->expense;
+		unsatisfied.erase(id);
 		delete s;
 	}
 	else
@@ -446,6 +447,8 @@ bool Plan::remove(Building* building)
 		Logistics* l = dynamic_cast<Logistics*> (building);
         int id = l->id;
 		logistics.erase(id);
+		revenue -= l->revenue;
+		expense -= l->expense;
 		for (map<int,Distribution*>::iterator it = l->distribution.begin();
 			it != l->distribution.end(); it++)
 		{
@@ -463,10 +466,10 @@ bool Plan::remove(Building* building)
             s.distribution.erase(id);
             delete d;
 		}
-		revenue -= l->revenue;
-		expense -= l->expense;
+		unsold.erase(id);
 		delete l;
 	}
+	return true;
 }
 
 void Plan::update()
