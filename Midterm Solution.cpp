@@ -332,22 +332,17 @@ Plan& Plan::operator=(const Plan& p)
     for (map<int,Logistics*>::const_iterator it = p.logistics.begin();
 		it != p.logistics.end(); it++)
 	{
-		logistics[it->first] = new Logistics(*it->second);
+		// Has problem??? does it get deleted twice???
+		Logistics* l = new Logistics(*it->second);
+		logistics[it->first] = l;
+		unsold[it->first] = l;
 	}
     for (map<int,Store*>::const_iterator it = p.stores.begin();
 		it != p.stores.end(); it++)
 	{
-		stores[it->first] = new Store (*it->second);
-	}
-    for (map<int,Logistics*>::const_iterator it = p.unsold.begin();
-		it != p.unsold.end(); it++)
-	{
-		unsold[it->first] = logistics[it->first];
-	}
-    for (map<int,Store*>::const_iterator it = p.unsatisfied.begin();
-		it != p.unsatisfied.end(); it++)
-	{
-		unsatisfied[it->first] = stores[it->first];
+		Store* s = new Store(*it->second);
+		stores[it->first] = s;
+		unsatisfied[it->first] = s;
 	}
 
     return *this;
