@@ -146,9 +146,10 @@ public:
 };
 /** JasonBaby end */
 
-bool moreNet(Building, Building);
-bool lessNet(Building, Building);
-bool lessOER(Building,Building);
+bool moreNet(Building*, Building*);
+bool lessNet(Building*, Building*);
+bool moreOER(Building*, Building*);
+bool lessOER(Building*, Building*);
 
 int main()
 {
@@ -298,18 +299,18 @@ bool moreNet(Building *b1, Building *b2)
 {
 	return Building::compareNet(*b1,*b2) > 0;
 }
-
-// bool lessNet(Building b1, Building b2)
-// {
-// 	return Building::compareNet(b1,b2) < 0;
-// }
-// bool lessOER(Building b1, Building b2)
-// {
-// 	return Building::compareOER(b1,b2) < 0;
-// }
-
-
-
+bool lessNet(Building *b1, Building *b2)
+{
+	return Building::compareNet(*b1,*b2) < 0;
+}
+bool moreOER(Building *b1, Building *b2)
+{
+	return Building::compareOER(*b1,*b2) > 0;
+}
+bool lessOER(Building *b1, Building *b2)
+{
+	return Building::compareOER(*b1,*b2) < 0;
+}
 
 /** JasonBaby start */
 
