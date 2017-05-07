@@ -370,7 +370,7 @@ string Plan::toString() const
 	for(auto it = stores.begin();
 		it != stores.end(); it++)
 	{
-		int id = it -> first;
+		int id = it->first;
 		result << " " << id;
 	}
 
@@ -379,7 +379,7 @@ string Plan::toString() const
 		result << endl;
 		if(stores.find(i) == stores.end())
 		{
-			if (1 <= numLogistics)
+			if (numLogistics >= 1)
 			{
 				result << 0;
 			}
@@ -387,7 +387,6 @@ string Plan::toString() const
 			{
 				result << " 0";
 			}
-			result << endl;
 			continue;
 		}
 
