@@ -342,12 +342,12 @@ Plan& Plan::operator=(const Plan& p)
     for (map<int,Logistics*>::const_iterator it = p.unsold.begin();
 		it != p.unsold.end(); it++)
 	{
-		unsold[it->first] = new Logistics (*it->second);
+		unsold[it->first] = logistics[it->first];
 	}
     for (map<int,Store*>::const_iterator it = p.unsatisfied.begin();
 		it != p.unsatisfied.end(); it++)
 	{
-		unsatisfied[it->first] = new Store (*it->second);
+		unsatisfied[it->first] = stores[it->first];
 	}
 
     return *this;
