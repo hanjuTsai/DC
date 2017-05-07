@@ -394,7 +394,10 @@ string Plan::toString() const
 		map<int,Distribution*>& ds = s->distribution;
 		for(int j = 1; j <= numLogistics; j++)
 		{
-			result << " ";
+			if (j != 1)
+			{
+				result << " ";
+			}
 			auto dit = ds.find(j);
             if (dit == ds.end())
 			{
