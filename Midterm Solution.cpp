@@ -213,7 +213,7 @@ int main()
 	Store** stores = new Store*[storeNum];
 	for(int i = 0; i < storeNum; i++)
 	{
-		int id = i;
+		int id = i+1;
 		Point position = *store[i];
 		int cost = storeCost[i];
 		int demand2 = demand[i];
@@ -268,8 +268,8 @@ int main()
 	while(allBuildings.size() > 0)
 	{
 		plan1.update();
-		sort(&allBuildings[0],&allBuildings[-1], moreNet);
-		plan1.remove(allBuildings[-1]);
+		sort(allBuildings.begin(),allBuildings.end(), moreNet);
+		plan1.remove(allBuildings[logisticsNum+storeNum-1]);
 		allBuildings.erase(allBuildings.end());
 		if(plan1.getNet() > bestPlan1.getNet())
 		{
@@ -278,43 +278,43 @@ int main()
 
 
 	}
-	while(allBuildings1.size() > 0)
-	{
-		plan2.update();
-		sort(&allBuildings1[0],&allBuildings1[-1], lessOER);
-		plan2.remove(allBuildings1[-1]);
-		allBuildings1.erase(allBuildings1.end());
-		if(plan2.getNet() > bestPlan2.getNet())
-		{
-			bestPlan2 = plan2;
-		}
+	// while(allBuildings1.size() > 0)
+	// {
+	// 	plan2.update();
+	// 	sort(allBuildings1.begin(),allBuildings1.end(), lessOER);
+	// 	plan2.remove(allBuildings1[-1]);
+	// 	allBuildings1.erase(allBuildings1.end());
+	// 	if(plan2.getNet() > bestPlan2.getNet())
+	// 	{
+	// 		bestPlan2 = plan2;
+	// 	}
 
-	}
+	// }
 
-	if(bestPlan1.getNet() < bestPlan2.getNet())
-	{
-		bestPlan1 = bestPlan2;
-	}
-	string bestplan = bestPlan1.toString();
+	// if(bestPlan1.getNet() < bestPlan2.getNet())
+	// {
+	// 	bestPlan1 = bestPlan2;
+	// }
+	// string bestplan = bestPlan1.toString();
 
 
 
 	return 0;
 }
 
-bool moreNet(Building b1, Building b2)
+bool moreNet(Building *b1, Building *b2)
 {
-	return Building::compareNet(b1,b2) > 0;
+	return Building::compareNet(*b1,*b2) > 0;
 }
 
-bool lessNet(Building b1, Building b2)
-{
-	return Building::compareNet(b1,b2) < 0;
-}
-bool lessOER(Building b1, Building b2)
-{
-	return Building::compareOER(b1,b2) < 0;
-}
+// bool lessNet(Building b1, Building b2)
+// {
+// 	return Building::compareNet(b1,b2) < 0;
+// }
+// bool lessOER(Building b1, Building b2)
+// {
+// 	return Building::compareOER(b1,b2) < 0;
+// }
 
 
 
