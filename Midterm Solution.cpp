@@ -157,7 +157,7 @@ int main()
 	int storeNum = 0;
 	int logisticsNum = 0;
 	int costPerkm = 0;
-	cin >> storeNum >> logisticsNum >> costPerkm;
+	cin >> logisticsNum >> storeNum >> costPerkm;
 	Point** store = new Point*[storeNum];
 	Point** logistic = new Point*[logisticsNum];
 	int* demand = new int[storeNum];
